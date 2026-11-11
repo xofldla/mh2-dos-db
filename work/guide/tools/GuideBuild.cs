@@ -654,9 +654,9 @@ public static class G
         var data = A(Load("items"));
         MealIngredients.Clear();
         foreach (var s in A(Load("meals"))) foreach (var m in A(D(s), "meals")) foreach (var g in A(D(m), "ingredients")) MealIngredients.Add(S(D(g), "japanese"));
-        var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보입니다. 검색하면 모든 탭에서 찾습니다.", true));
+        var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보이고, 조합법은 <a href=\"https://w.atwiki.jp/alter2/pages/32.html\">ＭＨ２@Wiki 「調合」</a>의 재료・성공률입니다. 검색하면 모든 탭에서 찾습니다.", true));
         var rows = new List<string>[4]; for (int i = 0; i < 4; i++) rows[i] = new List<string>();
-        var drops = MonsterDrops(); var qdrops = QuestDrops(); var mdrops = MapDrops();
+        var drops = MonsterDrops(); var qdrops = QuestDrops(); var mdrops = MapDrops(); var cdrops = ComboDrops();
         int idx = 0;
         foreach (var o in data) {
             var it = D(o); idx++;
@@ -673,6 +673,7 @@ public static class G
             string buy0 = S(it, "buy");
             if (buy0 != "" && buy0 != "0") fx.Add("<span class=\"tk\">상점 구매:</span> 마을 상점(도구점・잡화점 등)에서 " + Money(buy0) + "에 살 수 있습니다.");
             List<string> dl;
+            if (cdrops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">조합:</span>" + string.Join("", dl));
             if (mdrops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">채집:</span>" + string.Join("", dl));
             if (drops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">몬스터에게서 입수 (갈무리・포획・부위 파괴):</span>" + string.Join("", dl));
             if (qdrops.TryGetValue(S(it, "japanese"), out dl)) {
@@ -680,6 +681,10 @@ public static class G
                 fx.Add(dl.Count > 5 ? "<details class=\"qdrop\"><summary><span class=\"tk\">퀘스트 보수:</span> " + dl.Count + "개 퀘스트 (눌러서 펼치기)</summary>" + body + "</details>"
                                     : "<span class=\"tk\">퀘스트 보수:</span>" + body);
             }
+            if (S(it, "japanese") == "もえないゴミ") fx.Add("<span class=\"tk\">조합:</span> 조합에 실패하면 생깁니다.");
+            bool anySrc = (buy0 != "" && buy0 != "0") || Has(it, "acquireSpecial") || Has(it, "supply") || Has(it, "account") || Has(it, "unavailable") || A(it, "rewards").Length > 0
+                || cdrops.ContainsKey(S(it, "japanese")) || mdrops.ContainsKey(S(it, "japanese")) || drops.ContainsKey(S(it, "japanese")) || qdrops.ContainsKey(S(it, "japanese")) || S(it, "japanese") == "もえないゴミ";
+            if (!anySrc) fx.Add("<span class=\"meta\">입수처: 참고 자료(위키 데이터・조합표)에 없음</span>");
             if (A(it, "rewards").Length > 0) fx.Add("<span class=\"tk\">내용물:</span> " + string.Join(" ", A(it, "rewards").Select(x => "<span class=\"mat\">" + T(S(D(x), "japanese")) + " " + H(S(D(x), "percent")) + "%</span>")));
             string buy = S(it, "buy"), sell = S(it, "sell");
             rows[ItemCat(it)].Add("<tr id=\"item-" + idx + "\">" + string.Join("", new[] { name, Rar(S(it, "rarity")), Num(S(it, "maxStack")), buy == "0" || buy == "" ? "-" : Money(buy), sell == "" ? "-" : Money(sell), desc, string.Join("<br>", fx) }.Select(c => "<td>" + c + "</td>")) + "</tr>\n");
@@ -694,6 +699,27 @@ public static class G
             sb.Append(TEnd + "</section>\n");
         }
         Write("items.html", sb.Append(Foot()).ToString());
+    }
+    // 조합표 (ＭＨ２@Wiki 調合 의 재료・성공률・개수만 work/guide/src/combos_atwiki.tsv 로 옮김). 이름 표기 차이는 아이템 목록 이름으로 맞춘다
+    static string ItemNorm(string j)
+    {
+        if (j == "" || ItemLink.ContainsKey(j)) return j;
+        var alt = new[] { j.Replace("G", "Ｇ"), j.Replace("解毒草", "げどく草"), j.Replace("なぞの骨", "謎の骨"), j.Replace("謎の骨", "なぞの骨"), j.Replace("壷", "壺"), j.Replace("５", "5"), Regex.Replace(j, "^(LV\\d)", "$1 ") };
+        foreach (var a in alt) if (ItemLink.ContainsKey(a)) return a;
+        Console.WriteLine("combo: unknown item " + j); return j;
+    }
+    static Dictionary<string, List<string>> ComboDrops()
+    {
+        var res = new Dictionary<string, List<string>>();
+        string f = Path.Combine(JsonDir, "..", "..", "work", "guide", "src", "combos_atwiki.tsv"); if (!File.Exists(f)) return res;
+        foreach (var line in File.ReadAllLines(f, new UTF8Encoding(false))) {
+            var c = line.Split('\t'); if (c.Length < 6 || c[0] == "") continue;
+            string prod = ItemNorm(c[0]);
+            var mats = new[] { c[1], c[2], c[3] }.Where(x => x != "").Select(x => { string n = ItemNorm(x); return ILink(n, T(n)); });
+            List<string> l; if (!res.TryGetValue(prod, out l)) res[prod] = l = new List<string>();
+            l.Add("<div class=\"drop\">" + string.Join(" + ", mats) + " <span class=\"meta\">성공률 " + H(c[4]) + "% · " + H(c[5].Replace("～", "~")) + "개</span></div>");
+        }
+        return res;
     }
     // 아이템(일본어 이름) → 지역별 채집 정보 (포인트 종류, 등급, 계절, 최대 확률). maps.html#loc-… 링크
     static Dictionary<string, List<string>> MapDrops()

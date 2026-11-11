@@ -29,7 +29,7 @@ powershell -NoProfile -File work\guide\publish.ps1 -Message "수정 내용"
 
 ## 자료 출처와 라이선스
 
-- 수치・데이터: [Monster Hunter Oldschool MH2 Wiki](https://wiki.mholdschool.com/mh2/), mmPotato 「モンスターハンター２解析情報」
+- 수치・데이터: [Monster Hunter Oldschool MH2 Wiki](https://wiki.mholdschool.com/mh2/), mmPotato 「モンスターハンター２解析情報」, 조합법(재료・성공률・개수): [ＭＨ２@Wiki 「調合」](https://w.atwiki.jp/alter2/pages/32.html)
 - 지도・아이콘・몬스터 그림: 같은 위키 (몬스터 그림은 크기를 줄임)
 - 지역・마을 아이콘: 이 공략을 위해 새로 그린 픽셀 그림
 - 글꼴: Galmuri11 (quiple, SIL Open Font License 1.1) — `guide/fonts/LICENSE_Galmuri.txt`
