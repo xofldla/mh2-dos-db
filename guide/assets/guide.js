@@ -18,10 +18,15 @@
   // 다른 페이지로 가는 링크(소재・몬스터)를 누르면 표시 → 도착한 페이지에 「돌아가기」 버튼
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a.xlink") : null; if (!a) return;
+    // 도착 페이지 주소에 bk=1 을 붙인다 (저장소・캐시와 상관없이 몇 번을 오가도 버튼이 나오게)
+    var href = a.getAttribute("href"), hash = "", i = href.indexOf("#");
+    if (i >= 0) { hash = href.slice(i); href = href.slice(0, i); }
+    if (!/[?&]bk=1/.test(href)) href += (href.indexOf("?") >= 0 ? "&" : "?") + "bk=1";
+    a.setAttribute("href", href + hash);
     try { window.name = (window.name || "").replace(/;?mh2back=1/g, "") + ";mh2back=1"; } catch (x) {}
     try { sessionStorage.setItem("mh2back", "1"); } catch (x) {}
   }, true);
-  var cameBack = /mh2back=1/.test(window.name || ""); try { if (sessionStorage.getItem("mh2back") === "1") cameBack = true; sessionStorage.removeItem("mh2back"); } catch (x) {}
+  var cameBack = /[?&]bk=1/.test(location.search) || /mh2back=1/.test(window.name || ""); try { if (sessionStorage.getItem("mh2back") === "1") cameBack = true; sessionStorage.removeItem("mh2back"); } catch (x) {}
   try { window.name = (window.name || "").replace(/;?mh2back=1/g, ""); } catch (x) {}
   if (cameBack && history.length > 1) {
     var back = document.createElement("button"); back.type = "button"; back.id = "backbtn"; back.innerHTML = "↩ 돌아가기";

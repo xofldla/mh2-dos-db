@@ -888,6 +888,8 @@ public static class G
     }
 
     // ================= 맵 =================
+    // 위키 좌표 = 512px 지도에서 32px 아이콘의 왼쪽 위 모서리 → 아이콘 중심(지점)은 +16px = +3.125%
+    static string PtPos(string v) { double d; return double.TryParse(v, NumberStyles.Float, CultureInfo.InvariantCulture, out d) ? (d + 3.125).ToString("0.###", CultureInfo.InvariantCulture) : H(v); }
     public static readonly string[] SeasonEmoji = { "☀️", "⛄", "🌳" };
     // 채집 포인트 종류 → 소분류 (0 소비 / 1 소재 / 2 기타)
     static readonly string[] KindGroupName = { "소비 아이템", "소재 아이템", "기타" };
@@ -944,7 +946,7 @@ public static class G
                     if (!kindIcon.ContainsKey(nm)) { kinds.Add(nm); kindIcon[nm] = S(ic, "icon"); kindCount[nm] = 0; }
                     kindCount[nm]++;
                     string pid = slug + "-" + (i + 1); bool has = i < firstKeys.Count;
-                    sb0.Append("<button type=\"button\" class=\"pt" + (has ? "" : " nodata") + "\" data-p=\"" + pid + "\" data-k=\"" + kinds.IndexOf(nm) + "\" style=\"left:" + H(S(ic, "x")) + "%;top:" + H(S(ic, "y")) + "%\" title=\"" + (has ? (i + 1) + ". " : "") + H(nm) + "\">" + Icon(S(ic, "icon")) + (has ? "<b>" + (i + 1) + "</b>" : "") + "</button>");
+                    sb0.Append("<button type=\"button\" class=\"pt" + (has ? "" : " nodata") + "\" data-p=\"" + pid + "\" data-k=\"" + kinds.IndexOf(nm) + "\" style=\"left:" + PtPos(S(ic, "x")) + "%;top:" + PtPos(S(ic, "y")) + "%\" title=\"" + (has ? (i + 1) + ". " : "") + H(nm) + "\">" + Icon(S(ic, "icon")) + (has ? "<b>" + (i + 1) + "</b>" : "") + "</button>");
                     if (has) {
                         string key = firstKeys[i];
                         js.Append(Js(pid) + ":{n:" + Js(nm) + ",i:" + Js(S(ic, "icon")) + ",z:" + Js(zoneName[key]) + ",no:" + (i + 1) + ",m:" + Js(Tk(S(md, "titleJapanese"))) + ",r:{" + string.Join(",", pts[key].Select(kv => kv.Key + ":" + kv.Value)) + "}},");
