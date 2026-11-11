@@ -56,8 +56,8 @@
     document.head.appendChild(st);
     var el = document.createElement("div"); el.id = "visits"; el.className = bar ? "inbar" : "floating";
     var pad = function (n) { n = String(n); while (n.length < 4) n = "0" + n; return n; };
-    var show = function (d) { el.innerHTML = "[ Today : <b>" + pad(d.today_hits) + "</b> ] [ Total : <b>" + pad(d.total_hits) + "</b> ]"; };
-    el.textContent = "[ Today : ---- ] [ Total : ---- ]";
+    var show = function (d) { el.innerHTML = "[ Total : <b>" + pad(d.total_hits) + "</b> ]"; };
+    el.textContent = "[ Total : ---- ]";
     (bar || document.body).appendChild(el);
     var KEYS = "mh2-visits", cached = null;
     try { cached = JSON.parse(sessionStorage.getItem(KEYS) || "null"); } catch (e) {}
