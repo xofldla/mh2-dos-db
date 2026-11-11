@@ -518,4 +518,8 @@ img.rgi { width:22px; height:22px; image-rendering:pixelated; vertical-align:-5p
 .drop a.xlink { display:inline; }
 details.qdrop > summary { cursor:pointer; color:var(--acc); }
 .drop .sea { cursor:help; }
+.sealeg { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:6px; margin:-30px 0 8px; }
+.sealeg span { padding:2px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); }
+.sealeg span.lab { border:0; background:none; color:var(--sub); padding-right:0; }
+@media (max-width:640px) { .sealeg { margin-top:0; justify-content:flex-start; } }
 details.qdrop[open] > summary { margin-bottom:2px; }

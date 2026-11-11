@@ -694,6 +694,7 @@ public static class G
         sb.Append("</div>\n");
         for (int i = 0; i < 4; i++) {
             sb.Append("<section class=\"grp ccat" + (i == 0 ? "" : " off") + "\" data-c=\"" + i + "\"><h2>" + Icon(ItemCatIcon[i]).Replace("class=\"ico ", "class=\"ico big ") + ItemCatName[i] + "</h2>\n");
+            sb.Append("<div class=\"sealeg\"><span class=\"lab\">계절</span>" + string.Join("", new[] { "温暖期", "寒冷期", "繁殖期" }.Select((n, k) => "<span>" + SeasonEmoji[k] + " " + T(n) + "</span>")) + "</div>");
             sb.Append(Table("ft items", "이름", "레어", "최대", "매입", "매각", "게임 설명", "효과・입수"));
             foreach (var r in rows[i]) sb.Append(r);
             sb.Append(TEnd + "</section>\n");
