@@ -523,3 +523,11 @@ details.qdrop > summary { cursor:pointer; color:var(--acc); }
 .sealeg span.lab { border:0; background:none; color:var(--sub); padding-right:0; }
 @media (max-width:640px) { .sealeg { margin-top:0; justify-content:flex-start; } }
 details.qdrop[open] > summary { margin-bottom:2px; }
+
+/* 몬스터: 특수 수주 조건 안내 (희소종 등) */
+.rarebox { margin:12px 0; padding:8px 14px; border:2px solid #d4a017; border-radius:8px; background:var(--card); }
+.rarebox h3 { margin:4px 0 6px; color:#d4a017; }
+.rarebox h4 { margin:10px 0 4px; }
+.rarebox ul { margin:4px 0; padding-left:20px; }
+.rarebox .rmat { margin:6px 0; }
+.rarebox .rmat .drop { margin-left:12px; }

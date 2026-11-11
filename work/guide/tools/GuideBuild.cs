@@ -769,6 +769,51 @@ public static class G
         }
         return sb.ToString();
     }
+    // 몬스터(일본어 이름) → 특수 수주 조건(비경 세트 소지)이 붙은 퀘스트 안내 상자.
+    // 조합법은 조합표에서, 재료 입수처는 퀘스트 보수에서 자동으로 만든다.
+    static Dictionary<string, string> RareQuestNotes()
+    {
+        const string SET = "秘境セット";
+        var special = new Dictionary<string, List<string>>(); var allCount = new Dictionary<string, int>();
+        foreach (var ld in QuestLocs()) {
+            string loc = S(ld, "location"); var cats = A(ld, "categories").Select(D).ToList();
+            for (int i = 0; i < cats.Count; i++) {
+                var qls = A(cats[i], "questLocales").Select(D).ToList();
+                for (int k = 0; k < qls.Count; k++) {
+                    int n = 0;
+                    foreach (var qo in A(qls[k], "quests")) {
+                        var q = D(qo); string id = QId(loc, i, k, n++); int st; int.TryParse(S(q, "stars"), out st);
+                        bool sp = S(q, "require").Contains("Explorer");
+                        foreach (var mo in A(q, "largeMonsters")) {
+                            string mj = S(D(mo), "japanese"); allCount[mj] = (allCount.ContainsKey(mj) ? allCount[mj] : 0) + 1;
+                            if (!sp) continue;
+                            List<string> l; if (!special.TryGetValue(mj, out l)) special[mj] = l = new List<string>();
+                            l.Add("<li><span class=\"meta\">" + LocKo(loc) + "・" + T(S(cats[i], "categoryJapanese")) + "</span> <a class=\"xlink\" href=\"quests.html#" + id + "\">" + (st > 0 ? "★" + st + " " : "") + T(S(q, "japanese")) + "</a></li>");
+                        }
+                    }
+                }
+            }
+        }
+        var res = new Dictionary<string, string>(); if (special.Count == 0) return res;
+        var combos = ComboDrops(); var qd = QuestDrops();
+        // 조합 재료 (조합표의 첫 번째 조합법)
+        var mats = new List<string>();
+        string f = Path.Combine(JsonDir, "..", "..", "work", "guide", "src", "combos_atwiki.tsv");
+        if (File.Exists(f)) foreach (var line in File.ReadAllLines(f, new UTF8Encoding(false))) { var c = line.Split('\t'); if (c.Length >= 4 && c[0] == SET) { mats = new[] { c[1], c[2], c[3] }.Where(x => x != "").Select(ItemNorm).ToList(); break; } }
+        string setLink = ILink(SET, "<b>" + T(SET) + "</b>");
+        foreach (var kv in special) {
+            bool only = allCount.ContainsKey(kv.Key) && allCount[kv.Key] == kv.Value.Count;
+            var sb = new StringBuilder("<div class=\"rarebox\"><h3>🗝️ 만나려면: " + T(SET) + " 필요</h3>");
+            sb.Append("<p>" + (only ? "이 몬스터는 아래 퀘스트에서만 나옵니다." : "아래 퀘스트는") + " 수주・참가하려면 " + setLink + "를 <b>가지고 있어야</b> 합니다. 필요한 것은 " + T(SET) + " 1개뿐입니다.</p><ul>" + string.Join("", kv.Value) + "</ul>");
+            List<string> cl; if (combos.TryGetValue(SET, out cl)) sb.Append("<h4>" + T(SET) + " 만드는 법 (조합)</h4>" + string.Join("", cl) + "<p class=\"meta\">조합하면 재료 " + mats.Count + "개는 없어지고 " + T(SET) + "만 남습니다.</p>");
+            if (mats.Count > 0) {
+                sb.Append("<h4>재료 얻는 곳 (퀘스트 보수로만 나옴)</h4>");
+                foreach (var mj in mats) { List<string> ql; sb.Append("<div class=\"rmat\"><b>" + ILink(mj, T(mj)) + "</b>" + (qd.TryGetValue(mj, out ql) ? string.Join("", ql) : "<div class=\"meta\">입수처 자료 없음</div>") + "</div>"); }
+            }
+            res[kv.Key] = sb.Append("</div>").ToString();
+        }
+        return res;
+    }
     // 아이템(일본어 이름) → 지역별 채집 정보 (포인트 종류, 등급, 계절, 최대 확률). maps.html#loc-… 링크
     static Dictionary<string, List<string>> MapDrops()
     {
@@ -861,6 +906,7 @@ public static class G
         var specNames = spec.Keys.ToList();
         var tiles = new StringBuilder[specNames.Count + 1]; for (int i = 0; i < tiles.Length; i++) tiles[i] = new StringBuilder();
         var pops = new List<string>(); int mid = 0;
+        var rareReq = RareQuestNotes();
         Func<Dictionary<string, object>, string> imgOf = mm => { string b = Path.GetFileName(S(mm, "image")); return File.Exists(Path.Combine(OutDir, "images", "monsters", b + ".jpg")) ? "images/monsters/" + b + ".jpg" : ""; };
         var outer = new StringBuilder(Head("bestiary.html", "몬스터", "종족별 탭에서 몬스터를 고르고 <b>그림을 누르면</b> 생태・약점・육질・상태이상・갈무리・보수・공격이 나옵니다. 생태 설명은 게임 속 「몬스터 생태」 한글 패치 문장(다른 시리즈 출처는 새로 번역). 육질은 숫자가 클수록 잘 들어갑니다.", false));
         foreach (var o in data) {
@@ -872,6 +918,7 @@ public static class G
             if (desc != "") { var src = Regex.Match(desc, "<sub>\\[(.*?)\\]</sub>"); sb.Append("<p class=\"eco\">" + T(desc) + (src.Success && !src.Groups[1].Value.Contains("モンスターハンター２") && !src.Groups[1].Value.Contains("引用") ? " <span class=\"src\">(출처: " + H(src.Groups[1].Value) + ")</span>" : "") + "</p>\n"); }
             if (A(m, "notes").Length > 0) sb.Append("<ul class=\"notes\">" + string.Join("", A(m, "notes").Select(x => "<li>" + P(Convert.ToString(x)) + "</li>")) + "</ul>\n");
             if (Has(m, "detailedNotes")) sb.Append("<p class=\"note\">" + P(S(m, "detailedNotes")) + "</p>");
+            string rq; if (rareReq.TryGetValue(S(m, "japanese"), out rq)) sb.Append(rq);
             // 약점 별
             var stars = D(m.ContainsKey("stars") ? m["stars"] : null);
             if (stars != null) {
