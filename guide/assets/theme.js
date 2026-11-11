@@ -55,9 +55,10 @@
       "#visits.floating{position:fixed;top:48px;right:16px}#visits b{color:var(--acc);font-weight:700}";
     document.head.appendChild(st);
     var el = document.createElement("div"); el.id = "visits"; el.className = bar ? "inbar" : "floating";
-    var pad = function (n) { n = String(n); while (n.length < 4) n = "0" + n; return n; };
-    var show = function (d) { el.innerHTML = "[ Total : <b>" + pad(d.total_hits) + "</b> ]"; };
-    el.textContent = "[ Total : ---- ]";
+    // 앞자리 0 없이, 천 단위 쉼표 (예: 0, 27, 1,234)
+    var fmt = function (n) { return String(Number(n) || 0).replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
+    var show = function (d) { el.innerHTML = "[ Total : <b>" + fmt(d.total_hits) + "</b> ]"; el.title = "누적 접속 수"; };
+    el.textContent = "[ Total : … ]";
     (bar || document.body).appendChild(el);
     var KEYS = "mh2-visits", cached = null;
     try { cached = JSON.parse(sessionStorage.getItem(KEYS) || "null"); } catch (e) {}
