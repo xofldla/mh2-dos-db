@@ -43,6 +43,30 @@
     paint();
     var bar = document.querySelector("header.top .wrap");
     if (bar) bar.appendChild(btn); else { btn.classList.add("floating"); document.body.appendChild(btn); }
+    visits(bar);
+  }
+
+  // 접속 수: GitHub Pages 사이트에서만 센다(hitscounter.dev, 계정 불필요). 같은 탭(세션)에서는 한 번만 올리고 다른 페이지는 저장값을 보여 준다.
+  function visits(bar) {
+    if (!/(^|\.)github\.io$/.test(location.hostname)) return;
+    var st = document.createElement("style");
+    st.textContent = "#visits{font:12px/1 \"Galmuri11\",monospace;color:var(--sub);white-space:nowrap;z-index:30}" +
+      "header.top .wrap{position:relative}#visits.inbar{position:absolute;right:16px;top:calc(100% + 6px)}" +
+      "#visits.floating{position:fixed;top:48px;right:16px}#visits b{color:var(--acc);font-weight:700}";
+    document.head.appendChild(st);
+    var el = document.createElement("div"); el.id = "visits"; el.className = bar ? "inbar" : "floating";
+    var pad = function (n) { n = String(n); while (n.length < 4) n = "0" + n; return n; };
+    var show = function (d) { el.innerHTML = "[ Today : <b>" + pad(d.today_hits) + "</b> ] [ Total : <b>" + pad(d.total_hits) + "</b> ]"; };
+    el.textContent = "[ Today : ---- ] [ Total : ---- ]";
+    (bar || document.body).appendChild(el);
+    var KEYS = "mh2-visits", cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(KEYS) || "null"); } catch (e) {}
+    if (cached && cached.d === new Date().toDateString()) { show(cached); return; }
+    var site = "https://xofldla.github.io/mh2-dos-db/";
+    fetch("https://hitscounter.dev/api/hit?output=json&url=" + encodeURIComponent(site))
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d && d.total_hits != null) { show(d); d.d = new Date().toDateString(); try { sessionStorage.setItem(KEYS, JSON.stringify(d)); } catch (e) {} } })
+      .catch(function () { el.textContent = ""; });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();
 })();
