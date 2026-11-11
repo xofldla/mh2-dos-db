@@ -512,3 +512,7 @@ img.rgi { width:22px; height:22px; image-rendering:pixelated; vertical-align:-5p
 .qcond b { color:var(--acc); margin-right:6px; }
 .qcond .sep { margin:0 6px; color:var(--sub); }
 .qcond b { color:#e03a2f; } :root[data-theme="light"] .qcond b { color:#c0201a; }
+
+/* 아이템: 몬스터에게서 입수 */
+.drop { margin:3px 0; line-height:1.6; }
+.drop a.xlink { display:inline; }

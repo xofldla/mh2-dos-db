@@ -656,6 +656,7 @@ public static class G
         foreach (var s in A(Load("meals"))) foreach (var m in A(D(s), "meals")) foreach (var g in A(D(m), "ingredients")) MealIngredients.Add(S(D(g), "japanese"));
         var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보입니다. 검색하면 모든 탭에서 찾습니다.", true));
         var rows = new List<string>[4]; for (int i = 0; i < 4; i++) rows[i] = new List<string>();
+        var drops = MonsterDrops();
         int idx = 0;
         foreach (var o in data) {
             var it = D(o); idx++;
@@ -669,6 +670,7 @@ public static class G
             if (Has(it, "supply")) fx.Add("<span class=\"tag\">지급품 전용</span>");
             if (Has(it, "account")) fx.Add("<span class=\"tag\">정산 아이템</span>");
             if (Has(it, "unavailable")) fx.Add("<span class=\"tag\">입수 불가</span>");
+            List<string> dl; if (drops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">몬스터에게서 입수 (갈무리・포획・부위 파괴):</span>" + string.Join("", dl));
             if (A(it, "rewards").Length > 0) fx.Add("<span class=\"tk\">내용물:</span> " + string.Join(" ", A(it, "rewards").Select(x => "<span class=\"mat\">" + T(S(D(x), "japanese")) + " " + H(S(D(x), "percent")) + "%</span>")));
             string buy = S(it, "buy"), sell = S(it, "sell");
             rows[ItemCat(it)].Add("<tr id=\"item-" + idx + "\">" + string.Join("", new[] { name, Rar(S(it, "rarity")), Num(S(it, "maxStack")), buy == "0" || buy == "" ? "-" : Money(buy), sell == "" ? "-" : Money(sell), desc, string.Join("<br>", fx) }.Select(c => "<td>" + c + "</td>")) + "</tr>\n");
@@ -683,6 +685,36 @@ public static class G
             sb.Append(TEnd + "</section>\n");
         }
         Write("items.html", sb.Append(Foot()).ToString());
+    }
+    // 아이템(일본어 이름) → 몬스터별 입수 방법 (토벌/수렵 후 갈무리, 포획 보수, 부위 파괴 보수)
+    static Dictionary<string, List<string>> MonsterDrops()
+    {
+        var res = new Dictionary<string, List<string>>();
+        foreach (var o in A(Load("monsters"))) {
+            var m = D(o); string mja = S(m, "japanese");
+            var per = new Dictionary<string, List<string[]>>(); var order = new List<string>();
+            Action<object, string, string> add = (mat, rank, how) => {
+                var d = D(mat); string j = S(d, "j") != "" ? S(d, "j") : S(d, "japanese"); if (j == "") return;
+                string q = S(d, "quantity");
+                if (!per.ContainsKey(j)) { per[j] = new List<string[]>(); order.Add(j); }
+                per[j].Add(new[] { rank, how + (q != "" && q != "1" ? " ×" + H(q) : "") + " " + H(S(d, "percent")) + "%" });
+            };
+            foreach (var r in A(m, "carves")) { var rd = D(r); string rk = T(S(rd, "rankJapanese"));
+                foreach (var s in A(rd, "sources")) { var sd = D(s); string src = S(sd, "japanese");
+                    string how = src == "本体" || src == "" ? "갈무리" : src == "落し物" ? "떨어뜨린 것 줍기" : T(src) + " 갈무리";
+                    foreach (var x in A(sd, "materials")) add(x, rk, how); } }
+            foreach (var r in A(m, "captureRewards")) { var rd = D(r); string rk = T(S(rd, "rankJapanese"));
+                foreach (var x in A(rd, "materials")) add(x, rk, "포획"); }
+            foreach (var r in A(m, "breakRewards")) { var rd = D(r); string rk = T(S(rd, "rankJapanese"));
+                foreach (var s in A(rd, "sources")) { var sd = D(s); string how = T(S(sd, "japanese")) + " 파괴";
+                    foreach (var x in A(sd, "materials")) add(x, rk, how); } }
+            foreach (var j in order) {
+                string body = string.Join(" / ", per[j].GroupBy(e => e[0]).Select(g => "<span class=\"meta\">" + g.Key + "</span> " + string.Join(", ", g.Select(e => e[1]))));
+                List<string> l; if (!res.TryGetValue(j, out l)) res[j] = l = new List<string>();
+                l.Add("<div class=\"drop\">" + MLink(mja, "<b>" + T(mja) + "</b>") + ": " + body + "</div>");
+            }
+        }
+        return res;
     }
     // ================= 몬스터 =================
     static readonly string[] HzHead = { "베기", "타격", "탄", "화", "수", "뇌", "빙", "용", "기절", "경직" };
