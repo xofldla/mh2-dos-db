@@ -517,4 +517,5 @@ img.rgi { width:22px; height:22px; image-rendering:pixelated; vertical-align:-5p
 .drop { margin:3px 0; line-height:1.6; }
 .drop a.xlink { display:inline; }
 details.qdrop > summary { cursor:pointer; color:var(--acc); }
+.drop .sea { cursor:help; }
 details.qdrop[open] > summary { margin-bottom:2px; }

@@ -725,7 +725,7 @@ public static class G
     static Dictionary<string, List<string>> MapDrops()
     {
         Func<string, int> rk = j => j.Contains("ハード") ? 1 : j.Contains("演習") ? 2 : 0;
-        string[] rkName = { "마을・하위", "상위", "훈련" }; string[] seasonKey = { "summer", "winter", "breeding" };
+        string[] rkName = { "마을・하위", "상위", "훈련" }; string[] seasonKey = { "summer", "winter", "breeding" }; string[] seasonName = { T("温暖期"), T("寒冷期"), T("繁殖期") };
         // 아이템 → 지역 → (종류 집합, 등급 집합, 계절 집합, 최대 %)
         var agg = new Dictionary<string, Dictionary<string, object[]>>(); var regOrder = new List<string>(); var regLink = new Dictionary<string, string>();
         foreach (var l in A(Load("maps"))) {
@@ -759,7 +759,7 @@ public static class G
         foreach (var kv in agg) {
             res[kv.Key] = regOrder.Where(g => kv.Value.ContainsKey(g)).Select(g => {
                 var v = kv.Value[g]; var kinds = (List<string>)v[0];
-                return "<div class=\"drop\"><a class=\"xlink\" href=\"" + regLink[g] + "\"><b>" + H(g) + "</b></a>: " + (kinds.Count > 0 ? H(string.Join("・", kinds)) + " " : "") + "<span class=\"meta\">" + string.Join("・", ((SortedSet<int>)v[1]).Select(i => rkName[i])) + "</span> " + string.Join("", ((SortedSet<int>)v[2]).Select(i => SeasonEmoji[i])) + " 최대 " + v[3] + "%</div>";
+                return "<div class=\"drop\"><a class=\"xlink\" href=\"" + regLink[g] + "\"><b>" + H(g) + "</b></a>: " + (kinds.Count > 0 ? H(string.Join("・", kinds)) + " " : "") + "<span class=\"meta\">" + string.Join("・", ((SortedSet<int>)v[1]).Select(i => rkName[i])) + "</span> " + string.Join("", ((SortedSet<int>)v[2]).Select(i => "<span class=\"sea\" title=\"" + seasonName[i] + "\">" + SeasonEmoji[i] + "</span>")) + " 최대 " + v[3] + "%</div>";
             }).ToList();
         }
         return res;
