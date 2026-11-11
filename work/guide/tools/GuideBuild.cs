@@ -83,7 +83,7 @@ public static class G
     static readonly string[][] Nav = {
         new[]{"index.html","홈"}, new[]{"weapons.html","무기"}, new[]{"armor.html","방어구"}, new[]{"armor-skills.html","스킬"},
         new[]{"items.html","아이템"}, new[]{"bestiary.html","몬스터"}, new[]{"quests.html","퀘스트"}, new[]{"maps.html","맵"},
-        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","마을의뢰"} };
+        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"} };
 
     public static string Head(string file, string title, string sub, bool search)
     {
