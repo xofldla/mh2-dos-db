@@ -532,3 +532,6 @@ details.qdrop[open] > summary { margin-bottom:2px; }
 .rarebox .rmat { margin:6px 0; }
 .rarebox .rmat .drop { margin-left:12px; }
 .rarebox .rq { color:#d4a017; font-weight:700; margin-left:4px; }
+
+/* 팝업 닫기 버튼: 길게 내려도 오른쪽 위에 따라오게 (스크롤되는 .wp-box 안에서 sticky) */
+.wp-x { position:sticky; top:0; float:right; z-index:5; margin:-4px -4px 4px 8px; width:34px; height:34px; font-size:16px; box-shadow:0 2px 8px rgba(0,0,0,.5); }
