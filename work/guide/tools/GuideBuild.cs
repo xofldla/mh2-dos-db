@@ -656,7 +656,7 @@ public static class G
         foreach (var s in A(Load("meals"))) foreach (var m in A(D(s), "meals")) foreach (var g in A(D(m), "ingredients")) MealIngredients.Add(S(D(g), "japanese"));
         var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보입니다. 검색하면 모든 탭에서 찾습니다.", true));
         var rows = new List<string>[4]; for (int i = 0; i < 4; i++) rows[i] = new List<string>();
-        var drops = MonsterDrops(); var qdrops = QuestDrops();
+        var drops = MonsterDrops(); var qdrops = QuestDrops(); var mdrops = MapDrops();
         int idx = 0;
         foreach (var o in data) {
             var it = D(o); idx++;
@@ -670,7 +670,11 @@ public static class G
             if (Has(it, "supply")) fx.Add("<span class=\"tag\">지급품 전용</span>");
             if (Has(it, "account")) fx.Add("<span class=\"tag\">정산 아이템</span>");
             if (Has(it, "unavailable")) fx.Add("<span class=\"tag\">입수 불가</span>");
-            List<string> dl; if (drops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">몬스터에게서 입수 (갈무리・포획・부위 파괴):</span>" + string.Join("", dl));
+            string buy0 = S(it, "buy");
+            if (buy0 != "" && buy0 != "0") fx.Add("<span class=\"tk\">상점 구매:</span> 마을 상점(도구점・잡화점 등)에서 " + Money(buy0) + "에 살 수 있습니다.");
+            List<string> dl;
+            if (mdrops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">채집:</span>" + string.Join("", dl));
+            if (drops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">몬스터에게서 입수 (갈무리・포획・부위 파괴):</span>" + string.Join("", dl));
             if (qdrops.TryGetValue(S(it, "japanese"), out dl)) {
                 string body = string.Join("", dl);
                 fx.Add(dl.Count > 5 ? "<details class=\"qdrop\"><summary><span class=\"tk\">퀘스트 보수:</span> " + dl.Count + "개 퀘스트 (눌러서 펼치기)</summary>" + body + "</details>"
@@ -690,6 +694,49 @@ public static class G
             sb.Append(TEnd + "</section>\n");
         }
         Write("items.html", sb.Append(Foot()).ToString());
+    }
+    // 아이템(일본어 이름) → 지역별 채집 정보 (포인트 종류, 등급, 계절, 최대 확률). maps.html#loc-… 링크
+    static Dictionary<string, List<string>> MapDrops()
+    {
+        Func<string, int> rk = j => j.Contains("ハード") ? 1 : j.Contains("演習") ? 2 : 0;
+        string[] rkName = { "마을・하위", "상위", "훈련" }; string[] seasonKey = { "summer", "winter", "breeding" };
+        // 아이템 → 지역 → (종류 집합, 등급 집합, 계절 집합, 최대 %)
+        var agg = new Dictionary<string, Dictionary<string, object[]>>(); var regOrder = new List<string>(); var regLink = new Dictionary<string, string>();
+        foreach (var l in A(Load("maps"))) {
+            var ms = A(D(l), "maps"); if (ms.Length == 0) continue;
+            string reg = LocName(D(ms[0])); regOrder.Add(reg); regLink[reg] = "maps.html#loc-" + Slug(S(D(l), "name"));
+            foreach (var mo in ms) {
+                var md = D(mo); var icons = A(md, "icons"); var ranks = A(md, "yieldRanks");
+                var firstKeys = new List<string>();
+                if (ranks.Length > 0) foreach (var z in A(D(ranks[0]), "zones")) { int k = 0; foreach (var sp in A(D(z), "spots")) firstKeys.Add(S(D(z), "zone") + "#" + (++k)); }
+                foreach (var yr in ranks) {
+                    var yd = D(yr); int r = rk(S(yd, "rankJapanese"));
+                    foreach (var z in A(yd, "zones")) {
+                        var zd = D(z); int k = 0;
+                        foreach (var sp in A(zd, "spots")) {
+                            var s = D(sp); string key = S(zd, "zone") + "#" + (++k);
+                            int ii = firstKeys.IndexOf(key); string kind = ii >= 0 && ii < icons.Length ? Tk(S(D(icons[ii]), "japanese")) : "";
+                            for (int se = 0; se < 3; se++) foreach (var x in A(s, seasonKey[se])) {
+                                var d = D(x); string j = S(d, "japanese"); if (j == "") continue;
+                                Dictionary<string, object[]> byReg; if (!agg.TryGetValue(j, out byReg)) agg[j] = byReg = new Dictionary<string, object[]>();
+                                object[] v; if (!byReg.TryGetValue(reg, out v)) byReg[reg] = v = new object[] { new List<string>(), new SortedSet<int>(), new SortedSet<int>(), 0 };
+                                if (kind != "" && !((List<string>)v[0]).Contains(kind)) ((List<string>)v[0]).Add(kind);
+                                ((SortedSet<int>)v[1]).Add(r); ((SortedSet<int>)v[2]).Add(se);
+                                int pc; int.TryParse(S(d, "percent"), out pc); if (pc > (int)v[3]) v[3] = pc;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        var res = new Dictionary<string, List<string>>();
+        foreach (var kv in agg) {
+            res[kv.Key] = regOrder.Where(g => kv.Value.ContainsKey(g)).Select(g => {
+                var v = kv.Value[g]; var kinds = (List<string>)v[0];
+                return "<div class=\"drop\"><a class=\"xlink\" href=\"" + regLink[g] + "\"><b>" + H(g) + "</b></a>: " + (kinds.Count > 0 ? H(string.Join("・", kinds)) + " " : "") + "<span class=\"meta\">" + string.Join("・", ((SortedSet<int>)v[1]).Select(i => rkName[i])) + "</span> " + string.Join("", ((SortedSet<int>)v[2]).Select(i => SeasonEmoji[i])) + " 최대 " + v[3] + "%</div>";
+            }).ToList();
+        }
+        return res;
     }
     // 아이템(일본어 이름) → 몬스터별 입수 방법 (토벌/수렵 후 갈무리, 포획 보수, 부위 파괴 보수)
     static Dictionary<string, List<string>> MonsterDrops()
