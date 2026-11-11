@@ -225,7 +225,24 @@ $icons = [ordered]@{
     'ssssssssssssssss',
     'sSssSssSssSssSss',
     'SSSSSSSSSSSSSSSS') }
-  'dundorma' = @{ pal = 's=#c8bca8;S=#8a7e6a;k=#3a3228;r=#c0392b;y=#ffd27a;b=#6a8ab0'; px = @(
+  'kokoto' = @{ pal = 'b=#8a5a2b;R=#5e3a17;w=#e8d2a0;W=#b89a64;r=#d07a2a;k=#5e3a17;g=#7cc05a;G=#4a8a3a'; px = @(
+    '.b.....b........',
+    '..b...b.........',
+    '...b.b..........',
+    '....R...........',
+    '...b.b...rrrr...',
+    '..b.www.rrRRrr..',
+    '.b..wWw.rrrrrr..',
+    '....wWw..wwwww..',
+    '....wWw..wWkWw..',
+    '....wWw..wWkWw..',
+    '...wwWww.wwkww..',
+    'gggggggggggggggg',
+    'gGggGggGggGggGgg',
+    'GGGGGGGGGGGGGGGG',
+    'GgGGGgGGGgGGGgGG',
+    'GGGGGGGGGGGGGGGG') }
+  'dundorma' = @{ pal ='s=#c8bca8;S=#8a7e6a;k=#3a3228;r=#c0392b;y=#ffd27a;b=#6a8ab0'; px = @(
     '...r.......r....',
     '...rr......rr...',
     '...k.......k....',

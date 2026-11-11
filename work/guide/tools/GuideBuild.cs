@@ -984,15 +984,16 @@ public static class G
     // ================= 퀘스트 =================
     public static void Quests()
     {
-        var data = A(Load("quests"));
+        var data = QuestLocs();
         var sb = new StringBuilder(Head("quests.html", "퀘스트", "먼저 <b>마을</b>을 고르고, 다음에 <b>분류</b>(프리 퀘스트・하위・상위 등)를 고르세요. 퀘스트 제목・목표는 한글 패치 표기. 보수금은 「메인 / 서브A / 서브B」. 줄을 누르면 지급품・보수가 펼쳐지고, 몬스터・아이템 이름을 누르면 해당 페이지로 이동합니다. 검색하면 모든 마을・분류에서 찾습니다.", true));
-        var locs = A(data).Select(D).ToList();
+        var locs = data;
         sb.Append("<div class=\"gtabs vill\" data-g=\"vill\">");
         foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\"><span>" + LocKo(loc) + "</span><span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span></button>"); }
         sb.Append("</div>\n");
         foreach (var ld in locs) {
             string loc = S(ld, "location"); CurLoc = loc;
             sb.Append("<section class=\"gpanel vill" + (ld == locs[0] ? "" : " off") + "\" data-g=\"vill\" data-t=\"" + loc + "\"><h2 class=\"villh\"><img src=\"images/regions/" + loc + ".svg\" alt=\"\">" + LocKo(loc) + "</h2>");
+            if (loc == "kokoto") sb.Append("<p class=\"note\">점보 마을에서 배를 완성하면 배를 타고 가는 마을. 아래는 게임 퀘스트 파일에서 의뢰인이 <b>" + Tk("ココット村の村長") + "</b>인 퀘스트입니다 (점보 마을 목록에서 옮겨 옴).</p>");
             var cats = A(ld, "categories").Select(D).ToList();
             sb.Append("<div class=\"gtabs\" data-g=\"cat-" + loc + "\">");
             for (int i = 0; i < cats.Count; i++) sb.Append("<button type=\"button\" data-t=\"" + i + "\"" + (i == 0 ? " class=\"on\"" : "") + ">" + T(S(cats[i], "categoryJapanese")) + " <span class=\"cnt\">" + A(cats[i], "questLocales").Sum(x => A(D(x), "quests").Length) + "</span></button>");
@@ -1025,7 +1026,42 @@ public static class G
         }
         Write("quests.html", sb.Append(Foot()).ToString());
     }
-    static string LocKo(string loc) { return loc == "jumbo" ? Tk("ジャンボ村") : loc == "dundorma" ? "돈도르마" : H(loc); }
+    static string LocKo(string loc) { return loc == "jumbo" ? Tk("ジャンボ村") : loc == "kokoto" ? Tk("ココット村") : loc == "dundorma" ? "돈도르마" : H(loc); }
+    // 퀘스트 마을 목록: 점보 마을 퀘스트 가운데 의뢰인이 「ココット村の村長」인 것(게임 퀘스트 파일 m0NNNN.mib 의 client)을
+    // 「코코트 마을」로 따로 모은다. 퀘스트 번호 = 파일 번호(10진) → hex 4자리
+    static List<Dictionary<string, object>> questLocsCache;
+    static List<Dictionary<string, object>> QuestLocs()
+    {
+        if (questLocsCache != null) return questLocsCache;
+        var kok = new HashSet<string>();
+        string mib = Path.Combine(JsonDir, "..", "..", "work", "trans", "mib_refs.tsv");
+        if (File.Exists(mib)) foreach (var line in File.ReadAllLines(mib, new UTF8Encoding(false))) {
+            var c = line.Split('\t'); if (c.Length < 6 || c[2] != "client" || c[5] != "ココット村の村長") continue;
+            var m = Regex.Match(c[1], "^m(\\d{5})[dn]\\d\\.mib$"); if (m.Success) kok.Add(int.Parse(m.Groups[1].Value).ToString("X4"));
+        }
+        Func<Dictionary<string, object>, Dictionary<string, object>> copy = d => d.ToDictionary(kv => kv.Key, kv => kv.Value);
+        var res = new List<Dictionary<string, object>>();
+        foreach (var lo in A(Load("quests"))) {
+            var ld = D(lo);
+            if (S(ld, "location") != "jumbo" || kok.Count == 0) { res.Add(ld); continue; }
+            var jcats = new List<object>(); var kcats = new List<object>();
+            foreach (var co in A(ld, "categories")) {
+                var cd = D(co); var jl = new List<object>(); var kl = new List<object>();
+                foreach (var qo in A(cd, "questLocales")) {
+                    var qd = D(qo); var qs = A(qd, "quests");
+                    var jq = qs.Where(x => !kok.Contains(S(D(x), "hex"))).ToArray(); var kq = qs.Where(x => kok.Contains(S(D(x), "hex"))).ToArray();
+                    if (jq.Length > 0) { var n = copy(qd); n["quests"] = jq; jl.Add(n); }
+                    if (kq.Length > 0) { var n = copy(qd); n["quests"] = kq; kl.Add(n); }
+                }
+                if (jl.Count > 0) { var n = copy(cd); n["questLocales"] = jl.ToArray(); jcats.Add(n); }
+                if (kl.Count > 0) { var n = copy(cd); n["questLocales"] = kl.ToArray(); kcats.Add(n); }
+            }
+            var j = copy(ld); j["categories"] = jcats.ToArray(); res.Add(j);
+            if (kcats.Count > 0) { var k = copy(ld); k["location"] = "kokoto"; k["categories"] = kcats.ToArray(); res.Add(k); }
+        }
+        Console.WriteLine("kokoto quests: " + kok.Count);
+        return questLocsCache = res;
+    }
     // 데이터에 없는 특별 등장 조건 (ＭＨ２@Wiki ジャンボ村 에서 확인)
     static readonly Dictionary<string, string> QuestSpecial = new Dictionary<string, string> { { "水辺のダイミョウ", "「" + "유해를 잇는 자" + "」에서 다이묘자자미 등장 장면을 본 뒤" } };
     static string CurLoc = "";
@@ -1039,10 +1075,10 @@ public static class G
     static Dictionary<string, List<string>> QuestDrops()
     {
         var res = new Dictionary<string, List<string>>();
-        foreach (var lo in A(Load("quests"))) {
+        foreach (var lo in QuestLocs()) {
             var ld = D(lo); string loc = S(ld, "location"); var cats = A(ld, "categories").Select(D).ToList();
             for (int i = 0; i < cats.Count; i++) {
-                string where = (loc == "jumbo" ? "점보" : LocKo(loc)) + "・" + T(S(cats[i], "categoryJapanese"));
+                string where = (loc == "jumbo" ? "점보" : loc == "kokoto" ? "코코트" : LocKo(loc)) + "・" + T(S(cats[i], "categoryJapanese"));
                 var qls = A(cats[i], "questLocales").Select(D).ToList();
                 for (int k = 0; k < qls.Count; k++) {
                     int n = 0;

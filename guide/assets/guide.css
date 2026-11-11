@@ -475,7 +475,7 @@ a.xlink { display:inline-block; vertical-align:top; } table.rw a.xlink { display
 .gtabs button.on { background:var(--acc); border-color:var(--acc); color:var(--card); font-weight:700; }
 .gtabs .cnt { margin-left:4px; padding:0 5px; border-radius:8px; background:var(--head); color:var(--sub); font-size:12px; }
 .gtabs button.on .cnt { background:rgba(0,0,0,.2); color:var(--card); }
-.gtabs.vill { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; }
+.gtabs.vill { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px; }
 .gtabs.vill button { justify-content:center; padding:10px; font-size:24px; line-height:1.2; border-width:2px; }
 .gtabs.vill img { width:40px; height:40px; image-rendering:pixelated; }
 .gpanel.off { display:none; }
