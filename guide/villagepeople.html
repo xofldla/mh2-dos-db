@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마을 사람과의 교류 | 몬스터헌터2 (DOS) DB</title>
+<style>
+@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:400 }
+@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11-Bold.woff2") format("woff2"); font-weight:700 }
+:root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2621; --sub:#6f665c; --line:#ddd2c2; --head:#efe4d1; --acc:#8a3b1e; }
+:root[data-theme="dark"] { --bg:#1d1a17; --card:#26221e; --ink:#ece5da; --sub:#a59a8c; --line:#3b352f; --head:#302a24; --acc:#e08a5c; }
+* { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:12px/1.75 "Galmuri11","Malgun Gothic","Apple SD Gothic Neo",sans-serif }
+main { max-width:960px; margin:0 auto; padding:24px 16px 64px }
+h1 { font-size:24px; margin:0 0 4px } h2 { font-size:24px; margin:32px 0 10px; color:var(--acc) }
+.sub { color:var(--sub) } nav a { color:var(--acc); margin-right:12px }
+table { border-collapse:collapse; width:100%; background:var(--card) }
+th, td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top } th { background:var(--head); font-weight:700 }
+td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .wrap { overflow-x:auto }
+input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
+p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px } footer { margin-top:40px; color:var(--sub) }
+#themebtn { font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px } #themebtn.floating { position:fixed; top:12px; right:16px; z-index:30 } #themebtn .ti { color:var(--acc) }
+</style><script src="assets/theme.js"></script></head><body><main>
+<nav><a href="index.html">← 공략 목차</a></nav>
+<h1>마을 사람과의 교류</h1>
+<div class="sub">점보 마을 사람들의 납품 의뢰와 친밀도</div>
+<p>마을 사람의 의뢰(아이템 납품·퀘스트)를 해결하면 그 사람의 <b>친밀도</b>가 오릅니다. 친밀도가 쌓이면 선물·식사 초대 같은 이벤트가 생기고 마을 시설이 발전합니다.</p>
+<h2>마을 사람 유형</h2><div class="wrap"><table><tr><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>
+<tr><td>촌장</td><td>공방 할머니</td><td>조선소 대장</td></tr>
+<tr><td>교관</td><td>공방 수제자</td><td>조합점 주인</td></tr>
+<tr><td>잡화고양이</td><td>공방 둘째 제자</td><td>식재료 상인</td></tr>
+<tr><td>수행 중인 여자 헌터</td><td>공방 새 제자</td><td>도구점 주인</td></tr>
+<tr><td>라이벌 헌터</td><td></td><td></td></tr>
+<tr><td>용인족 언니</td><td></td><td></td></tr>
+</table></div>
+<h2>퀘스트 레벨별 친밀도</h2><div class="wrap"><table style="max-width:320px"><tr><th>퀘스트 레벨</th><th>친밀도</th></tr>
+<tr><td>★1</td><td class=n>6pt</td></tr>
+<tr><td>★2</td><td class=n>8pt</td></tr>
+<tr><td>★3</td><td class=n>10pt</td></tr>
+<tr><td>★4</td><td class=n>12pt</td></tr>
+</table></div>
+<h2>납품 아이템별 친밀도</h2><p class="note">같은 아이템도 요구 수가 많으면 친밀도가 더 오릅니다. 이름으로 찾을 수 있습니다. <b>⭐ = 1개당 친밀도가 높은 효율 좋은 납품</b>(상위 15%).</p>
+<input type="search" id="q" placeholder="아이템 이름 검색 (예: 버섯)" oninput="f()"><div class="wrap"><table id="items"><tr><th>아이템</th><th>요구 수 → 친밀도</th></tr>
+<tr><td>가시열매<div class=ja>ハリの実</div></td><td>5개 → 4pt<br>12개 → 15pt<div class=eff>1개당 최대 1.25pt</div></td></tr>
+<tr><td>가우시카뿔<div class=ja>ガウシカの角</div></td><td>1개 → 4pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 강주약<div class=ja>強走薬</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>게네포스가죽<div class=ja>ゲネポスの皮</div></td><td>1개 → 3pt<br>2개 → 6pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>게네포스마비이빨<div class=ja>ゲネポスの麻痺牙</div></td><td>2개 → 4pt<br>5개 → 11pt<div class=eff>1개당 최대 2.2pt</div></td></tr>
+<tr><td>격렬독텐구버섯<div class=ja>ゲキレツ毒テング</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 경화약<div class=ja>硬化薬</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>고추<div class=ja>トウガラシ</div></td><td>2개 → 3pt<br>4개 → 6pt<div class=eff>1개당 최대 1.5pt</div></td></tr>
+<tr><td>광충<div class=ja>光蟲</div></td><td>1개 → 3pt<br>3개 → 12pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>괴력씨앗<div class=ja>怪力の種</div></td><td>1개 → 3pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>괴조비늘<div class=ja>怪鳥の鱗</div></td><td>2개 → 4pt<br>4개 → 9pt<div class=eff>1개당 최대 2.25pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 귀신버섯<div class=ja>オニマツタケ</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 귀인약<div class=ja>鬼人薬</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>그물<div class=ja>ネット</div></td><td>2개 → 5pt<br>4개 → 12pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>낙양초<div class=ja>落葉草</div></td><td>2개 → 2pt<br>5개 → 5pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>낚시개구리<div class=ja>釣りカエル</div></td><td>5개 → 5pt<br>10개 → 10pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>낚시지렁이<div class=ja>釣りミミズ</div></td><td>5개 → 5pt<br>10개 → 10pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>낫게소각<div class=ja>鎌蟹の小殻</div></td><td>2개 → 6pt<br>4개 → 13pt<div class=eff>1개당 최대 3.25pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 뇌광충<div class=ja>雷光虫</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>니트로버섯<div class=ja>ニトロダケ</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>담쟁이잎<div class=ja>ツタの葉</div></td><td>1개 → 2pt<br>3개 → 6pt<div class=eff>1개당 최대 2pt</div></td></tr>
+<tr><td>대식다랑어<div class=ja>大食いマグロ</div></td><td>1개 → 3pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 대저가죽<div class=ja>大猪の皮</div></td><td>1개 → 5pt<br>2개 → 10pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>대지의 결정<div class=ja>大地の結晶</div></td><td>2개 → 4pt<br>4개 → 9pt<div class=eff>1개당 최대 2.25pt</div></td></tr>
+<tr><td>덜익은 고기<div class=ja>生焼け肉</div></td><td>1개 → 1pt<br>5개 → 5pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>도모수털<div class=ja>桃毛獣の毛</div></td><td>1개 → 3pt<br>2개 → 6pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>도스가시다랑어<div class=ja>ドスハリマグロ</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>도스람포스발톱<div class=ja>ドスランポスの爪</div></td><td>1개 → 4pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>도스아로와나<div class=ja>ドスアロワナ</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>도스튀는정어리<div class=ja>ドスはじけイワシ</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 도스헤라클레스<div class=ja>ドスヘラクレス</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 독낭<div class=ja>毒袋</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>독버섯<div class=ja>毒テングダケ</div></td><td>4개 → 4pt<br>8개 → 8pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>두근두근버섯<div class=ja>ドキドキノコ</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 라이트크리스탈<div class=ja>ライトクリスタル</div></td><td>1개 → 15pt<div class=eff>1개당 최대 15pt</div></td></tr>
+<tr><td>람포스가죽<div class=ja>ランポスの皮</div></td><td>1개 → 3pt<br>2개 → 6pt<br>4개 → 13pt<div class=eff>1개당 최대 3.25pt</div></td></tr>
+<tr><td>람포스송곳니<div class=ja>ランポスの牙</div></td><td>2개 → 2pt<br>4개 → 5pt<div class=eff>1개당 최대 1.25pt</div></td></tr>
+<tr><td>랑고스타날개<div class=ja>ランゴスタの羽</div></td><td>1개 → 3pt<br>2개 → 6pt<br>4개 → 13pt<div class=eff>1개당 최대 3.25pt</div></td></tr>
+<tr><td>마구경단<div class=ja>マグダンゴ</div></td><td>1개 → 3pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 마비낭<div class=ja>麻痺袋</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>마비버섯<div class=ja>マヒダケ</div></td><td>4개 → 4pt<br>8개 → 8pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>마비함정<div class=ja>シビレ罠</div></td><td>1개 → 3pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>마카라이트광석<div class=ja>マカライト鉱石</div></td><td>1개 → 4pt<br>3개 → 14pt<div class=eff>1개당 최대 4.67pt</div></td></tr>
+<tr><td>만드라고라<div class=ja>マンドラゴラ</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 메인 마스트<div class=ja>メインマスト</div></td><td>1개 → 10pt<div class=eff>1개당 최대 10pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 메인 세일<div class=ja>メインセイル</div></td><td>1개 → 10pt<div class=eff>1개당 최대 10pt</div></td></tr>
+<tr><td>몬스터 알<div class=ja>モンスターエッグ</div></td><td>1개 → 3pt<br>2개 → 7pt<div class=eff>1개당 최대 3.5pt</div></td></tr>
+<tr><td>몬스터배설물<div class=ja>モンスターのフン</div></td><td>2개 → 1pt<br>6개 → 7pt<div class=eff>1개당 최대 1.17pt</div></td></tr>
+<tr><td>몬스터체액<div class=ja>モンスターの体液</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 민물장어<div class=ja>スネークサーモン</div></td><td>1개 → 3pt<br>2개 → 10pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>반죽메뚜기<div class=ja>のりこねバッタ</div></td><td>1개 → 2pt<br>3개 → 8pt<div class=eff>1개당 최대 2.67pt</div></td></tr>
+<tr><td>벌꿀<div class=ja>ハチミツ</div></td><td>2개 → 4pt<br>5개 → 12pt<div class=eff>1개당 최대 2.4pt</div></td></tr>
+<tr><td>봉형의 뼈<div class=ja>棒状の骨</div></td><td>2개 → 2pt<br>4개 → 5pt<div class=eff>1개당 최대 1.25pt</div></td></tr>
+<tr><td>불사충<div class=ja>不死虫</div></td><td>1개 → 3pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>빙결정<div class=ja>氷結晶</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 사룡가죽<div class=ja>蛇竜の皮</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>사룡비늘<div class=ja>砂竜の鱗</div></td><td>1개 → 3pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 상승통폭탄<div class=ja>打ち上げタル爆弾</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>생명가루<div class=ja>生命の粉</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>선인장의 꽃<div class=ja>サボテンの花</div></td><td>2개 → 3pt<br>4개 → 7pt<br>6개 → 9pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>설사자털<div class=ja>雪獅子の毛</div></td><td>2개 → 6pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td>섬광옥<div class=ja>閃光玉</div></td><td>2개 → 7pt<br>4개 → 16pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 성철<div class=ja>星鉄</div></td><td>1개 → 15pt<div class=eff>1개당 최대 15pt</div></td></tr>
+<tr><td>속빈열매<div class=ja>カラの実</div></td><td>10개 → 3pt<br>20개 → 7pt<div class=eff>1개당 최대 0.35pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 수면낭<div class=ja>睡眠袋</div></td><td>1개 → 6pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>순해소각<div class=ja>盾蟹の小殻</div></td><td>2개 → 5pt<br>4개 → 11pt<div class=eff>1개당 최대 2.75pt</div></td></tr>
+<tr><td>숫돌<div class=ja>砥石</div></td><td>4개 → 4pt<br>8개 → 8pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>싹이난 파<div class=ja>ジャンゴーネギ</div></td><td>3개 → 3pt<br>6개 → 6pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>쌀벌레<div class=ja>米虫</div></td><td>5개 → 3pt<br>12개 → 8pt<div class=eff>1개당 최대 0.67pt</div></td></tr>
+<tr><td>썩은 용비늘<div class=ja>朽ちた龍鱗</div></td><td>2개 → 4pt<br>4개 → 9pt<div class=eff>1개당 최대 2.25pt</div></td></tr>
+<tr><td>쓰레기<div class=ja>もえないゴミ</div></td><td>2개 → 1pt<br>6개 → 7pt<div class=eff>1개당 최대 1.17pt</div></td></tr>
+<tr><td>아로경단<div class=ja>アロダンゴ</div></td><td>1개 → 3pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td>악취구슬<div class=ja>こやし玉</div></td><td>2개 → 2pt<br>4개 → 8pt<div class=eff>1개당 최대 2pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 암룡갑각<div class=ja>岩竜の甲殻</div></td><td>1개 → 5pt<br>2개 → 11pt<div class=eff>1개당 최대 5.5pt</div></td></tr>
+<tr><td>애벌레<div class=ja>にが虫</div></td><td>1개 → 2pt<br>3개 → 7pt<div class=eff>1개당 최대 2.33pt</div></td></tr>
+<tr><td>얇게저민선인장<div class=ja>スライスサボテン</div></td><td>2개 → 3pt<br>4개 → 6pt<div class=eff>1개당 최대 1.5pt</div></td></tr>
+<tr><td>양광석<div class=ja>陽光石</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>연기구슬<div class=ja>けむり玉</div></td><td>1개 → 3pt<br>3개 → 10pt<div class=eff>1개당 최대 3.33pt</div></td></tr>
+<tr><td>영양제<div class=ja>栄養剤</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>용골【대】<div class=ja>竜骨【大】</div></td><td>1개 → 3pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td>용골【소】<div class=ja>竜骨【小】</div></td><td>2개 → 2pt<br>4개 → 5pt<div class=eff>1개당 최대 1.25pt</div></td></tr>
+<tr><td>용골【중】<div class=ja>竜骨【中】</div></td><td>1개 → 2pt<br>2개 → 3pt<br>3개 → 7pt<br>4개 → 7pt<div class=eff>1개당 최대 2.33pt</div></td></tr>
+<tr><td>용발톱<div class=ja>竜の爪</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 용의꼬리<div class=ja>リュウノテール</div></td><td>1개 → 6pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>용이빨<div class=ja>竜の牙</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>울음낭<div class=ja>鳴き袋</div></td><td>1개 → 2pt<br>3개 → 6pt<div class=eff>1개당 최대 2pt</div></td></tr>
+<tr><td>워밀보리<div class=ja>ウォーミル麦</div></td><td>3개 → 3pt<br>6개 → 6pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>원기드링크 (식재료)<div class=ja>元気ドリンコ （食材として）</div></td><td>1개 → 2pt<br>2개 → 6pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>원기드링크 (약품)<div class=ja>元気ドリンコ （薬品として）</div></td><td>1개 → 3pt<br>2개 → 7pt<div class=eff>1개당 최대 3.5pt</div></td></tr>
+<tr><td>은쌀풀<div class=ja>銀シャリ草</div></td><td>2개 → 4pt<br>4개 → 10pt<div class=eff>1개당 최대 2.5pt</div></td></tr>
+<tr><td>음폭탄<div class=ja>音爆弾</div></td><td>1개 → 3pt<br>3개 → 11pt<div class=eff>1개당 최대 3.67pt</div></td></tr>
+<tr><td>의문의 뼈<div class=ja>なぞの骨</div></td><td>2개 → 1pt<br>6개 → 7pt<div class=eff>1개당 최대 1.17pt</div></td></tr>
+<tr><td>이오스가죽<div class=ja>イーオスの皮</div></td><td>1개 → 4pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>이오스독이빨<div class=ja>イーオスの毒牙</div></td><td>2개 → 4pt<br>5개 → 12pt<div class=eff>1개당 최대 2.4pt</div></td></tr>
+<tr><td>인내씨앗<div class=ja>忍耐の種</div></td><td>1개 → 3pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>자갈<div class=ja>石ころ</div></td><td>5개 → 2pt<br>8개 → 3pt<br>10개 → 5pt<br>16개 → 9pt<div class=eff>1개당 최대 0.56pt</div></td></tr>
+<tr><td>잘익은 고기<div class=ja>こんがり肉</div></td><td>1개 → 2pt<br>2개 → 5pt<br>5개 → 12pt<div class=eff>1개당 최대 2.5pt</div></td></tr>
+<tr><td>조개 파편<div class=ja>かけた貝殻</div></td><td>5개 → 5pt<br>10개 → 10pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>죽은벌레<div class=ja>虫の死骸</div></td><td>2개 → 1pt<br>6개 → 7pt<div class=eff>1개당 최대 1.17pt</div></td></tr>
+<tr><td>척추뼈【대】<div class=ja>カラ骨【大】</div></td><td>2개 → 3pt<br>4개 → 7pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>척추뼈【소】<div class=ja>カラ骨【小】</div></td><td>5개 → 5pt<br>10개 → 12pt<div class=eff>1개당 최대 1.2pt</div></td></tr>
+<tr><td>철광석<div class=ja>鉄鉱石</div></td><td>2개 → 3pt<br>3개 → 4pt<br>4개 → 7pt<br>7개 → 10pt<div class=eff>1개당 최대 1.75pt</div></td></tr>
+<tr><td>칸타로스날개<div class=ja>カンタロスの羽</div></td><td>1개 → 3pt<br>2개 → 6pt<br>4개 → 13pt<div class=eff>1개당 최대 3.25pt</div></td></tr>
+<tr><td>켈비뿔<div class=ja>ケルビの角</div></td><td>2개 → 2pt<br>4개 → 5pt<div class=eff>1개당 최대 1.25pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 큰통폭탄<div class=ja>大タル爆弾</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>태양초<div class=ja>太陽草</div></td><td>1개 → 2pt<br>3개 → 7pt<div class=eff>1개당 최대 2.33pt</div></td></tr>
+<tr><td>파열아로와나<div class=ja>ハレツアロワナ</div></td><td>1개 → 3pt<br>4개 → 18pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>팡고모피<div class=ja>ファンゴの毛皮</div></td><td>2개 → 5pt<br>4개 → 11pt<br>6개 → 16pt<div class=eff>1개당 최대 2.75pt</div></td></tr>
+<tr><td>페인트볼<div class=ja>ペイントボール</div></td><td>3개 → 3pt<br>5개 → 5pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td>푸른버섯<div class=ja>アオキノコ</div></td><td>4개 → 4pt<br>8개 → 8pt<div class=eff>1개당 최대 1pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 풀베비절임<div class=ja>フルベビ漬け</div></td><td>1개 → 6pt<br>3개 → 20pt<div class=eff>1개당 최대 6.67pt</div></td></tr>
+<tr><td>하얀반점토마토<div class=ja>シモフリトマト</div></td><td>2개 → 4pt<br>4개 → 10pt<div class=eff>1개당 최대 2.5pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 해독적<div class=ja>解毒笛</div></td><td>1개 → 5pt<div class=eff>1개당 최대 5pt</div></td></tr>
+<tr><td>향균석<div class=ja>抗菌石</div></td><td>1개 → 3pt<br>2개 → 8pt<div class=eff>1개당 최대 4pt</div></td></tr>
+<tr><td>호피주<div class=ja>ホピ酒</div></td><td>1개 → 3pt<br>3개 → 9pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td>확산열매<div class=ja>カクサンの実</div></td><td>3개 → 5pt<br>6개 → 11pt<div class=eff>1개당 최대 1.83pt</div></td></tr>
+<tr><td>확산툭눈붕어<div class=ja>カクサンデメキン</div></td><td>1개 → 3pt<br>4개 → 18pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>회복약<div class=ja>回復薬</div></td><td>2개 → 5pt<br>4개 → 12pt<div class=eff>1개당 최대 3pt</div></td></tr>
+<tr><td><span class="star" title="1개당 친밀도가 높은 납품">⭐</span> 회복약Ｇ<div class=ja>回復薬グレート</div></td><td>1개 → 5pt<br>2개 → 12pt<div class=eff>1개당 최대 6pt</div></td></tr>
+<tr><td>횟감용생선<div class=ja>サシミウオ</div></td><td>2개 → 3pt<br>4개 → 6pt<div class=eff>1개당 최대 1.5pt</div></td></tr>
+<tr><td>흑진주<div class=ja>黒真珠</div></td><td>1개 → 4pt<br>2개 → 9pt<div class=eff>1개당 최대 4.5pt</div></td></tr>
+<tr><td>희귀한양파<div class=ja>レアオニオン</div></td><td>2개 → 4pt<br>4개 → 8pt<div class=eff>1개당 최대 2pt</div></td></tr>
+</table></div>
+<h2>이벤트 발생 조건</h2><div class="wrap"><table><tr><th>이벤트</th><th>필요한 친밀도</th><th>필요량</th><th>추가 조건</th></tr>
+<tr><td>선물</td><td>마을 사람 개인 친밀도</td><td class=n>24pt</td><td></td></tr>
+<tr><td>식사 초대</td><td>마을 사람 개인 친밀도</td><td class=n>32pt</td><td></td></tr>
+<tr><td>마을 특매</td><td>항구 관계자 친밀도 합계</td><td class=n>50pt</td><td>항구 LV3</td></tr>
+<tr><td>용 장인</td><td>공방 관계자 친밀도 합계</td><td class=n>20pt</td><td>공방 LV3</td></tr>
+<tr><td>행상</td><td>마을 전체 친밀도 합계</td><td class=n>2pt</td><td></td></tr>
+<tr><td>행상 특매</td><td>마을 전체 친밀도 합계</td><td class=n>50pt</td><td></td></tr>
+<tr><td>미용사 고양이</td><td>마을 전체 친밀도 합계</td><td class=n>80pt</td><td></td></tr>
+<tr><td>촌장</td><td>마을 전체 친밀도 합계</td><td class=n>500pt</td><td></td></tr>
+</table></div>
+<h2>항구・공방 레벨을 효율적으로 올리는 팁</h2><div class="tips">
+<p><b>누구에게 해야 하나:</b> 항구 쪽은 <b>항구 관계자</b>(조선소 대장・조합점 주인・식재료 상인・도구점 주인), 공방 쪽은 <b>공방 관계자</b>(공방 할머니・공방 수제자・공방 둘째 제자・공방 새 제자)의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</p>
+<p><b>의뢰 퀘스트는 별이 높을수록 이득:</b> 의뢰 퀘스트 한 번에 오르는 친밀도는 ★1 6pt, ★2 8pt, ★3 10pt, ★4 12pt입니다. 같은 시간이면 높은 별 의뢰를 고르세요.</p>
+<p><b>납품은 ⭐ 아이템부터:</b> 아래 표의 ⭐ 표시는 1개당 친밀도가 높은 납품입니다. 예: 라이트크리스탈 (15pt/개), 성철 (15pt/개), 메인 세일 (10pt/개), 메인 마스트 (10pt/개), 풀베비절임 (6.67pt/개), 수면낭 (6pt/개). 요구 수가 여러 단계인 아이템은 「1개당 최대」 값이 나오는 단계로 납품하면 효율이 좋습니다.</p>
+<p><b>레벨 3이 고비:</b> 항구가 <b>레벨 3</b>이 되고 항구 관계자 친밀도 합계가 <b>50pt</b>면 「마을 특매」, 공방이 <b>레벨 3</b>이 되고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」 이벤트가 생깁니다. 공방 쪽은 필요량이 적으니 먼저 노리기 좋습니다.</p>
+<p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p></div>
+<h2>마을 사람에게 받는 선물</h2><p class="note">선물은 마을 사람 유형마다 다릅니다. 1~5회째는 아래 순서이고, 6회째부터는 같은 유형의 선물 중 무작위입니다.</p>
+<div class="wrap"><table><tr><th></th><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>
+<tr><td>1회째</td><td>회복약Ｇ &#215;3</td><td>마카라이트광석 &#215;3</td><td>화이트레버 &#215;5</td></tr>
+<tr><td>2회째</td><td>벌꿀 &#215;5</td><td>음폭탄 &#215;5</td><td>고대콩 &#215;3</td></tr>
+<tr><td>3회째</td><td>잘익은 고기 &#215;5</td><td>섬광옥 &#215;5</td><td>단단한빵 &#215;3</td></tr>
+<tr><td>4회째</td><td>태양초 &#215;5</td><td>큰통폭탄 &#215;2</td><td>로열치즈 &#215;3</td></tr>
+<tr><td>5회째</td><td>성철 &#215;1</td><td>성철 &#215;1</td><td>성철 &#215;1</td></tr>
+</table></div>
+<p class="note">선물을 준 마을 사람이 누적으로 아래 인원이 되면 유형과 관계없이 성철을 받습니다. 21번째부터는 다시 1부터 셉니다.</p>
+<div class="wrap"><table style="max-width:320px"><tr><th>누적 인원</th><th>받는 아이템</th></tr>
+<tr><td>3번째</td><td>성철 &#215;3</td></tr>
+<tr><td>6번째</td><td>성철 &#215;3</td></tr>
+<tr><td>10번째</td><td>성철 &#215;4</td></tr>
+<tr><td>15번째</td><td>성철 &#215;5</td></tr>
+<tr><td>20번째</td><td>성철 &#215;5</td></tr>
+</table></div>
+<h2>식사 초대</h2><p class="note">식사 효과는 초대한 사람의 유형(A·B·C)과 마이하우스 레벨에 따라 정해집니다.</p>
+<div class="wrap"><table><tr><th></th><th>A 유형</th><th>B 유형</th><th>C 유형</th></tr>
+<tr><td>초대하는 사람</td><td>촌장, 조선소 대장, 식재료 상인</td><td>교관, 공방 수제자, 도구점 주인</td><td>라이벌 헌터, 수행 중인 여자 헌터, 공방 둘째 제자, 공방 새 제자</td></tr>
+<tr><td>마이하우스 LV1</td><td>체력+20 스태미나+25</td><td>체력+20 방어+10</td><td>공격+3 스태미나+25</td></tr>
+<tr><td>마이하우스 LV2</td><td>체력+30 스태미나+50</td><td>체력+30 방어+10</td><td>공격+3 스태미나+50</td></tr>
+<tr><td>마이하우스 LV3</td><td>체력+50 스태미나+50</td><td>체력+50 방어+20</td><td>공격+5 스태미나+50</td></tr>
+</table></div>
+<footer>자료 출처: mmpotato「モンスターハンター２解析情報」— 村人との交流 (원문 갱신 2011-11-04). 아이템·인물 이름은 몬스터헌터 2 한글 패치 표기를 따릅니다.</footer>
+</main>
+<script>
+function f(){ var q=document.getElementById('q').value.trim(); var rows=document.querySelectorAll('#items tr'); for (var i=1;i<rows.length;i++){ rows[i].style.display = (!q || rows[i].textContent.indexOf(q)>=0) ? '' : 'none'; } }
+</script></body></html>

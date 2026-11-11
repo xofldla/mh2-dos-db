@@ -1,0 +1,600 @@
+en	ko
+Allows special item combinations without the Alchemy Book. See the "Item Combinations" area of the Items page for a full listing of Alchemy combos.	조합서Ｇ・연금편 없이도 연금 조합을 할 수 있다. 연금 조합 전체 목록은 아이템 페이지의 「조합」 부분을 보라.
+You will always make the maximum possible amount of ammunition when combining.	탄을 조합할 때 언제나 최대 개수를 만든다.
+Prevents anyone from stealing your items. The following monster attacks can steal your items:	아이템을 도둑맞지 않는다. 아래 몬스터 공격이 아이템을 훔친다:
+Monster	몬스터
+Attacks	공격
+Affects your susceptibility to Stench status and Poison. The following monster attacks inflict Stench:	악취 상태와 독에 걸리는 정도가 바뀐다. 아래 몬스터 공격이 악취를 건다:
+(2&times; Dung and Poison)	(악취・독 2배)
+(0.5&times; Dung and Poison)	(악취・독 0.5배)
+(Negate Dung and 0.5&times; Poison)	(악취 무효, 독 0.5배)
+Increases damage dealt by Ballista S and Cannon S by 1.1x.	발리스타총탄・대포탄 피해가 1.1배가 된다.
+(1.1&times;)	(1.1배)
+Increases your weapon's Attack. Adds the amount in parentheses to the weapon's True Damage Value before its Bloat Value.	무기 공격력이 오른다. 괄호 안의 값을 무기 배율을 곱하기 전의 실공격력에 더한다.
+Weapon	무기
+Bloat	배율
+Blocks attacks automatically if your weapon is drawn. You must also be facing the direction of the incoming attack (within 180 degrees in front of you), and be free to block it (that is, not be in the middle of dodging or attacking.)	무기를 뽑은 상태면 자동으로 가드한다. 공격이 정면(앞쪽 180도 안)에서 와야 하고, 회피나 공격 동작 중이 아니어야 한다.
+Increases the yield of barrel bombs, dealing 1.5x damage, and ensuring success when combining bombs, Sonic Bombs, and Gunpowder. See the Explosive Damage section under About Weapons in the Weapons page.	통폭탄 위력이 1.5배가 되고, 폭탄・음폭탄・폭약 조합이 반드시 성공한다.
+(1.5&times;)	(1.5배)
+Allows you to carve monsters an additional time.	몬스터를 한 번 더 갈무리할 수 있다.
+Enable loading Cluster Shot of increasing levels in Bowguns that cannot normally use it. Each level includes the shot(s) from previous levels (see the Weapons page for which weapons have what ammo by default.)	원래 쓸 수 없는 보우건에 확산탄을 장전할 수 있게 된다. 단계가 오를수록 쓸 수 있는 레벨이 늘고, 앞 단계 탄도 포함한다.
+Changes how quickly you lose maximum Stamina when in a cold Area. Without this skill, your maximum Stamina is reduced every 2 minutes while in a cold area, and every 1 minute 30 seconds at the peak of the Snowy Mountain (areas 6, 7, and 8.) Negate Cold [L] is required for extreme cold conditions, such as the peak areas of the Snowy Mountain, Negate Cold [S] will only reduce the effect in these areas to 1/3 the normal rate. Hunger Halved appears to have a small effect on this, though not as much as cutting the effect in half.	추운 에리어에서 최대 스태미나가 줄어드는 속도가 바뀐다. 스킬이 없으면 추운 곳에서 2분마다, 설산 정상(에리어 6・7・8)에서는 1분 30초마다 줄어든다. 설산 정상 같은 혹한에는 추위무효【대】가 필요하며, 추위무효【소】는 그곳에서 효과를 1/3로 줄일 뿐이다. 배고픔감소도 조금 영향이 있지만 절반만큼은 아니다.
+(2&times; effect)</span>	(효과 2배)
+(1.5&times; effect)</span>	(효과 1.5배)
+(negate low effect, <sup>1</sup>/<sub>3</sub>&times; high effect)</span>	(약한 추위 무효, 혹한은 <sup>1</sup>/<sub>3</sub>배)
+(negate all)</span>	(모두 무효)
+Skill	스킬
+Cold Area	추운 에리어
+Snowy Mountain 6, 7, 8	설산 6・7・8
+no skill	스킬 없음
+No Skill	스킬 없음
+none	없음
+n/a	-
+Adds the given percent to your chances to successfully combine items. This stacks with Combo Books.	조합 성공 확률에 해당 %를 더한다. 조합서와 함께 적용된다.
+Changes how difficult it is to cook meat on a BBQ Spit.	고기굽기세트로 고기를 굽는 난이도가 바뀐다.
+Enable loading Crag Shot of increasing levels in Bowguns that cannot normally use it. Each level includes the shot(s) from previous levels (see the Weapons page for which weapons have what ammo by default.)	원래 쓸 수 없는 보우건에 철갑유탄을 장전할 수 있게 된다. 단계가 오를수록 쓸 수 있는 레벨이 늘고, 앞 단계 탄도 포함한다.
+Changes your total Defense by the given amount.	방어력이 해당 값만큼 바뀐다.
+Changes your Dragon Element Resistance by the given amount. The following monster attacks deal Dragon damage:	용내성이 해당 값만큼 바뀐다. 아래 몬스터 공격이 용속성 피해를 준다:
+Negates the staggering effect of monster roars. Some monsters roar so loudly, only High Grade Earplugs can block them out. The following monsters' roars can only be negated by High Grade Earplugs, and regular Earplugs have no effect:	몬스터 포효에 움찔하지 않는다. 일부 몬스터는 포효가 너무 커서 고급귀마개로만 막을 수 있다. 아래 몬스터의 포효는 고급귀마개로만 막히고, 일반 귀마개는 효과가 없다:
+Changes the amount of time it takes to eat meat and fish.	고기・생선을 먹는 시간이 바뀐다.
+Changes all of your Element Resistances by the given amount.	모든 속성 내성이 해당 값만큼 바뀐다.
+Increases the amount of time that you are invulnerable during dodge moves. Normally, dodge moves have 6 frames, or 200 milliseconds, of invulnerability: Evasion +1 increases this to 8 frames (267ms), +2 to 10 frames (333ms).	회피 중 무적 시간이 늘어난다. 보통 회피 무적은 6프레임(200ms)이며, 회피성능+1은 8프레임(267ms), +2는 10프레임(333ms)이 된다.
+(8 frames or 267ms)	(8프레임, 267ms)
+(10 frames or 333ms)	(10프레임, 333ms)
+Frames	프레임
+Time	시간
+Increases your weapon's affinity. Additionally, Critical Eye +1 and +2 prevent your weapon from bouncing. Weapon attacks that would normally bounce also only consume normal sharpness; attacks like the Hammer charge attacks and Gunlance shelling are not affected.	무기 회심률이 오른다. 간파+1・+2는 공격이 튕기지 않으며, 튕길 공격도 예리도를 보통만큼만 소모한다. 해머 모아치기, 건랜스 포격 등에는 영향이 없다.
+(+10 &amp; no bouncing)	(+10, 튕김 없음)
+(+15 &amp; no bouncing)	(+15, 튕김 없음)
+Affects your chances to receive additional items in quest rewards. This only affects base quest rewards, not rewards from monster part-breaks. (See "How quest rewards work" on the Quests page.)	퀘스트 보수에서 아이템을 더 받을 확률이 바뀐다. 기본 보수에만 적용되고 부위 파괴 보수에는 적용되지 않는다.
+Percent	확률
+Horrible Luck	재난
+Bad Luck	불운
+Good Luck	행운
+Great Luck	격운
+Changes your Fire Element Resistance by the given amount. The following monster attacks deal Fire damage:	화내성이 해당 값만큼 바뀐다. 아래 몬스터 공격이 화속성 피해를 준다:
+Increases the timing window to reel in a fish, and makes the lure appear to be much bigger.	물고기를 낚아 올리는 타이밍 폭이 넓어지고, 찌가 훨씬 크게 보인다.
+Affects your chances to gather additional items from gathering points, including mining spots. One item is always guaranteed from any gathering point, regardless of this skill, and each successive attempt has a chance to yield another item or to deplete the gathering point (the point will always be depleted once its maximum number of gathering attempts has been made on it.) Normally the chance for another item is 84%: this skill changes that to the value in parentheses for the given level.	채취 포인트(채굴 포인트 포함)에서 아이템을 더 얻을 확률이 바뀐다. 스킬과 상관없이 첫 1개는 반드시 얻고, 이후 한 번마다 아이템을 더 얻거나 포인트가 바닥난다(최대 횟수에 이르면 반드시 바닥남). 보통 추가 확률은 84%이며, 스킬 단계에 따라 괄호 안의 값으로 바뀐다.
+Increases the amount of maximum Stamina gained when eating cooked meat by the amount in parentheses. Additionally, the Speed Eater skill will occasionally increase maximum Stamina by 25 points when using a recovery item 1/3 of the time.	구운 고기를 먹을 때 최대 스태미나가 괄호 안의 값만큼 더 오른다. 줏어먹기는 회복 아이템을 쓸 때 1/3 확률로 최대 스태미나가 25 오른다.
+(+25 and <sup>1</sup>/<sub>3</sub> chance stamina from items)	(+25, 아이템 사용 시 <sup>1</sup>/<sub>3</sub> 확률로 스태미나 증가)
+Changes your shield's effectiveness while guarding. Affects how far you get knocked back, how much Stamina is consumed, and chip damage. This also affects the guarding animation, based on monster attack and weapon class. Each Guard level affects the Impact value of monster attacks. E.G. If using a Lance, with Guard +1, a Rathalos Fireball deals 40 base Impact, -10 from Guard +1, meaning the resulting 30 Impact only has a small final impact instead of the default large. Additionally, Guard +2 will allow you to block normally unblockable attacks. See the "About Weapons" section of the Weapons page for more details.	가드 성능이 바뀐다. 밀려나는 거리, 스태미나 소모, 깎이는 체력, 가드 모션에 영향을 준다. 단계마다 몬스터 공격의 충격값이 바뀐다. 예: 랜스로 가드성능+1이면 리오레우스 화염구(충격 40)가 30이 되어, 큰 경직 대신 작은 경직이 된다. 가드성능+2는 원래 막을 수 없는 공격도 막는다.
+(-20 and Guard Up)	(-20, 가드 불가 공격도 가드)
+Changes the maximum sharpness of your weapon by 50 hits. Increasing a weapon's sharpness will often unlock a higher level of sharpness as well. Normal and increased sharpness are included on the Weapons page per weapon.	무기 예리도 최대치가 50타만큼 바뀐다. 늘어나면 더 높은 예리도 단계가 열리기도 한다. 무기 페이지에 무기마다 기본・장인 예리도를 적었다.
+Changes your maximum Hitpoints by the given amount.	최대 체력이 해당 값만큼 바뀐다.
+Changes the Hitpoint-depleting effects of hot areas. Without this skill, you lose 1 Hitpoint every few seconds while in a hot area as recoverable (red-bar) health, but your health does not recover until you leave the area or drink a Cold Drink. Negate Heat [L] is needed for the Volcano, Negate Heat [S] will only reduce the rate to 1/3 of normal. The frequency of this health loss depends on the locale:	더운 에리어에서 체력이 깎이는 효과가 바뀐다. 스킬이 없으면 몇 초마다 체력이 1씩 깎이며(빨간 게이지), 에리어를 벗어나거나 쿨러드링크를 마시기 전까지 회복되지 않는다. 화산에는 더위무효【대】가 필요하고, 더위무효【소】는 속도를 1/3로 줄일 뿐이다. 깎이는 간격은 지역에 따라 다르다:
+(2&times; effect)	(효과 2배)
+(1.5&times; effect)	(효과 1.5배)
+(negate low effect, <sup>1</sup>/<sub>3</sub>&times; high effect)	(약한 더위 무효, 혹서는 <sup>1</sup>/<sub>3</sub>배)
+(negate all)	(모두 무효)
+Desert	사막
+Volcano	화산
+1 / 1.5 seconds (45 frames)	1.5초마다 1 (45프레임)
+1 / 1 second (30 frames)	1초마다 1 (30프레임)
+1 / 2 seconds (60 frames)	2초마다 1 (60프레임)
+1 / 1.333 seconds (40 frames)	1.333초마다 1 (40프레임)
+1 / 3 seconds (90 frames)	3초마다 1 (90프레임)
+1 / 6 seconds (180 frames)	6초마다 1 (180프레임)
+1 / 4 seconds (240 frames)	4초마다 1 (240프레임)
+1 / 8 seconds (240 frames)	8초마다 1 (240프레임)
+1 / 0.667 seconds (20 frames)	0.667초마다 1 (20프레임)
+1 / 0.5 seconds (15 frames)	0.5초마다 1 (15프레임)
+Changes how often you lose maximum Stamina. Without the skill, maximum Stamina is reduced by 25 every 6 minutes, with Double Hunger every 3 minutes, Hunger x 1.5 every 4 minutes, Hunger Halved every 12 minutes, and Hunger Negated totally eliminates Stamina reduction from Hunger. Maximum Stamina can still be reduced by extreme cold.	최대 스태미나가 줄어드는 간격이 바뀐다. 스킬이 없으면 6분마다 25씩 줄고, 배고픔증가【대】는 3분, 【소】는 4분, 배고픔감소는 12분마다 줄며, 배고픔무효는 배고픔으로는 줄지 않는다. 혹한으로 인한 감소는 여전히 받는다.
+(2&times;) (3 min)	(2배, 3분)
+(1.5&times;) (4 min)	(1.5배, 4분)
+(12 min)	(12분)
+Changes your Ice Element Resistance by the given amount. The following monster attacks deal Ice damage:	빙내성이 해당 값만큼 바뀐다. 아래 몬스터 공격이 빙속성 피해를 준다:
+Changes the duration of consumables with a time-limited effect by the amount in parentheses.	효과 시간이 있는 소모품의 지속 시간이 괄호 안의 배율로 바뀐다.
+(<sup>2</sup>/<sub>3</sub>&times; Duration)	(지속 <sup>2</sup>/<sub>3</sub>배)
+(1.5&times; Duration)	(지속 1.5배)
+Maximizes the number of shots that can be loaded into Bowguns, and adds a fourth charge level for Bows.	보우건 장전 수가 최대가 되고, 활은 4단계 모으기가 생긴다.
+No Map hides most of the map even if you have the Map supply item.Automap displays the full locale map at all times.	지도무효는 지급품 지도가 있어도 지도 대부분이 가려진다. 지도상비는 언제나 지역 전체 지도를 보여 준다.
+Increases the odds that monsters will be large individuals.	몬스터가 큰 개체로 나올 확률이 오른다.
+Enable loading Normal Shot of increasing levels in Bowguns that cannot normally use it. Each level includes the shot(s) from previous levels (see the Weapons page for which weapons have what ammo by default.)	원래 쓸 수 없는 보우건에 일반탄을 장전할 수 있게 된다. 단계가 오를수록 쓸 수 있는 레벨이 늘고, 앞 단계 탄도 포함한다.
+All levels of Normal Shot deal increased 1.1x damage.	모든 레벨의 일반탄 피해가 1.1배가 된다.
+Changes how long you suffer Paralysis. Without the skill, it takes 5 seconds to recover from Paralysis, with Double Paralysis it takes 10 seconds, and Halve 2.5 seconds. The following monster attacks will inflict Paralysis:	마비 시간이 바뀐다. 스킬이 없으면 5초, 마비배가는 10초, 마비감소는 2.5초. 아래 몬스터 공격이 마비를 건다:
+(10 sec)	(10초)
+(2.5 sec)	(2.5초)
+Enable loading Pellet Shot of increasing levels in Bowguns that cannot normally use it. Each level includes the shot(s) from previous levels (see the Weapons page for which weapons have what ammo by default.)	원래 쓸 수 없는 보우건에 산탄을 장전할 수 있게 된다. 단계가 오를수록 쓸 수 있는 레벨이 늘고, 앞 단계 탄도 포함한다.
+All levels of Pellet Shot deal increased 1.3x damage.	모든 레벨의 산탄 피해가 1.3배가 된다.
+(1.3&times;)	(1.3배)
+Enable loading Pierce Shot of increasing levels in Bowguns that cannot normally use it. Each level includes the shot(s) from previous levels (see the Weapons page for which weapons have what ammo by default.)	원래 쓸 수 없는 보우건에 관통탄을 장전할 수 있게 된다. 단계가 오를수록 쓸 수 있는 레벨이 늘고, 앞 단계 탄도 포함한다.
+All levels of Pierce Shot deal increased 1.1x damage.	모든 레벨의 관통탄 피해가 1.1배가 된다.
+Changes how long you suffer Poison. There are three strengths of Poison based on their duration: Weak (10s), Normal (30s), and Strong (40s). The following monster attacks will inflict Poison:	독에 걸리는 시간이 바뀐다. 독은 지속 시간에 따라 약(10초)・보통(30초)・강(40초) 세 가지다. 아래 몬스터 공격이 독을 건다:
+Affects your Attack and/or Defense when your health drops low enoughbelow 40%.	체력이 40% 아래로 떨어지면 공격력・방어력이 바뀐다.
+(Attack &times; 0.7 &amp; Defense - 42)	(공격력 0.7배, 방어력 -42)
+(Defense + 90)	(방어력 +90)
+(Attack &times; 1.5 &amp; Defense + 90)	(공격력 1.5배, 방어력 +90)
+Changes the deviation of Bowgun shots and Bow arrows. Increased deviation means shots and arrows deviate further away from the center of the targeting reticule.	보우건 탄과 활 화살의 흔들림이 바뀐다. 흔들림이 크면 조준점 가운데에서 더 많이 벗어난다.
+This skill triggers some of the time25% of the time. When triggered, Demonic Protection increases the damage you take by 1.3x, and Divine Protection reduces it by 0.7&times;.	25% 확률로 발동한다. 발동하면 악령의가호는 받는 피해가 1.3배, 정령의가호는 0.7배가 된다.
+(0.7&times;)	(0.7배)
+Detect shows a detailed monster icon on the map, as long as the monster is being tracked (if it is Paintballed or the hunter is using Psychoserum).Autotracker additionally shows monster icons on the map at all times, without the need to track it.	탐지는 페인트볼이나 천리안의 약으로 추적 중인 몬스터를 지도에 자세한 아이콘으로 보여 준다. 자동마킹은 추적하지 않아도 항상 몬스터 아이콘을 보여 준다.
+Allows you to fire Bowgun shots without having to reload, except when changing ammo type. This also increases recoil by removing the Bowgun's Recoil Compensation from Recoil calculations (see the Recoil section under About Weapons in the Weapons page for more details.) When using a Bow, you draw arrows and charge shots 1.15x faster.	보우건을 탄 종류를 바꿀 때 말고는 장전 없이 쏠 수 있다. 대신 보우건의 반동 억제가 계산에서 빠져 반동이 커진다. 활은 화살 뽑기・모으기가 1.15배 빨라진다.
+Reduces Bowgun Recoil by two, or four, points. A Bowgun's recoil level is calculated based on its base Recoil Compensation and the Shot type being fired (see the Recoil section under About Weapons in the Weapons page for more details.)	보우건 반동이 2 또는 4 줄어든다. 반동은 보우건 기본 반동 억제와 쏘는 탄 종류로 정해진다.
+(-2)	(-2)
+(-4)	(-4)
+Changes the amount of Hitpoints recovered from healing items by the modifier in parentheses. (This effect is not applied to other hunters when using Lifepowder or recovery items with the Wide-Range skills.)	회복 아이템의 체력 회복량이 괄호 안의 배율로 바뀐다. (생명분진이나 광역화로 다른 헌터를 회복시킬 때는 적용되지 않는다.)
+(0.75&times;)	(0.75배)
+(1.25&times;)	(1.25배)
+Affects how quickly you recover temporary damage (red-bar), based on the multiplier in parentheses. Without the skill, you recover 1 hitpoint every two seconds.	빨간 게이지(일시 피해)가 회복되는 속도가 괄호 안의 배율로 바뀐다. 스킬이 없으면 2초마다 1씩 회복한다.
+(4&times; slower)	(4배 느림)
+(3&times; slower)	(3배 느림)
+(3&times; faster)	(3배 빠름)
+(4&times; faster)	(4배 빠름)
+Rate	속도
+Changes the time it takes to reload Bowgun shots and apply Bow coatings. Bowgun reload time is determined by the Bowgun's base Reload Speed and the Reload time of the Shot type being loaded (see the Reload section under About Weapons in the Weapons page for more details.)	보우건 장전과 활 병 장착 시간이 바뀐다. 보우건 장전 시간은 보우건 기본 장전 속도와 탄 종류로 정해진다.
+(140% coating time)	(병 장착 140%)
+(110% coating time)	(병 장착 110%)
+(85% coating time)	(병 장착 85%)
+(75% coating time)	(병 장착 75%)
+(65% coating time)	(병 장착 65%)
+Changes how often you draw the aggression of monsters to yourself, and away from other hunters in the area. This does not impact how a monster first detects you.	몬스터가 같은 에리어의 다른 헌터 대신 나를 노리는 빈도가 바뀐다. 몬스터가 처음 나를 발견하는 것에는 영향이 없다.
+Blunt increases the amount of sharpness lost while attacking and when blocking with the Great Sword. Sharp Sword reduces sharpness loss when bouncing to the normal amount, reduces sharpness loss when blocking with the Great Sword, and reduces sharpness loss for the Gunlance when firing Shells and Wyvernfire. Normal and Wide shells reduce only one hit of sharpness, Long two hits, Wyvernfire five. (see the Gunlance Shells and Wyvernfire section under About Weapons in the Weapons page for more details.)	무뎌짐은 공격과 대검 가드 때 예리도 소모가 늘어난다. 명검은 튕길 때 소모를 보통으로 줄이고, 대검 가드와 건랜스 포격・용격포의 예리도 소모를 줄인다. (통상형・확산형 포격은 1타, 방사형은 2타, 용격포는 5타만 소모)
+Changes how long you remain asleep when inflicted by a monster. Without the skill, you Sleep for 12 seconds, with Sleep Doubled it takes 24 seconds, and Halved 6 seconds. The following monster attacks will inflict Sleep:	잠드는 시간이 바뀐다. 스킬이 없으면 12초, 수면배가는 24초, 수면감소는 6초. 아래 몬스터 공격이 수면을 건다:
+(24 sec)	(24초)
+(6 sec)	(6초)
+Changes the duration of Snowman status. The following monster attacks will inflict Snowman:	눈사람 상태 시간이 바뀐다. 아래 몬스터 공격이 눈사람 상태를 건다:
+You will gather items in the field and carve monsters  1.3x more quickly.	채취와 갈무리가 1.3배 빨라진다.
+Sharpening Slowed reduces the amount of sharpness restored when sharpening by half; Fast Sharpening reduces the amount of time it takes to sharpen your weapon to one quarter the time.	숫돌성능감소는 숫돌로 회복하는 예리도가 절반이 된다. 숫돌사용고속화는 숫돌 사용 시간이 1/4이 된다.
+(0.5&times; restored)	(회복량 0.5배)
+(0.25&times; duration)	(시간 0.25배)
+Changes the amount of stamina used while sprinting, charging Hammer attacks, using Dual Swords Demon Mode, and charging Bow shots. The following table demonstrates stamina use for various tasks with this skill (in units per frames and units per second):	달리기, 해머 모으기, 쌍검 귀인화, 활 모으기 때 스태미나 소모가 바뀐다. 동작별 소모량(프레임당, 초당)은 아래 표와 같다:
+(1.2&times;)	(1.2배)
+(0.5&times;)	(0.5배)
+Category	구분
+Short Sprinter	둔족
+Marathon Runner	러너
+Sprinting	달리기
+2/5 frames	5프레임당 2
+1/3 frames	3프레임당 1
+1/6 frames	6프레임당 1
+2/3 frames	3프레임당 2
+Hammer Charge	해머 모으기
+Dual Swords Demon Mode	쌍검 귀인화
+Lance Charge	랜스 돌진
+Dodging	회피
+25 Stamina	스태미나 25
+Diving	다이빙
+Lance &amp; Gunlance Hopping	랜스・건랜스 스텝
+Applies more 1.125x status with every attack that has a status effect. This applies to all Blademaster weapons that have status, Poison S, Para S, Sleep S, Poison Coating, Para Coating, and Sleep Coating.	상태이상 공격의 축적치가 1.125배가 된다. 상태이상 속성 검사 무기 전부, 독탄・마비탄・수면탄, 독병・마비병・수면병에 적용된다.
+(1.125&times;)	(1.125배)
+Changes how much you need to struggle to break out of Stun inflicted by monster attacks, specifically the number of inputs required to break out. Stun Halved also halves the KO value inflicted by monster attacks.	기절에서 벗어나는 데 필요한 버튼 입력 횟수가 바뀐다. 기절확률감소는 몬스터 공격의 기절치도 절반으로 줄인다.
+Changes the strength of Terrain damage by the amount in parentheses. This includes heat damage from lava and the flame aura generated by Lunastra and Teostra.	지형 피해가 괄호 안의 배율로 바뀐다. 용암 열기와 나나 테스카토리・테오 테스카토르의 화염 오라도 포함된다.
+(2&times;)	(2배)
+(<sup>4</sup>/<sub>3</sub>&times;)	(<sup>4</sup>/<sub>3</sub>배)
+(<sup>2</sup>/<sub>3</sub>&times;)	(<sup>2</sup>/<sub>3</sub>배)
+(<sup>1</sup>/<sub>3</sub>&times;)	(<sup>1</sup>/<sub>3</sub>배)
+You will throw items such as Paintballs and Throwing Knives farther and faster. Also reduces the likelihood that a thrown Boomerang will break to 12.5%.	페인트볼, 투척나이프 등을 더 멀리, 빠르게 던진다. 부메랑이 부서질 확률도 12.5%로 줄어든다.
+Changes your Thunder Element Resistance by the given amount. The following monster attacks deal Thunder damage:	뇌내성이 해당 값만큼 바뀐다. 아래 몬스터 공격이 뇌속성 피해를 준다:
+Copies all skill points from your torso armor. Each piece of armor with Torso Up adds all the skill points for the torso armor an additional time, as if that armor piece had all the same skill points (positive and negative), including skill points from decorations. E.G. one piece doubles the points, two pieces triple, etc.	몸통 방어구의 스킬 포인트를 그대로 복사한다. 동계통배가 부위 하나마다 몸통의 스킬 포인트(플러스・마이너스, 장식주 포함)를 한 번 더 더한다. 예: 1부위면 2배, 2부위면 3배.
+You will move faster while carrying an egg or other delivery item, and can drop from a greater height without breaking or dropping it.	알 등 운반 아이템을 들고 더 빨리 움직이고, 더 높은 곳에서 내려와도 깨거나 떨어뜨리지 않는다.
+Eliminates the effects of monster-induced Tremors. The following monster attacks create tremors (also, if Monoblos or Diablos charges into a ledge, it will create tremors on the ledge):	몬스터가 일으키는 진동에 휘청이지 않는다. 아래 몬스터 공격이 진동을 일으킨다 (모노블로스・디아블로스가 벼랑에 돌진해도 진동이 생긴다):
+Changes the duration of the Silence status. Also changes the duration of maximum stamina loss from Chameleos's attacks. The following monster attacks inflict Silence:	성대마비 시간이 바뀐다. 오나즈치 공격으로 최대 스태미나가 줄어드는 시간도 바뀐다. 아래 몬스터 공격이 성대마비를 건다:
+Changes your Water Element Resistance by the given amount. The following monster attacks deal Water damage:	수내성이 해당 값만큼 바뀐다. 아래 몬스터 공격이 수속성 피해를 준다:
+Affects the chance that a tool will break when used, based on the value in parentheses.	도구가 쓸 때 부서질 확률이 괄호 안의 값만큼 바뀐다.
+Shares the effects of certain consumables Herbs, Potions, Antidotes, Powerseeds, and Armorseeds with all hunters in the area. The stage determines how much of the effect is applied.	약초・회복약・해독약・괴력씨앗・인내씨앗 등의 효과를 같은 에리어의 헌터 모두에게 나눈다. 단계에 따라 적용 비율이 다르다.
+(0.5&times; effect)	(효과 0.5배)
+(1.0&times; effect)	(효과 1.0배)
+You will resist the effects of wind created by monsters beating their wings, kicking up dust, etc. Some monsters apply stronger Wind Pressure than others, and can only be resisted by the Windproof [L] skill. Some dragons generate yet greater wind pressure, requiring Dragon-Windproof. Any flying large monsters not listed below only require Windproof [S] to resist wind from their wingbeats:	몬스터 날갯짓 등으로 생기는 풍압을 견딘다. 일부 몬스터의 풍압은 풍압무효【대】로만, 일부 고룡은 용풍압무효로만 막을 수 있다. 아래에 없는 비행 대형 몬스터의 날갯짓은 풍압무효【소】로 충분하다:
+Monsters	몬스터
+Effect	효과
+Rathian, Rathalos, Gravios, Monoblos, Diablos, Fatalis	리오레이아, 리오레우스, 그라비모스, 모노블로스, 디아블로스, 밀라보레아스
+Wingbeats	날갯짓
+Lao-Shan Lung	라오샨룽
+Footfalls	발소리
+Lunastra, Teostra, Kushala Daora	나나 테스카토리, 테오 테스카토르, 크샬다오라
+Aura: dispel by breaking Lunastra or Teostra's horns, or poisoning Kushala Daora	오라: 나나・테오는 뿔 파괴, 크샬다오라는 독으로 해제
+Chameleos	오나즈치
+Tail Slam	꼬리 내려치기
+Add 5% to combination success, while in your inventory.	가지고 있으면 조합 성공률 +5%.
+Add a further 5% (10% total) to combination success, while in your inventory along with the Book of Combos 1	조합서①과 함께 가지고 있으면 조합 성공률 +5% 더 (합계 10%).
+Add a further 10% (20% total) to combination success, while in your inventory along with the Book of Combos 1 and 2	조합서①②와 함께 가지고 있으면 조합 성공률 +10% 더 (합계 20%).
+Add a further 10% (30% total) to combination success, while in your inventory along with the Book of Combos 1, 2, and 3	조합서①②③과 함께 가지고 있으면 조합 성공률 +10% 더 (합계 30%).
+Add a further 20% (50% total) to combination success, while in your inventory along with the Book of Combos 1, 2, 3, and 4	조합서①~④와 함께 가지고 있으면 조합 성공률 +20% 더 (합계 50%).
+Allow additional combo recipies (the same as the Alchemy armor skill), while in your inventory.	가지고 있으면 연금 조합을 할 수 있다 (스킬 연금술과 같음).
+Successfully combine at least 212 different recipes, and speak to the Combo Master. Each recipe counts separately, even if it creates the same result item as another recipe.	서로 다른 조합식 212개 이상을 성공한 뒤 조합점 주인에게 말을 건다. 결과물이 같아도 조합식이 다르면 따로 센다.
+Restore 30 hitpoints.	체력 30 회복.
+Restore 50 hitpoints.	체력 50 회복.
+Increase maximum health by 10 points, until you cart. This does not restore any hitpoints.	쓰러질 때까지 최대 체력 +10. 체력 회복은 없다.
+Increase maximum health by 20 points, until you cart. This does not restore any hitpoints.	쓰러질 때까지 최대 체력 +20. 체력 회복은 없다.
+Cure poison.	독 해제.
+Double the speed of red-bar health recovery for 5 minutes.	5분 동안 빨간 게이지 회복 속도 2배.
+Stop all stamina loss for 3 minutes, and increase maximum stamina by 25. Maximum stamina can still be reduced by cold temperatures.	3분 동안 스태미나가 줄지 않고 최대 스태미나 +25. 추위로 인한 감소는 받는다.
+Stop all stamina loss for 6 minutes, and increase maximum stamina by 50. Maximum stamina can still be reduced by cold temperatures.	6분 동안 스태미나가 줄지 않고 최대 스태미나 +50. 추위로 인한 감소는 받는다.
+Add 3 to your weapon's true damage, until you cart. This does not stack with meal buffs or Mega Demondrug.	쓰러질 때까지 실공격력 +3. 식사 효과・귀인약Ｇ과 겹치지 않는다.
+Add 5 to your weapon's true damage, until you cart. This does not stack with meal buffs or Demondrug.	쓰러질 때까지 실공격력 +5. 식사 효과・귀인약과 겹치지 않는다.
+Add 25 to your weapon's true damage for 20 seconds.	20초 동안 실공격력 +25.
+Add 3 to your defense, until you cart. This does not stack with meal buffs or Mega Armorskin.	쓰러질 때까지 방어력 +3. 식사 효과・경화약Ｇ과 겹치지 않는다.
+Add 10 to your defense, until you cart. This does not stack with meal buffs or Armorskin.	쓰러질 때까지 방어력 +10. 식사 효과・경화약과 겹치지 않는다.
+Add 25 to your defense for 20 seconds.	20초 동안 방어력 +25.
+Prevent damage taken from hot temperatures for 10 minutes.	10분 동안 더위로 체력이 깎이지 않는다.
+Prevent increased maximum stamina loss from cold temperatures for 10 minutes.	10분 동안 추위로 최대 스태미나가 빨리 줄지 않는다.
+Reveal all large monsters on the map for 10 seconds.	10초 동안 지도에 모든 대형 몬스터를 표시.
+Cure poison and restore 10 hitpoints.	독 해제, 체력 10 회복.
+Increase maximum health to 150 and restore all hitpoints.	최대 체력 150, 체력 완전 회복.
+Increase maximum health to 150, increase maximum stamina to 150, and restore all hitpoints.	최대 체력・최대 스태미나 150, 체력 완전 회복.
+Increase maximum stamina by 25. If max stamina is already at 150, this will not reset the stamina loss timer.	최대 스태미나 +25. 이미 150이면 감소 타이머는 초기화되지 않는다.
+Restore 50 hitpoints to yourself and all hunters in the same area.	자신과 같은 에리어 헌터 모두 체력 50 회복.
+Add 6 to your weapon's true attack, while in your inventory.<span class="mhg"> Stacks with Powertalon.</span> Duplicates do not stack this effect.	가지고 있으면 실공격력 +6. 여러 개 가져도 겹치지 않는다.
+Add 9 to your weapon's true attack, while in your inventory. Stacks with Powercharm. Duplicates do not stack this effect.	가지고 있으면 실공격력 +9. 힘의부적과 겹친다. 여러 개 가져도 겹치지 않는다.
+Add 16 to your defense, while in your inventory.<span class="mhg"> Stacks with Armortalon.</span> Duplicates do not stack this effect.	가지고 있으면 방어력 +16. 여러 개 가져도 겹치지 않는다.
+Add 24 to your defense, while in your inventory. Stacks with Armorcharm. Duplicates do not stack this effect.	가지고 있으면 방어력 +24. 방어의 부적과 겹친다. 여러 개 가져도 겹치지 않는다.
+Place on the ground and any calm, carnivorous large monsters will approach and eat it. After 3 minutes, it will disappear. A Capacity: 3 can be placed at once.	땅에 두면 진정 상태의 육식 대형 몬스터가 다가와 먹는다. 3분 뒤 사라진다. 한 번에 3개까지 둘 수 있다.
+Place on the ground and any calm, carnivorous large monsters will approach, eat it, and become poisoned. After 3 minutes, it will disappear. A Capacity: 3 can be placed at once.	땅에 두면 진정 상태의 육식 대형 몬스터가 다가와 먹고 독에 걸린다. 3분 뒤 사라진다. 한 번에 3개까지 둘 수 있다.
+Place on the ground and any calm, carnivorous large monsters will approach, eat it, and become paralyzed. After 3 minutes, it will disappear. A Capacity: 3 can be placed at once.	땅에 두면 진정 상태의 육식 대형 몬스터가 다가와 먹고 마비된다. 3분 뒤 사라진다. 한 번에 3개까지 둘 수 있다.
+Place on the ground and any calm, carnivorous large monsters will approach, eat it, and fall asleep. After 3 minutes, it will disappear. A Capacity: 3 can be placed at once.	땅에 두면 진정 상태의 육식 대형 몬스터가 다가와 먹고 잠든다. 3분 뒤 사라진다. 한 번에 3개까지 둘 수 있다.
+Cook a Raw Meat on a BBQ Spit, and take it off the spit right after the music ends.	고기굽기세트로 고기를 굽다가 음악이 끝난 직후 꺼낸다.
+Increase maximum stamina by 50. If max stamina is already at 150, this will not reset the stamina loss timer.	최대 스태미나 +50. 이미 150이면 감소 타이머는 초기화되지 않는다.
+Cook a Raw Meat on a BBQ Spit, and take it off the spit a few seconds after the music ends.	고기굽기세트로 고기를 굽다가 음악이 끝나고 몇 초 뒤 꺼낸다.
+Increase maximum stamina to 150. If max stamina is already at 150, this will not reset the stamina loss timer.	최대 스태미나 150. 이미 150이면 감소 타이머는 초기화되지 않는다.
+Cook a Raw Meat on a Ladies' or Manly BBQ Spit, and take it off the spit a few seconds after the music ends.	아가씨 구이세트나 사나이 구이세트로 고기를 굽다가 음악이 끝나고 몇 초 뒤 꺼낸다.
+50/50 chance to increase maximum stamina by 25 or decrease by 25.	50% 확률로 최대 스태미나 +25, 50% 확률로 -25.
+Cook a Raw Meat on a BBQ Spit, and take it off too late.	고기굽기세트로 고기를 굽다가 너무 늦게 꺼낸다.
+Combine a Spicy Meat with the Chef's Kit, begin cooking it, and take it off the spit after the music ends.	매콤한 고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 꺼낸다.
+Combine a Spicy Meat with the Chef's Kit, begin cooking it, and take it off the spit during the perfect window after the music ends.	매콤한 고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 딱 맞는 순간에 꺼낸다.
+Combine a Cool Meat with the Chef's Kit, begin cooking it, and take it off the spit after the music ends.	시원한고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 꺼낸다.
+Combine a Cool Meat with the Chef's Kit, begin cooking it, and take it off the spit during the perfect window after the music ends.	시원한고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 딱 맞는 순간에 꺼낸다.
+Combine a Poisoned Meat with the Chef's Kit, begin cooking it, and take it off the spit after the music ends.	독고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 꺼낸다.
+Combine a Poisoned Meat with the Chef's Kit, begin cooking it, and take it off the spit during the perfect window after the music ends.	독고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 딱 맞는 순간에 꺼낸다.
+Recover red-bar health.	빨간 게이지 체력 회복.
+Combine a Whetfish, Pin Tuna, or Popfish with the Chef's Kit, begin cooking it, and take it off the spit as the music ends.	전갱이・가시다랑어・튀는정어리를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝날 때 꺼낸다.
+Recover red-bar health and double the speed of red-bar health recovery for 2 minutes.	빨간 게이지 체력 회복, 2분 동안 빨간 게이지 회복 속도 2배.
+Combine a Whetfish, Pin Tuna, or Popfish with the Chef's Kit, begin cooking it, and take it off the spit a few seconds after the music ends.	전갱이・가시다랑어・튀는정어리를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝나고 몇 초 뒤 꺼낸다.
+Recover red-bar health and double the speed of red-bar health recovery for 4 minutes.	빨간 게이지 체력 회복, 4분 동안 빨간 게이지 회복 속도 2배.
+Combine a Great Whetfish, Great Pin Tuna, or Great Popfish with the Chef's Kit, begin cooking it, and take it off the spit a few seconds after the music ends.	도스전갱이 등 도스 물고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝나고 몇 초 뒤 꺼낸다.
+Combine a Whetfish, Pin Tuna, or Popfish with the Chef's Kit, begin cooking it, and take it off the spit during the perfect window after the music ends.	전갱이・가시다랑어・튀는정어리를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 딱 맞는 순간에 꺼낸다.
+Recover red-bar health and double the speed of red-bar health recovery for 8 minutes 20 seconds.	빨간 게이지 체력 회복, 8분 20초 동안 빨간 게이지 회복 속도 2배.
+Combine a Great Whetfish, Great Pin Tuna, or Great Popfish with the Chef's Kit, begin cooking it, and take it off the spit during the perfect window after the music ends.	도스전갱이 등 도스 물고기를 만능구이세트와 조합해 굽기 시작하고, 음악이 끝난 뒤 딱 맞는 순간에 꺼낸다.
+50/50 chance to recover red-bar health.	50% 확률로 빨간 게이지 체력 회복.
+Combine a regular or Great Whetfish, Pin Tuna, or Popfish with the Chef's Kit, begin cooking it, and take it off too late.	전갱이・가시다랑어・튀는정어리(도스 포함)를 만능구이세트와 조합해 굽다가 너무 늦게 꺼낸다.
+Deals 8 cutting damage.	베기 피해 8.
+Throw a knife in a straight line horizontal to the ground. Deals 20 base damage	땅과 수평으로 곧게 던진다. 기본 피해 20.
+Throw a knife in a straight line horizontal to the ground. Deals 5 base damage and applies 50 Poison status.	땅과 수평으로 곧게 던진다. 기본 피해 5, 독 축적 50.
+Throw a knife in a straight line horizontal to the ground. Deals 5 base damage and applies 50 Sleep status.	땅과 수평으로 곧게 던진다. 기본 피해 5, 수면 축적 50.
+Throw a knife in a straight line horizontal to the ground. Deals 5 base damage and applies 50 Paralysis status.	땅과 수평으로 곧게 던진다. 기본 피해 5, 마비 축적 50.
+Throw a knife in a straight line horizontal to the ground. Applies 80 tranquilizer.	땅과 수평으로 곧게 던진다. 마취 축적 80.
+Throw at a monster and it's location will appear on the map for 10 minutes. If a small monster is painted, its icon will disappear once you leave the area. With the Detect or Autotracker armor skill, for</span> large monsters, the icon will indicate the monster's facing direction, whether it's flying, and whether it's alerted for combat or calm.	몬스터에 맞히면 10분 동안 지도에 위치가 표시된다. 소형 몬스터는 에리어를 벗어나면 아이콘이 사라진다. 탐지・자동마킹이 있으면 대형 몬스터의 방향, 비행 여부, 전투・진정 상태도 보인다.
+Throw in a short arc and explode in a bright flash of light. Some monsters will by temporarily stunned by this if they are close enough to and facing the explosion, even while flying. The sound of the explosion will draw the attention of any calm large monsters in the area.	짧게 던져 밝은 섬광으로 터진다. 가까이서 폭발 쪽을 보고 있던 일부 몬스터는 날고 있어도 잠시 눈이 먼다. 폭발음은 에리어의 진정 상태 대형 몬스터의 주의를 끈다.
+Throw in a short arc and explode with a high-pitched, loud noise. Some monsters will be startled by this, with varying results: Yian Kut-Ku will be temporarily stunned and unable to move or attack; if swimming, Plesioth will often leap out of the water on to dry land; if burrowing through the sand, Cephalos and Cephadrome will leap out and flop around on the ground for a few seconds; while underground, Monoblos or Diablos will emerge halfway above the ground and flail around as if caught in a pitfall trap.	짧게 던져 날카로운 큰 소리로 터진다. 일부 몬스터가 놀란다: 얀쿡크는 잠시 움직이지 못하고, 헤엄치던 가노토토스는 뭍으로 뛰어오르기도 하며, 모래 속 가레오스・도스가레오스는 튀어나와 몇 초 동안 버둥거리고, 땅속의 모노블로스・디아블로스는 반쯤 나와 구멍함정에 빠진 듯 허우적댄다.
+Cover a wide area in a cloud of foul smoke. If standing still, you will throw it at your feet; throw while moving to toss ahead of you. The following monsters will leave the area where the dung bomb was detonated, unless already alerted by a hunter: Rathian, Rathalos, Yian Kut-Ku, Gypceros.	넓은 범위를 악취 연기로 덮는다. 멈춰 서서 쓰면 발밑에, 움직이며 쓰면 앞으로 던진다. 아래 몬스터는 헌터를 아직 경계하지 않았다면 그 에리어를 떠난다: 리오레이아, 리오레우스, 얀쿡크, 게리오스.
+Cover a small area with smoke, obscuring you from monsters. The smoke lasts 20 seconds after detonating. If standing still, you will throw it at your feet; throw while moving to toss ahead of you. While you remain in the smoke, calm monsters cannot see you. This has no effect on alert monsters.	좁은 범위를 연기로 덮어 몬스터 눈을 피한다. 연기는 20초 남는다. 멈춰 서서 쓰면 발밑에, 움직이며 쓰면 앞으로 던진다. 연기 안에 있으면 진정 상태 몬스터가 보지 못한다. 경계 중인 몬스터에게는 효과가 없다.
+Throw and cover a small area with poisonous smoke. Any monsters caught in the smoke cloud will take 10 poison status.	던져서 좁은 범위를 독 연기로 덮는다. 연기 안의 몬스터에 독 축적 10.
+Transport yourself to the basecamp after 2 seconds; monsters can interrupt the process during this window.	2초 뒤 베이스캠프로 돌아간다. 그 사이 몬스터에게 맞으면 끊긴다.
+Apply 80 Tranquilizer to a monster; 100 Tranquilizer will put a monster to sleep. Does no damage, but will wake a sleeping monster.	마취 축적 80 (100이면 잠든다). 피해는 없지만 자는 몬스터를 깨운다.
+Trap a large monster for a short time. Will disappear after 5 minutes if not triggered. Only one can be placed at a time. Cannot be placed in certain areas of the Swamp. The following monsters will not, or cannot, trigger the trap: Velocidrome, Gendrome, Iodrome, Cephadrome, Monoblos, Diablos, Lao-Shan Lung, Kirin, and Fatalis.	대형 몬스터를 잠시 묶는다. 5분 안에 걸리지 않으면 사라진다. 한 번에 하나만 둘 수 있고, 늪지 일부 에리어에는 둘 수 없다. 아래 몬스터는 걸리지 않는다: 도스람포스, 도스게네포스, 도스이오스, 도스가레오스, 모노블로스, 디아블로스, 라오샨룽, 키린, 밀라보레아스.
+Place at your feet and explode with a three-second fuse, dealing 20 explosive damage.	발밑에 두면 3초 뒤 터진다. 폭발 피해 20.
+Place at your feet and explode with a three-second fuse, dealing 30 explosive damage.	발밑에 두면 3초 뒤 터진다. 폭발 피해 30.
+Place at your feet and explode when damaged by most damage sources, dealing 80 explosive damage. Decays after 5 minutes if not detonated.	발밑에 두고 공격하면 터진다. 폭발 피해 80. 5분 안에 안 터지면 사라진다.
+Place at your feet and explode when damaged by most damage sources, dealing 150 explosive damage. Decays after 5 minutes if not detonated.	발밑에 두고 공격하면 터진다. 폭발 피해 150. 5분 안에 안 터지면 사라진다.
+Place at your feet and launch directly upward, dealing 20 explosive damage.	발밑에 두면 바로 위로 솟아 터진다. 폭발 피해 20.
+Place at your feet and launch at an angle, dealing 20 explosive damage.	발밑에 두면 비스듬히 날아가 터진다. 폭발 피해 20.
+Place at your feet and explode when damaged by most damage sources, dealing 500 explosive damage. Decays after 5 minutes if not detonated.	발밑에 두고 공격하면 터진다. 폭발 피해 500. 5분 안에 안 터지면 사라진다.
+6-Motion-Value Normal Shot. Can be loaded into nearly any bowgun.	모션값 6의 일반탄. 거의 모든 보우건에 장전할 수 있다.
+12-Motion-Value Normal Shot. Can be loaded into any bowgun.	모션값 12의 일반탄. 모든 보우건에 장전할 수 있다.
+10-Motion-Value Normal Shot.<span class="mhg"> Ricochet up to 3 times.</span>	모션값 10의 일반탄.
+10-Motion-Value Piercing Shot. Impacts up to 3 times.	모션값 10의 관통탄. 최대 3히트.
+9-Motion-Value Piercing Shot. Impacts up to 4 times.	모션값 9의 관통탄. 최대 4히트.
+7-Motion-Value Piercing Shot. Impacts up to 6 times.	모션값 7의 관통탄. 최대 6히트.
+5-Motion-Value Pellet Shot. Impacts up to 3 times.	모션값 5의 산탄. 최대 3히트.
+5-Motion-Value Pellet Shot. Impacts up to 4 times.	모션값 5의 산탄. 최대 4히트.
+5-Motion-Value Pellet Shot. Impacts up to 6 times.	모션값 5의 산탄. 최대 6히트.
+Deal 3-Motion-Value raw damage on impact, 20 explosive and 30 fire damage on explosion.	명중 시 모션값 3, 폭발 시 폭발 20・화속성 30.
+Deal 3-Motion-Value raw damage on impact, 30 explosive and 45 fire damage on explosion.	명중 시 모션값 3, 폭발 시 폭발 30・화속성 45.
+Deal 3-Motion-Value raw damage on impact, 40 explosive and 60 fire damage on explosion.	명중 시 모션값 3, 폭발 시 폭발 40・화속성 60.
+Deal 6-Motion-Value raw damage on impact, 32 explosive and 2 fire damage from each bomblet. Friendly fire will stagger but do no damage.	명중 시 모션값 6, 자탄마다 폭발 32・화속성 2. 아군은 피해 없이 움찔한다.
+Deal 1-Motion-Value raw and 40-Motion-Value Fire damage.	모션값 1, 화속성 모션값 40.
+Deal 1-Motion-Value raw and 10-Motion-Value Water damage. Impacts up to 3 times.	모션값 1, 수속성 모션값 10. 최대 3히트.
+Deal 1-Motion-Value raw and 20-Motion-Value Water damage. Impacts up to 3 times.	모션값 1, 수속성 모션값 20. 최대 3히트.
+Deal 48 Dragon damage.<span class="mhg"> Impacts up to 6 times.</span>	용속성 피해 48.
+Restore 30 hitpoints to all hunters and monsters in the firing cone.	발사 범위 안의 헌터・몬스터 모두 체력 30 회복.
+Restore 50 hitpoints to all hunters and monsters in the firing cone.	발사 범위 안의 헌터・몬스터 모두 체력 50 회복.
+Apply 25 Poison status to a monster. Can affect more than one monster if they are very close together.	독 축적 25. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Apply 50 Poison status to a monster. Can affect more than one monster if they are very close together.	독 축적 50. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Apply 25 Paralysis status to a monster. Can affect more than one monster if they are very close together.	마비 축적 25. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Apply 50 Paralysis status to a monster. Can affect more than one monster if they are very close together.	마비 축적 50. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Apply 25 Sleep status to a monster. Can affect more than one monster if they are very close together.	수면 축적 25. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Apply 50 Sleep status to a monster. Can affect more than one monster if they are very close together.	수면 축적 50. 몬스터끼리 붙어 있으면 여러 마리에 걸린다.
+Paint a monster and it's location will appear on the map for 10 minutes. If a small monster is painted, its icon will disappear once you leave the area. With the Detect or Autotracker armor skill, for large monsters, the icon will indicate the monster's facing direction, whether it's flying, and whether it's alerted for combat or calm.	몬스터에 맞히면 10분 동안 지도에 위치가 표시된다. 소형 몬스터는 에리어를 벗어나면 아이콘이 사라진다. 탐지・자동마킹이 있으면 대형 몬스터의 방향, 비행 여부, 전투・진정 상태도 보인다.
+Add 3 to another hunter's true damage, until they cart. Does not stack with Demondrug or Mega Demondrug. Will not take effect if the hunter is using the Supply Box at camp.	맞은 헌터가 쓰러질 때까지 실공격력 +3. 귀인약・귀인약Ｇ과 겹치지 않는다. 캠프 지급품 상자를 쓰는 중이면 효과가 없다.
+Add 3 to another hunter's defense, until they cart. Does not stack with Armorskin or Mega Armorskin. Will not take effect if the hunter is using the Supply Box at camp.	맞은 헌터가 쓰러질 때까지 방어력 +3. 경화약・경화약Ｇ과 겹치지 않는다. 캠프 지급품 상자를 쓰는 중이면 효과가 없다.
+Fishing bait with no special properties.	특별한 효과가 없는 낚시 미끼.
+Fishing bait that can also be used to fish Plesioth, dealing damage.	가노토토스도 낚을 수 있는 미끼. 낚으면 피해를 준다.
+Attact Pin Tuna and Speartuna to your fishing lure.	가시다랑어・청새치가 미끼에 몰린다.
+Attact Burst Arowana and Bomb Arowana to your fishing lure.	파열아로와나・폭렬아로와나가 미끼에 몰린다.
+Attract Goldenfish to your fishing lure.	황금어가 미끼에 몰린다.
+Cook Raw Meat into Steak, if you have Raw Meat in your inventory. Use to start cooking, and press <span class="ui-icon circle-icon"></span> to take the meat off the spit. Remove while the music is playing to keep the Raw Meat, shortly after the music stops for Rare Steak, a few seconds after the music for Well-Done Steak, too late or not at all for Burnt Steak.	고기를 가지고 있으면 구울 수 있다. 사용해서 굽기 시작하고 ○ 버튼으로 꺼낸다. 음악 중에 꺼내면 고기 그대로, 음악이 끝난 직후면 덜익은 고기, 몇 초 뒤면 잘익은 고기, 너무 늦으면 탄고기.
+Trade 99 Meteorite to any Veggie Elder.	성철 99개를 물물교환 노인에게 교환.
+Trade 99 Pawprint Stamps to any Veggie Elder.	고양이 발도장 99개를 물물교환 노인에게 교환.
+Restore 150 hits of sharpness to your weapon.	무기 예리도 150타 회복.
+Alert all monsters in the area to attack you. Monsters who are actively fleeing to another area will not be affected.	에리어의 몬스터 모두가 나를 노리게 한다. 다른 에리어로 도망 중인 몬스터는 제외.
+Restore 20 hitpoints to yourself and 60 hitpoints to other hunters in the same area. Also, alert all monsters in the area to attack you. Monsters who are actively fleeing to another area will not be affected.	자신은 체력 20, 같은 에리어 다른 헌터는 체력 60 회복. 에리어의 몬스터 모두가 나를 노린다 (도망 중인 몬스터 제외).
+Cure poison on yourself and other hunters in the same area. Also, alert all monsters in the area to attack you. Monsters who are actively fleeing to another area will not be affected.	자신과 같은 에리어 헌터의 독 해제. 에리어의 몬스터 모두가 나를 노린다 (도망 중인 몬스터 제외).
+Add 10 to the true damage of your weapon and the weapons of any hunters in the same area for 3 minutes. Also, alert all monsters in the area to attack you. Monsters who are actively fleeing to another area will not be affected.	3분 동안 자신과 같은 에리어 헌터의 실공격력 +10. 에리어의 몬스터 모두가 나를 노린다 (도망 중인 몬스터 제외).
+Add 20 to your defense and the defense of any hunters in the same area for 3 minutes. Also, alert all monsters in the area to attack you. Monsters who are actively fleeing to another area will not be affected.	3분 동안 자신과 같은 에리어 헌터의 방어력 +20. 에리어의 몬스터 모두가 나를 노린다 (도망 중인 몬스터 제외).
+Restore 20 hitpoints.	체력 20 회복.
+Cure poison 50% of the time.	50% 확률로 독 해제.
+A Melynx will always steal this instead of other items.	메라루가 다른 아이템 대신 반드시 이것을 훔친다.
+Sold automatically at the end of a quest.	퀘스트가 끝나면 자동으로 팔린다.
+<details><summary>Effect Chances</summary><table><thead><tr><th>Effect</th><th>% Chance</th></tr></thead><tbody><tr><th>Restore 10 HP</th><td class='ta-r'>27%</td></tr><tr><th>Attack +10 for 3 minutes</th><td class='ta-r'>20%</td></tr><tr><th>Defense +20 for 3 minutes</th><td class='ta-r'>20%</td></tr><tr><th>Max Stamina -25</th><td class='ta-r'>14%</td></tr><tr><th>Max Stamina +25, no Stamina loss for 3 minutes</th><td class='ta-r'>10%</td></tr><tr><th>Current Health Halved (not max health, no red recovery)</th><td class='ta-r'>5%</td></tr><tr><th>Max Stamina 150, Max Health 150, Restore All Health</th><td class='ta-r'>3%</td></tr><tr><th>Poison (Short) + Stench + Vocal Cord Paralysis</th><td class='ta-r'>1%</td></tr></tbody></table></details>	<details><summary>효과 확률</summary><table><thead><tr><th>효과</th><th>확률</th></tr></thead><tbody><tr><th>체력 10 회복</th><td class='num'>27%</td></tr><tr><th>3분 동안 공격력 +10</th><td class='num'>20%</td></tr><tr><th>3분 동안 방어력 +20</th><td class='num'>20%</td></tr><tr><th>최대 스태미나 -25</th><td class='num'>14%</td></tr><tr><th>최대 스태미나 +25, 3분 동안 스태미나 감소 없음</th><td class='num'>10%</td></tr><tr><th>현재 체력 절반 (최대 체력은 그대로, 빨간 게이지 없음)</th><td class='num'>5%</td></tr><tr><th>최대 스태미나・최대 체력 150, 체력 완전 회복</th><td class='num'>3%</td></tr><tr><th>독(짧음) + 악취 + 성대마비</th><td class='num'>1%</td></tr></tbody></table></details>
+Add 10 to your weapon's raw damage for 3 minutes.	3분 동안 실공격력 +10.
+Add 20 to your defense for 3 minutes.	3분 동안 방어력 +20.
+Restore 150 hits of sharpness.	예리도 150타 회복.
+When eaten, there's a 50% chance you will recover 20 health, and a 50% chance you receive one of a variety of items as a reward.	먹으면 50% 확률로 체력 20 회복, 50% 확률로 여러 아이템 중 하나를 얻는다.
+Defeat the Master Shipwright at arm wrestling.	조선소 대장을 팔씨름으로 이긴다.
+Adds an additional page (100 more slots) to your item storage and equipment storage.	아이템・장비 상자가 1페이지(100칸) 늘어난다.
+Adds an additional page (100 more slots) to your item storage and equipment storage (requires buying the Organizer Guide first.)	아이템・장비 상자가 1페이지(100칸) 늘어난다 (먼저 [책]수납달인기술을 사야 한다).
+Extends your home in Jumbo Village, including a kitchen area with four seats to serve meals to a full hunting party, and adds an additional page (100 more slots) to your item storage and equipment storage.	점보 마을의 집이 넓어져 4인 식사 자리가 있는 부엌이 생기고, 아이템・장비 상자가 1페이지(100칸) 늘어난다.
+Extends your home in Jumbo Village, and adds an additional page (100 more slots) to your item storage and equipment storage (requires buying the Woodworker Guide first.)	점보 마을의 집이 넓어지고 아이템・장비 상자가 1페이지(100칸) 늘어난다 (먼저 개축달인・장인술을 사야 한다).
+Restore 100 hits of sharpness to your weapon.	무기 예리도 100타 회복.
+<span class="va-m">Use at a Ballista emplacement to load the shot. Deal 100 damage to monsters before defense modifiers. Press R1 to aim, </span><span class="ui-icon circle-icon"></span><span class="va-m"> to fire, and </span><span class="ui-icon cross-icon"></span><span class="va-m"> to unload and leave the Ballista.</span>	발리스타 앞에서 써서 장전한다. 육질 보정 전 피해 100. R1 조준, ○ 발사, × 탄을 빼고 내려온다.
+Use at a cannon to load the shot. Deal 250 damage to monsters before defense modifiers.	대포 앞에서 써서 장전한다. 육질 보정 전 피해 250.
+Trade a Daora Scale to any Veggie Elder.	강철용린 1개를 물물교환 노인에게 교환.
+Supply the Excavation Enthusiast with enough pickaxes to eventually excavate it from the Jumbo mine.	발굴 마니아에게 곡괭이를 충분히 건네면 점보 마을 광산에서 발굴된다.
+Rewarded by completing enough villager requests (see the Item Delivery Requests section below.)	마을 사람의 납품 의뢰를 충분히 마치면 받는다.
+Rewarded by the Kokoto Village Chief.	코코트 마을 촌장에게 받는다.
+Jungle	밀림
+Swamp	늪지
+Snowy Mountain	설산
+Forest	숲언덕
+Tower	탑
+Pearls	진주
+Fort	요새
+Battle Quarters	투기장
+Castle Schrade	슈레이드 성
+The Battleground	결전장
+Arenas	투기장
+Found in all regions.	모든 지역에 산다.
+Often seen in the company of Melynxes, they will fiercely defend their Felyne comrades when attacked.	메라루와 함께 다닐 때가 많고, 동료 아이루가 공격받으면 맹렬히 지킨다.
+Poison	독
+Paralysis	마비
+Sleep	수면
+KO	기절
+poison	독
+paralysis	마비
+sleep	수면
+stun	기절
+Often seen in the company of common Felynes, who will fiercely defend them when attacked.	아이루와 함께 다닐 때가 많고, 공격받으면 아이루가 맹렬히 지켜 준다.
+Found in forests and ruins.	숲과 유적에 산다.
+They will hide in plain sight to ambush unwary hunters.	눈앞에 숨어 있다가 방심한 헌터를 덮친다.
+Powerful and elusive, the King Shakalaka is rarely seen by hunters.	강하고 잘 숨어서 헌터 눈에 띄는 일이 드물다.
+Poison will slay it without destroying its body.	독으로 쓰러뜨리면 몸이 부서지지 않는다.
+Found in jungles and swamps.	밀림과 늪지에 산다.
+They are slow-moving on the ground, but will pounce when provoked.	땅에서는 느리지만 건드리면 덮친다.
+Found in ruins and in the presence of certain elder dragons.	유적과 일부 고룡 주변에 나타난다.
+Found in forests, jungles, and swamps.	숲, 밀림, 늪지에 산다.
+Both the males and females have horns.	수컷과 암컷 모두 뿔이 있다.
+Their excellent sense of smell attunes them to even the most hidden mushroom patches.	코가 좋아 깊이 숨은 버섯도 찾아낸다.
+Found in mountains.	산에 산다.
+Its hard skull protects it from being knocked out.	머리뼈가 단단해 기절하지 않는다.
+The arrival of a large monster is enough to make the entire herd flee.	대형 몬스터가 나타나면 무리 전체가 달아난다.
+Found in deserts and volcanoes.	사막과 화산에 산다.
+Unlike the Aptonoth, Apceros will not flee from even the most fearsome large monsters.	아프토노스와 달리 무서운 대형 몬스터에게도 달아나지 않는다.
+Can leap great distances, but are easily cut down.	멀리 뛰지만 쉽게 쓰러진다.
+Snowman	눈사람
+Found in jungles.	밀림에 산다.
+Will often hang back while its pack attacks.	무리가 덤비는 동안 뒤에 물러나 있을 때가 많다.
+Found in deserts and swamps.	사막과 늪지에 산다.
+Found in deserts.	사막에 산다.
+Found in jungles, swamps, and volcanoes.	밀림, 늪지, 화산에 산다.
+Weak Poison	약한 독
+Found in swamps, and volcanoes.	늪지와 화산에 산다.
+Can launch fireballs a short distance.	불덩이를 가까이 뱉는다.
+Ears	귀
+Break	파괴
+Fire	화
+Its mighty shriek can deafen the hardiest hunter.	강한 울음소리는 단련된 헌터의 귀도 먹먹하게 한다.
+400 beak, 600 ears	부리 400, 귀 600
+Head	머리
+Right Wing	오른날개
+Left Wing	왼날개
+Tail	꼬리
+Break twice	2회 파괴
+Break both	양쪽 파괴
+Strong Poison	강한 독
+It likes to steal valuables and shiny things.	귀중품과 반짝이는 것을 훔치기 좋아한다.
+Comb	볏
+Found in volcanoes and ruins.	화산과 유적에 산다.
+Its poisonous spit allows it to attack hunters from a distance.	독을 뱉어 멀리서 헌터를 공격한다.
+Found in jungles, swamps, and forests.	밀림, 늪지, 숲에 산다.
+When enraged, she will charge several times before stumbling.	분노하면 여러 번 돌진한 뒤 넘어진다.
+Found in jungles and deserts.	밀림과 사막에 산다.
+A rare sight, only a hunter with the proper navigational tools can find its stomping grounds.	보기 드물어, 알맞은 탐험 도구를 가진 헌터만 서식지를 찾을 수 있다.
+Often takes flight to thwart hunters.	헌터를 피해 자주 날아오른다.
+Dragon	용
+Found in swamps and mountains.	늪지와 산에 산다.
+Able to climb on any surface, it's nearly impossible to dislodge while climbing.	어떤 면이든 기어오르며, 붙어 있을 때 떼어내기가 거의 불가능하다.
+Stagger the stomach, head, and each leg twice each to break the skin.	배, 머리, 다리 각각을 2번씩 움찔하게 하면 표피가 파괴된다.
+Skin	표피
+Stagger 4 parts twice?	4부위 각 2회 경직?
+Thunder	뇌
+Found in volcanoes.	화산에 산다.
+The tail can be cut, though even the sharpest blade will bounce off it.	꼬리를 자를 수 있지만 아무리 날카로운 칼날도 튕겨 낸다.
+While burrowed, it will take an additional &times;1.1 raw or explosive damage. After the first hit, it will be agitated and the modifier disabled until it burrows to hide again, usually after changing area.	땅속에 숨어 있을 때 물리・폭발 피해를 1.1배 더 받는다. 첫 공격 뒤에는 흥분해서 다시 숨을 때까지(보통 에리어 이동 후) 보정이 사라진다.
+Found in swamps and volcanoes.	늪지와 화산에 산다.
+The rocky scales on its chest can be broken to expose its flesh.	가슴의 바위 같은 비늘을 부수면 살이 드러난다.
+700 partial, 1400 full	부분 700, 전체 1400
+Chest	가슴
+Unlike the common variety, it will favor fiery attacks once agitated by a hunter.	원종과 달리 헌터에게 자극받으면 불 공격을 즐겨 쓴다.
+It will only face a solo hunter.	혼자인 헌터만 상대한다.
+Horn	뿔
+Does not take additional damage while Paralyzed.	마비 중에도 피해가 늘지 않는다.
+It will often burrow in anticipation of hunters, to ambush them from underground.	헌터를 예상하고 땅속에 숨었다가 기습할 때가 많다.
+300 each horn	뿔마다 300
+Horns	뿔
+Very flighty, but aggressive when angered.	겁이 많지만 화나면 사납다.
+Water	수
+Fin	지느러미
+Hunters have reported that it is so massive and its attacks so quick that the air around its body is harmful.	몸집이 너무 크고 공격이 빨라 몸 주위 공기조차 위험하다는 헌터 보고가 있다.
+It will circle its prey to dizzy it before striking with its claws.	먹잇감 주위를 돌아 어지럽힌 뒤 집게로 내려친다.
+Its powerful legs allow it to leap to a great height.	강한 다리로 높이 뛰어오른다.
+200 blunt, 400 blunt	타격 200, 타격 400
+Guarding	가드 중
+Guarding with a Broken Claw	집게 파괴 후 가드 중
+Left Claw	왼집게
+Right Claw	오른집게
+Shell	껍데기
+While eating, it will take an additional &times;1.1 raw or explosive damage. After the first hit, it will be agitated and the modifier disabled until it calms down and begins eating again, usually after changing area.	먹는 중에는 물리・폭발 피해를 1.1배 더 받는다. 첫 공격 뒤에는 흥분해서 다시 진정하고 먹을 때까지(보통 에리어 이동 후) 보정이 사라진다.
+The tips of its legs are so sharp, it can climb on any surface.	다리 끝이 날카로워 어떤 면이든 기어오른다.
+Shell Broken	껍데기 파괴 후
+Rarely seen in the wild, until it threatens a human settlement.	사람 마을을 위협하기 전까지는 야생에서 거의 보이지 않는다.
+It walks tall on its long legs, making it hard to battle from the ground until they are injured.	긴 다리로 높이 서서 다니므로, 다리를 다치게 하기 전까지는 땅에서 싸우기 어렵다.
+Its claws cannot be broken by damaging them directly; instead it must be toppled while its legs have been injured to the point of glowing bright red. Standing in its high stance puts a great strain on its legs, and injuring a leg in this stance will turn them increasingly red: the first time it staggers, a dull red; the second, bright red. While in its low, crouching stance, injuring a leg can cause it to stagger, but the leg will not glow brighter than dull red. Once all four legs are glowing bright red, it can be toppled by further injuring any one leg, and its claws will break on impact with the ground.	집게는 직접 때려서 부술 수 없다. 다리를 새빨갛게 될 때까지 다치게 한 뒤 넘어뜨려야 한다. 높이 선 자세에서 다리를 공격하면 점점 붉어진다(1번째 경직은 어두운 빨강, 2번째는 밝은 빨강). 낮게 웅크린 자세에서는 경직은 하지만 어두운 빨강 이상으로는 안 된다. 다리 4개가 모두 밝은 빨강이 되면 아무 다리나 더 공격해 넘어뜨릴 수 있고, 땅에 부딪치며 집게가 부서진다.
+Legs	다리
+Stagger each leg twice, then break	다리마다 2회 경직 후 파괴
+Found in forests, jungles, swamps, and volcanoes.	숲, 밀림, 늪지, 화산에 산다.
+Often found in groups, seldom alone. Even a small sounder of Bullfango can quickly overwhelm an unwary hunter.	혼자보다 무리로 다닐 때가 많다. 작은 무리라도 방심한 헌터를 금세 몰아붙인다.
+Found in jungles, swamps, and mountains.	밀림, 늪지, 산에 산다.
+Easily agitated by hunters, it will charge and kick with reckless abandon.	헌터에게 쉽게 흥분해 마구 돌진하고 걷어찬다.
+It is more resilient than most small monsters.	대부분의 소형 몬스터보다 튼튼하다.
+Stench	악취
+During a prolonged hunt, it may seek out mushrooms to replenish its spent energy.	사냥이 길어지면 기운을 채우려 버섯을 찾아다니기도 한다.
+With Belly Flexed	배에 힘을 줄 때
+Left Claws	왼발톱
+Right Claws	오른발톱
+Crown	왕관
+Tail Item	꼬리 아이템
+When called by its leader, it will burrow out of the ground.	우두머리가 부르면 땅속에서 나온다.
+Its ice-cold breath can encase a hunter in snow.	차가운 숨으로 헌터를 눈사람으로 만든다.
+Fire element damage is required to break Blangonga's fangs.	도도블랑고 엄니는 화속성 피해로만 부서진다.
+Fangs	엄니
+Ice	빙
+Found in mountains and volcanoes.	산과 화산에 산다.
+It is believed to have some connection to the Black Dragon.	흑룡과 어떤 관련이 있다고 여겨진다.
+Ice element damage is required to break Rajang's tail, and the final blow must land while it's enraged.	라잔 꼬리는 빙속성 피해로만 부서지며, 마지막 일격은 분노 중에 넣어야 한다.
+Though it has a tough hide, its horn is quite fragile.	가죽은 질기지만 뿔은 꽤 약하다.
+Found in jungles, deserts, and mountains.	밀림, 사막, 산에 산다.
+Guild researchers believe that the right ailment may impair its protective shroud of wind.	길드 연구자들은 알맞은 상태이상이 바람 장막을 약하게 할 거라 본다.
+Wind Pressure Active	풍압 두른 상태
+Except at Snowy Mountain	설산 제외
+Only at Snowy Mountain	설산만
+Known to attack human settlements.	사람 마을을 습격한 적이 있다.
+It belches a nauseating gas that can impair a hunter in various ways.	메스꺼운 가스를 내뿜어 헌터에게 여러 이상을 일으킨다.
+While Invisible	투명 상태
+Dragon element damage is required to break Chameleos's horn.	오나즈치 뿔은 용속성 피해로만 부서진다.
+Silence	성대마비
+Found in deserts, volcanoes, and ruins.	사막, 화산, 유적에 산다.
+Flame Aura	화염 오라
+Dragon element damage is required to break Lunastra's horns, and its health must be below 60%. Lunastra's tail can only be cut when it's below 40% health.	나나 테스카토리 뿔은 체력 60% 이하에서 용속성 피해로만 부서진다. 꼬리는 체력 40% 이하에서만 자를 수 있다.
+Found in deserts, swamps, and volcanoes.	사막, 늪지, 화산에 산다.
+It can summon explosive powder in a wide area around its body.	몸 주위 넓은 범위에 폭발하는 가루를 흩뿌린다.
+Dragon element damage is required to break Teostra's horns, and its health must be below 60%. Teostra's tail can only be broken when it's below 40% health.	테오 테스카토르 뿔은 체력 60% 이하에서 용속성 피해로만 부서진다. 꼬리는 체력 40% 이하에서만 부서진다.
+Due to its large scales and thick hide, it is immune to poison, paralysis, and sleep.	큰 비늘과 두꺼운 가죽 때문에 독・마비・수면에 걸리지 않는다.
+One swing of its mighty tail is enough to fell even the strongest hunter.	꼬리 한 번 휘두르면 가장 강한 헌터도 쓰러진다.
+400 horn, 800 head	뿔 400, 머리 800
+It is not possible to attack Lao's Spine with Blademaster weapons	라오샨룽 척추는 검사 무기로 공격할 수 없다.
+Left Shoulder	왼어깨
+Right Shoulder	오른어깨
+Spine Plate	척추 판
+Back	등
+Only seasoned hunters are allowed to pursue it.	노련한 헌터만 쫓을 수 있다.
+Great Thunderbugs are known to flock to it.	대뇌광충이 모여든다.
+Yama's Front Left Tentacle	앞 왼쪽 촉수
+Yama's Front Right Tentacle	앞 오른쪽 촉수
+Yama's Back Left Tentacle	뒤 왼쪽 촉수
+Yama's Back Right Tentacle	뒤 오른쪽 촉수
+Break all	모두 파괴
+It has only been seen at the ruins of Castle Schrade	슈레이드 성 폐허에서만 목격되었다.
+Only hunters of the greatest renown claim to have faced this dragon.	가장 이름난 헌터만이 이 용과 싸웠다고 말한다.
+500 right horn, 1000 left horn, 1500 eye	오른뿔 500, 왼뿔 1000, 눈 1500
+Eye and Horns	눈과 뿔
+Wing	날개
+It is believed to lie deep in the heart of the volcano.	화산 깊은 곳에 잠들어 있다고 여겨진다.
+While at 20% to 50% Health	체력 20~50%일 때
+No one knows where this dragon can be found.	이 용이 어디 있는지 아무도 모른다.
+HR41+ to post, HR38+ to join	HR41 이상 수주, HR38 이상 참가
+Two Yian Kut-Ku will spawn at the start of the quest. Once one has died and its corpse faded, a replacement will spawn; therefore there are usually, but never more than, two active at once.	시작하면 얀쿡크 2마리가 나온다. 1마리가 죽어 사체가 사라지면 새로 나오므로, 보통 2마리(그 이상은 없음)가 동시에 있다.
+HR51+ and possess the Ancient Dragon Tome	HR51 이상, [책]조룡 소지
+Possess the Explorer's Tools	비경 세트 소지
+No armor allowed	방어구 착용 불가
+Great and Longswords	대검・태도
+Speak to the Great Elder after clearing 20 Town Sieges from the Great Hall.	대장로의 집회소에서 마을 방어전을 20번 클리어한 뒤 대장로에게 말을 건다.
+Hammers and Hunting Horns	해머・수렵피리
+Speak to the Master Shipwright after successfully hunting a silver-crown-sized, or larger, Plesioth.	은관 크기 이상의 가노토토스를 사냥한 뒤 조선소 대장에게 말을 건다.
+Lances and Gunlances	랜스・건랜스
+Swords and Dual Swords	한손검・쌍검
+Excavated from the Jumbo Village mines	점보 마을 광산에서 발굴
+Complete "Horn of the Monoblos" and speak to the Kokoto Village chief	「일각룡의 뿔」 클리어 후 코코트 마을 촌장에게 말을 건다
+Training Only	훈련 전용
+Rewarded for ordering a meal from the felyne's special menu 50 times	아이루 특별 메뉴를 50번 주문하면 받는다
+Light Bowgun	라이트 보우건
+Heavy Bowgun	헤비 보우건
+Bow	활
+Accumulate 50 or more request points from the Diva in Dundorma	가희의 의뢰 포인트를 50 이상 모은다
+Headgear	머리
+Dojo Only	훈련 전용
+Torso	몸통
+Arms	팔
+Waist	허리
+Legs	다리
+decorations	장식주
+Village/Low Rank	마을・하위
+High Rank	상위
+Low Rank	하위
+Village	마을
+??	??
+350, <img class='attribute-icon' src='../images/attributes/fire.png' title='Fire'>	350 (<span class="el fire">화</span>속성만)
+600, <img src='../images/cursors/greatsword.png'></span>	600 (대검)
+1000, <img class='attribute-icon' src='../images/attributes/ice.png' title='Ice'>, while enraged	1000 (<span class="el ice">빙</span>속성, 분노 중)
+300, &le;60% HP	300 (체력 60% 이하)
+100, &le;30% HP	100 (체력 30% 이하)
+150, <img class='attribute-icon' src='../images/attributes/dragon.png' title='Dragon'>	150 (<span class="el dragon">용</span>속성만)
+140, &le;30% HP	140 (체력 30% 이하)
+300, <img class='attribute-icon' src='../images/attributes/dragon.png'>, &le;60% HP	300 (<span class="el dragon">용</span>속성, 체력 60% 이하)
+100, &le;40% HP	100 (체력 40% 이하)
+300, <img class='attribute-icon' src='../images/attributes/dragon.png' title='Dragon'>, &le;60% HP	300 (<span class="el dragon">용</span>속성, 체력 60% 이하)
+Acquire all the coins available at the Dojo	도장에서 얻을 수 있는 코인을 모두 모은다
+Capture 100 Large Monsters (only Main Goal monsters count)	대형 몬스터 100마리 포획 (메인 목표 몬스터만 셈)
+Clear 100 quests in the Desert	사막 퀘스트 100회 클리어
+Clear 100 quests in the Forest and Hills	숲언덕 퀘스트 100회 클리어
+Clear 100 quests in the Jungle	밀림 퀘스트 100회 클리어
+Clear 100 quests in the Snowy Mountain	설산 퀘스트 100회 클리어
+Clear 100 quests in the Swamp	늪지 퀘스트 100회 클리어
+Clear 100 quests in the Volcano	화산 퀘스트 100회 클리어
+Clear all Dundorma Tavern Quests	돈도르마 주점 퀘스트 모두 클리어
+Clear all Hunter's Dojo quests	헌터 도장 퀘스트 모두 클리어
+Clear all Instructor's Training quests	교관 훈련 퀘스트 모두 클리어
+Clear all Online Quests	온라인 퀘스트 모두 클리어
+Clear all Village Quests	마을 퀘스트 모두 클리어
+Clear any Transport Quests 30 times	운반 퀘스트 30회 클리어
+Clear Dundorma sieges from the Elder Hall 30 times	대장로의 집회소에서 돈도르마 방어전 30회 클리어
+Clear Dundorma sieges from the Tavern 30 times	주점에서 돈도르마 방어전 30회 클리어
+Combine 213/237 of the Combo recipes	조합식 237개 중 213개 성공
+Complete 30 Choice Mushrooms delivery subquests	특산 버섯 납품 서브 퀘스트 30회 달성
+Complete 30 Powderstone delivery subquests	분진석 납품 서브 퀘스트 30회 달성
+Complete 30 Quartz Ore delivery subquests	석영 납품 서브 퀘스트 30회 달성
+Complete 30 Unique Mushrooms delivery subquests	희귀 버섯 납품 서브 퀘스트 30회 달성
+Complete 30 Wyvern Eggs delivery subquests	비룡의 알 납품 서브 퀘스트 30회 달성
+Craft at least 30/59 armor pieces in any combination of the ones below: Chameleos 10 Pieces, Lunastra 10 Pieces, Yama Tsukami 10 Pieces, White Fatalis 10 Pieces, Yian Garuga 10 Pieces, Melahoa 3 Pieces, Makluva 3 Pieces, Bistro 3 Pieces	아래 방어구 59개 중 30개 이상 생산: 오나즈치 10부위, 나나 테스카토리 10부위, 야마츠카미 10부위, 밀라보레아스(선조룡) 10부위, 얀가루루가 10부위, 멜라호아 3부위, 마크루바 3부위, 비스트로 3부위
+Craft at least 44/55 weapons of those required for each weapon Fanatic title	무기별 「마니아」 칭호 대상 무기 55개 중 44개 이상 생산
+Eat 100 meals	식사 100회
+Have 2,000,000z in your possession at one time	소지금 2,000,000z 이상
+Have 50 registered Friends at the same time	친구 50명 동시 등록
+Have over 200,000 total points at the Hunter's Dojo	헌터 도장 누적 200,000점 이상
+Hunt 10 Big-size (Silver Crown) monsters	큰 개체(은관) 10마리 수렵
+Hunt 10 King-size (Giant Gold Crown) monsters	최대 개체(금관) 10마리 수렵
+Hunt 10 Small-size (Mini Crown) monsters	작은 개체(미니) 10마리 수렵
+Hunt 15 Big-size (Silver Crown) monsters	큰 개체(은관) 15마리 수렵
+Hunt 15 King-size (Giant Gold Crown) monsters	최대 개체(금관) 15마리 수렵
+Hunt 15 Small-size (Mini Crown) monsters	작은 개체(미니) 15마리 수렵
+Hunt 5 Big-size (Silver Crown) monsters	큰 개체(은관) 5마리 수렵
+Hunt 5 King-size (Giant Gold Crown) monsters	최대 개체(금관) 5마리 수렵
+Hunt 5 Small-size (Mini Crown) monsters	작은 개체(미니) 5마리 수렵
+Hunt Teostra in Offline Mode	오프라인에서 테오 테스카토르 수렵
+Lose 50 PvP	대전 50패
+none (default title)	없음 (기본 칭호)
+Obtain at least 15 of the following Treasures: Explorer Compass, Explorer's Map, Expedition Kit, Explorer's Tools, Tome of Finality, Tome of Legends, Tome of Dragons, Ancient Dragon Tome, Ancient Spout, Ancient Vessel, Ancient Heel, Ancient Pot*, Song of Origins, Silver Egg, Golden Egg, Wyvern Tear, Territorial Dung, Crab Pearl, or Dragon Treasure	아래 보물 중 15개 이상 입수: 탐험가 나침반, 탐험가 지도, 탐험 세트, 비경 세트, 종언의 책, 전설의 책, 고룡의 책, [책]조룡, 고대의 주둥이, 고대의 그릇, 고대의 굽, 고대의 항아리, 시원의 노래, 은색 알, 금색 알, 비룡의 눈물, 영역 표시 똥, 게 진주, 용의 보물
+Order from the Special Felyne Menu 50 times	아이루 특별 메뉴 50회 주문
+Plant 30 Guild Flags	길드 깃발 30개 꽂기
+Play for a total of 300 hours	총 플레이 300시간
+Register with the Guild Master	길드 마스터에게 등록
+Requirements	조건
+Score 15,000P in a Hunter's Dojo quest	헌터 도장 퀘스트에서 15,000P 획득
+Score 4,000P in the Shooting Minigame	사격 미니게임 4,000P 획득
+Unlock all Symbol Colors	심볼 색을 모두 해금
+Win 50 PvP	대전 50승
+Win the Arm Wrestling Minigame 50 times	팔씨름 미니게임 50승
+Win the Drinking Minigame 50 times	술 마시기 미니게임 50승
+Hunter Rank	헌터 랭크
+Hunter Life	헌터 생활
+Equipment	장비
+Quest	퀘스트
+Old Fatalis Buster	미라언세스버스터

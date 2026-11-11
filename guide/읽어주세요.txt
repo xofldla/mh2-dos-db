@@ -1,0 +1,24 @@
+﻿몬스터헌터 2 (도스) 한글 공략 — 오프라인판
+
+■ 여는 법
+  압축을 푼 뒤 index.html 을 더블클릭하면 브라우저에서 열립니다.
+  인터넷 연결이 필요 없습니다. 폴더 구조(assets, fonts)를 그대로 두세요.
+
+■ 내용
+  무기, 방어구, 스킬, 아이템, 몬스터, 퀘스트, 맵 채집, 식사, 헌터 칭호, 마을 사람과의 교류
+  각 페이지 위 검색창으로 찾을 수 있고, 「일본어 원문 표시」를 켜면 원문 이름이 같이 나옵니다.
+
+■ 용어
+  아이템・장비・몬스터・퀘스트 이름과 게임 속 설명은 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다.
+
+■ 자료 출처
+  Monster Hunter Oldschool MH2 Wiki (https://wiki.mholdschool.com/mh2/)
+  mmPotato 「モンスターハンター２解析情報」 (https://mh2kaiseki.web.fc2.com/)
+  위 자료의 수치를 바탕으로 했고, 설명문은 한국어로 새로 옮겼습니다.
+  지도 그림(images/maps), 아이콘(images/icons), 몬스터 그림(images/monsters, 크기를 줄임)은 Monster Hunter Oldschool MH2 Wiki 의 것입니다.
+
+■ 지역 아이콘
+  images/regions 의 지역 아이콘은 이 공략을 위해 새로 그린 픽셀 그림입니다.
+
+■ 글꼴
+  Galmuri11 (quiple) — SIL Open Font License 1.1, fonts/LICENSE_Galmuri.txt 참고.
