@@ -84,7 +84,7 @@ footer { margin-top:40px; color:var(--sub) }
 <nav><a href="index.html">← 공략 목차</a></nav>
 <h1>마을 사람과의 교류</h1>
 <div class="sub">점보 마을 사람들의 납품 의뢰와 친밀도</div>
-<p>마을 사람의 의뢰(아이템 납품·퀘스트)를 해결하면 그 사람의 <b>친밀도</b>가 오릅니다. 친밀도가 쌓이면 선물·식사 초대 같은 이벤트가 생기고 마을 시설이 발전합니다.</p>
+<p>의뢰하면 수주할 수 있는 퀘스트가 늘어납니다.</p>
 '@
 # 효율: 1개당 친밀도(요구 수 단계 중 가장 좋은 값). 상위 15%에 ⭐
 $eff = @{}; $bestTier = @{}; foreach ($k in $req.Keys) { $best = 0.0; foreach ($t in $req[$k].tiers) { $c = [double](($t[0] -replace '[^0-9]', '')); $pt = [double](($t[1] -replace '[^0-9]', '')); if ($c -gt 0 -and $pt / $c -gt $best) { $best = $pt / $c; $bestTier[$k] = "$($t[0]) → $($t[1])" } }; $eff[$k] = $best }
