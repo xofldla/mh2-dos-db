@@ -392,10 +392,15 @@ public static class G
     static string SetName(List<ArmorSets.Piece> set)
     {
         var names = set.Select(p => Tk(S(p.A, "japanese"))).ToList();
+        // 이름이 다른 부위가 섞인 세트(레더라이트 + 그린저지 등)는 같은 앞부분을 가진 다수 부위로 이름을 정한다
+        if (names.Count >= 3) {
+            var maj = names.GroupBy(n => n.Length >= 2 ? n.Substring(0, 2) : n).OrderByDescending(g => g.Count()).First();
+            if (maj.Count() >= 3 && maj.Count() < names.Count) names = maj.ToList();
+        }
         string pre = names[0];
         foreach (var n in names.Skip(1)) { int k = 0; while (k < pre.Length && k < n.Length && pre[k] == n[k]) k++; pre = pre.Substring(0, k); }
         pre = pre.TrimEnd(' ', '・', '【', '[', '(', '·');
-        if (set.Count == 1 || pre.Length < 2) return names[0] + (set.Count > 1 ? " 외" : "");
+        if (set.Count == 1 || pre.Length < 1) return names[0] + (set.Count > 1 ? " 외" : "");
         return pre;
     }
 
@@ -452,13 +457,16 @@ public static class G
             var cd = D(c);
             if (ci < 5) foreach (var o in A(cd, "armor")) {
                 var a = D(o); if (Has(a, "dev") || S(a, "index") == "0" || S(a, "rarity") == "") continue;
-                var p = new ArmorSets.Piece { Part = ci, A = a, Name = S(a, "japanese"), Rar = S(a, "rarity"), Cls = S(a, "hunterClass"), Sex = S(a, "sex"), Skills = new HashSet<string>(A(a, "skills").Select(x => S(D(x), "j"))) };
+                var p = new ArmorSets.Piece { Part = ci, A = a, Name = S(a, "japanese"), Rar = S(a, "rarity"), Cls = S(a, "hunterClass"), Sex = S(a, "sex"), Skills = new HashSet<string>(A(a, "skills").Select(x => S(D(x), "j"))),
+                    Mats = new HashSet<string>(A(a, "forge").Select(x => S(D(x), "j") != "" ? S(D(x), "j") : S(D(x), "japanese"))) };
                 all.Add(p);
             }
             foreach (var o in A(cd, "decorations")) { var a = D(o); if (!Has(a, "dev")) decos.Add(a); }
             if (S(cd, "category") != "decorations") ci++;
         }
         var sets = ArmorSets.Group(all);
+        if (Environment.GetEnvironmentVariable("MH2_ARMOR_DEBUG") == "1")
+            File.WriteAllLines(Path.Combine(OutDir, "..", "work", "guide", "armor_groups_debug.txt"), sets.Where(s => s.Count < 5).OrderBy(s => s.Count).Select(s => s.Count + " | " + string.Join(" ; ", s.Select(p => p.Part + ":" + p.Name + " r" + p.Rar + " " + p.Cls + "/" + p.Sex + " [" + string.Join(",", A(p.A, "forge").Select(x => S(D(x), "j") != "" ? S(D(x), "j") : S(D(x), "japanese"))) + "]"))), new UTF8Encoding(false));
         // 세트 레어도 = 가장 많은 레어도(같으면 낮은 쪽)
         Func<List<ArmorSets.Piece>, int> setRar = s => s.GroupBy(p => Ri(p.A)).OrderByDescending(g => g.Count()).ThenBy(g => g.Key).First().Key;
         var rars = sets.Select(setRar).Distinct().OrderBy(x => x).ToList();

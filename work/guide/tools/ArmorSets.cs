@@ -5,7 +5,8 @@ using System.Linq;
 // 방어구 세트 묶기: 같은 레어도・직업・성별에서 이름 앞부분이 같고 스킬 계통이 겹치는 부위를 한 세트로
 public static class ArmorSets
 {
-    public class Piece { public int Part; public Dictionary<string, object> A; public string Name, Rar, Cls, Sex; public HashSet<string> Skills; }
+    public class Piece { public int Part; public Dictionary<string, object> A; public string Name, Rar, Cls, Sex; public HashSet<string> Skills; public HashSet<string> Mats = new HashSet<string>(); }
+    static double Jac(HashSet<string> a, HashSet<string> b) { int u = a.Union(b).Count(); return u == 0 ? 0 : (double)a.Intersect(b).Count() / u; }
 
     static string S(Dictionary<string, object> d, string k) { object v; return d != null && d.TryGetValue(k, out v) && v != null ? Convert.ToString(v) : ""; }
 
@@ -66,6 +67,24 @@ public static class ArmorSets
             if (both.Max(x => R(x)) - both.Min(x => R(x)) > 1) continue;
             par[rb] = ra; members[ra].AddRange(members[rb]); members.Remove(rb);
         }
-        return members.Values.Select(m => m.Select(x => all[x]).OrderBy(x => x.Part).ToList()).ToList();
+        // 2단계: 이름이 달라 혼자 남은 부위(예: グリーンジャージー = レザーライト의 다리)를
+        //        같은 레어도・같은 생산 소재인 세트의 빈 부위에 넣는다 (소재가 절반 이상 겹칠 때, 가장 잘 맞는 것부터)
+        var groups = members.Values.Select(m => m.Select(x => all[x]).ToList()).ToList();
+        var cands = new List<Tuple<double, List<Piece>, List<Piece>>>();
+        foreach (var single in groups.Where(g => g.Count == 1)) {
+            var p = single[0]; if (p.Mats.Count == 0) continue;
+            foreach (var g in groups.Where(g => g.Count >= 2)) {
+                if (g.Any(x => x.Part == p.Part) || g.Any(x => R(x) != R(p))) continue;
+                if (!g.All(x => Compat(x.Cls, p.Cls) && Compat(x.Sex, p.Sex))) continue;
+                double best = g.Max(x => Jac(x.Mats, p.Mats));
+                if (best >= 0.5) cands.Add(Tuple.Create(best, single, g));
+            }
+        }
+        var used = new HashSet<List<Piece>>();
+        foreach (var c in cands.OrderByDescending(x => x.Item1)) {
+            if (used.Contains(c.Item2) || c.Item3.Any(x => x.Part == c.Item2[0].Part)) continue;
+            c.Item3.Add(c.Item2[0]); used.Add(c.Item2);
+        }
+        return groups.Where(g => !used.Contains(g)).Select(g => g.OrderBy(x => x.Part).ToList()).ToList();
     }
 }
