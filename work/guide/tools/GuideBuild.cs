@@ -769,12 +769,30 @@ public static class G
         }
         return sb.ToString();
     }
-    // 몬스터(일본어 이름) → 특수 수주 조건(비경 세트 소지)이 붙은 퀘스트 안내 상자.
-    // 조합법은 조합표에서, 재료 입수처는 퀘스트 보수에서 자동으로 만든다.
+    // 몬스터(일본어 이름) → 등장 조건 안내 상자. 그 몬스터가 나오는 퀘스트가 전부 조건(HR・아이템 소지)이 붙은 것일 때만 만든다
+    // (오프라인 점보・코코트 퀘스트나 조건 없는 온라인 퀘스트가 하나라도 있으면 안내하지 않음).
+    // 필요한 아이템은 조합법(조합표)과 재료 입수처(퀘스트 보수)까지 자동으로 붙인다.
+    static readonly Dictionary<string, string> ReqItem = new Dictionary<string, string> { { "Explorer's Tools", "秘境セット" }, { "Ancient Dragon Tome", "祖龍の書" } };
+    static string QReqKo(string r)
+    {
+        if (r == "") return "조건 없음";
+        var parts = new List<string>();
+        var m = Regex.Match(r, @"HR(\d+)\+ to post, HR(\d+)\+ to join");
+        if (m.Success) parts.Add("수주 HR" + m.Groups[1].Value + " 이상・참가 HR" + m.Groups[2].Value + " 이상");
+        else { m = Regex.Match(r, @"HR(\d+)\+"); if (m.Success) parts.Add("HR" + m.Groups[1].Value + " 이상"); }
+        foreach (var kv in ReqItem) if (r.Contains(kv.Key)) parts.Add(T(kv.Value) + " 소지");
+        if (r.Contains("No armor")) parts.Add("방어구 착용 불가");
+        return parts.Count > 0 ? string.Join(" + ", parts) : H(r);
+    }
+    static int JoinHR(string r)
+    {
+        var m = Regex.Match(r, @"HR(\d+)\+ to join"); if (m.Success) return int.Parse(m.Groups[1].Value);
+        m = Regex.Match(r, @"HR(\d+)\+"); return m.Success ? int.Parse(m.Groups[1].Value) : 0;
+    }
     static Dictionary<string, string> RareQuestNotes()
     {
-        const string SET = "秘境セット";
-        var special = new Dictionary<string, List<string>>(); var allCount = new Dictionary<string, int>();
+        var list = new Dictionary<string, List<string[]>>(); // 몬스터 → [조건 원문, 링크 html]
+        var free = new HashSet<string>();
         foreach (var ld in QuestLocs()) {
             string loc = S(ld, "location"); var cats = A(ld, "categories").Select(D).ToList();
             for (int i = 0; i < cats.Count; i++) {
@@ -782,36 +800,46 @@ public static class G
                 for (int k = 0; k < qls.Count; k++) {
                     int n = 0;
                     foreach (var qo in A(qls[k], "quests")) {
-                        var q = D(qo); string id = QId(loc, i, k, n++); int st; int.TryParse(S(q, "stars"), out st);
-                        bool sp = S(q, "require").Contains("Explorer");
+                        var q = D(qo); string id = QId(loc, i, k, n++); int st; int.TryParse(S(q, "stars"), out st); string req = S(q, "require");
                         foreach (var mo in A(q, "largeMonsters")) {
-                            string mj = S(D(mo), "japanese"); allCount[mj] = (allCount.ContainsKey(mj) ? allCount[mj] : 0) + 1;
-                            if (!sp) continue;
-                            List<string> l; if (!special.TryGetValue(mj, out l)) special[mj] = l = new List<string>();
-                            l.Add("<li><span class=\"meta\">" + LocKo(loc) + "・" + T(S(cats[i], "categoryJapanese")) + "</span> <a class=\"xlink\" href=\"quests.html#" + id + "\">" + (st > 0 ? "★" + st + " " : "") + T(S(q, "japanese")) + "</a></li>");
+                            string mj = S(D(mo), "japanese");
+                            if (req == "" || loc != "dundorma") { free.Add(mj); continue; }
+                            List<string[]> l; if (!list.TryGetValue(mj, out l)) list[mj] = l = new List<string[]>();
+                            l.Add(new[] { req, "<li><span class=\"meta\">" + LocKo(loc) + "・" + T(S(cats[i], "categoryJapanese")) + "</span> <a class=\"xlink\" href=\"quests.html#" + id + "\">" + (st > 0 ? "★" + st + " " : "") + T(S(q, "japanese")) + "</a> <span class=\"rq\">" + QReqKo(req) + "</span></li>" });
                         }
                     }
                 }
             }
         }
-        var res = new Dictionary<string, string>(); if (special.Count == 0) return res;
+        var res = new Dictionary<string, string>();
         var combos = ComboDrops(); var qd = QuestDrops();
-        // 조합 재료 (조합표의 첫 번째 조합법)
-        var mats = new List<string>();
+        var recipe = new Dictionary<string, List<string>>();
         string f = Path.Combine(JsonDir, "..", "..", "work", "guide", "src", "combos_atwiki.tsv");
-        if (File.Exists(f)) foreach (var line in File.ReadAllLines(f, new UTF8Encoding(false))) { var c = line.Split('\t'); if (c.Length >= 4 && c[0] == SET) { mats = new[] { c[1], c[2], c[3] }.Where(x => x != "").Select(ItemNorm).ToList(); break; } }
-        string setLink = ILink(SET, "<b>" + T(SET) + "</b>");
-        foreach (var kv in special) {
-            bool only = allCount.ContainsKey(kv.Key) && allCount[kv.Key] == kv.Value.Count;
-            var sb = new StringBuilder("<div class=\"rarebox\"><h3>🗝️ 만나려면: " + T(SET) + " 필요</h3>");
-            sb.Append("<p>" + (only ? "이 몬스터는 아래 퀘스트에서만 나옵니다." : "아래 퀘스트는") + " 수주・참가하려면 " + setLink + "를 <b>가지고 있어야</b> 합니다. 필요한 것은 " + T(SET) + " 1개뿐입니다.</p><ul>" + string.Join("", kv.Value) + "</ul>");
-            List<string> cl; if (combos.TryGetValue(SET, out cl)) sb.Append("<h4>" + T(SET) + " 만드는 법 (조합)</h4>" + string.Join("", cl) + "<p class=\"meta\">조합하면 재료 " + mats.Count + "개는 없어지고 " + T(SET) + "만 남습니다.</p>");
-            if (mats.Count > 0) {
-                sb.Append("<h4>재료 얻는 곳 (퀘스트 보수로만 나옴)</h4>");
-                foreach (var mj in mats) { List<string> ql; sb.Append("<div class=\"rmat\"><b>" + ILink(mj, T(mj)) + "</b>" + (qd.TryGetValue(mj, out ql) ? string.Join("", ql) : "<div class=\"meta\">입수처 자료 없음</div>") + "</div>"); }
+        if (File.Exists(f)) foreach (var line in File.ReadAllLines(f, new UTF8Encoding(false))) { var c = line.Split('\t'); if (c.Length >= 4 && !recipe.ContainsKey(c[0])) recipe[c[0]] = new[] { c[1], c[2], c[3] }.Where(x => x != "").Select(ItemNorm).ToList(); }
+        foreach (var kv in list) {
+            if (free.Contains(kv.Key)) continue;
+            var qs = kv.Value;
+            int minHR = qs.Min(x => JoinHR(x[0]));
+            // 모든 퀘스트에 공통으로 필요한 아이템
+            var items = ReqItem.Where(r => qs.All(x => x[0].Contains(r.Key))).Select(r => r.Value).ToList();
+            var head = new List<string>(); if (minHR > 0) head.Add("HR" + minHR + " 이상"); head.AddRange(items.Select(x => T(x) + " 필요"));
+            var sb = new StringBuilder("<div class=\"rarebox\"><h3>🗝️ 만나려면: " + string.Join(" + ", head) + "</h3>");
+            sb.Append("<p>이 몬스터는 <b>조건이 붙은 온라인(돈도르마) 퀘스트</b>에서만 나옵니다." + (minHR > 0 ? " 가장 낮은 조건은 <b>HR" + minHR + " 이상</b>입니다." : "") + "</p><ul>" + string.Join("", qs.Select(x => x[1])) + "</ul>");
+            foreach (var it in items) {
+                string link = ILink(it, "<b>" + T(it) + "</b>");
+                sb.Append("<p>필요한 아이템: " + link + " 1개 — <b>가지고만 있으면</b> 됩니다.</p>");
+                List<string> cl; List<string> mats;
+                if (combos.TryGetValue(it, out cl)) {
+                    sb.Append("<h4>" + T(it) + " 만드는 법 (조합)</h4>" + string.Join("", cl));
+                    if (recipe.TryGetValue(it, out mats)) {
+                        sb.Append("<p class=\"meta\">조합하면 재료 " + mats.Count + "개는 없어지고 " + T(it) + "만 남습니다.</p><h4>재료 얻는 곳 (퀘스트 보수)</h4>");
+                        foreach (var mj in mats) { List<string> ql; sb.Append("<div class=\"rmat\"><b>" + ILink(mj, T(mj)) + "</b>" + (qd.TryGetValue(mj, out ql) ? string.Join("", ql) : "<div class=\"meta\">입수처 자료 없음</div>") + "</div>"); }
+                    }
+                } else { List<string> ql; if (qd.TryGetValue(it, out ql)) sb.Append("<h4>얻는 곳 (퀘스트 보수)</h4>" + string.Join("", ql)); }
             }
             res[kv.Key] = sb.Append("</div>").ToString();
         }
+        Console.WriteLine("condition boxes: " + string.Join(", ", res.Keys));
         return res;
     }
     // 아이템(일본어 이름) → 지역별 채집 정보 (포인트 종류, 등급, 계절, 최대 확률). maps.html#loc-… 링크
