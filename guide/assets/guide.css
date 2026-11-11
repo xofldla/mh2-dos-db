@@ -511,3 +511,4 @@ img.rgi { width:22px; height:22px; image-rendering:pixelated; vertical-align:-5p
 .qcond { margin:0 0 8px; padding:4px 8px; background:var(--head); border-radius:4px; }
 .qcond b { color:var(--acc); margin-right:6px; }
 .qcond .sep { margin:0 6px; color:var(--sub); }
+.qcond b { color:#e03a2f; } :root[data-theme="light"] .qcond b { color:#c0201a; }

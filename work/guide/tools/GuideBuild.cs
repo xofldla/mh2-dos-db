@@ -884,12 +884,12 @@ public static class G
         sb.Append("<p class=\"goals\">" + string.Join("<br>", A(q, "goals").Select((g, i) => "<span class=\"gl\">" + (i == 0 ? "메인" : i == 1 ? "서브A" : "서브B") + "</span> " + TJ(S(D(g), "j")))) + "</p>");
         // 등장 조건
         var cond = new List<string>();
-        cond.Add("<span class=\"cs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "-") + "</span>");
+
         string sj = S(q, "seasonJapanese"); if (sj != "") cond.Add((sj.Contains("温暖") ? "☀️ " : sj.Contains("寒冷") ? "⛄ " : sj.Contains("繁殖") ? "🌳 " : "") + T(sj));
         if (S(q, "timeOfDayJapanese") != "") cond.Add((S(q, "timeOfDayJapanese").Contains("夜") ? "🌙 " : "🌞 ") + T(S(q, "timeOfDayJapanese")));
         if (S(q, "require") != "") cond.Add("🎖️ " + P(S(q, "require")));
         string spc; if (CurLoc == "jumbo" && QuestSpecial.TryGetValue(S(q, "japanese"), out spc)) cond.Add("📌 " + spc);
-        sb.Append("<p class=\"qcond\"><b>등장 조건</b> " + string.Join("<span class=\"sep\">·</span>", cond) + "</p>");
+        sb.Append("<p class=\"qcond\"><b>등장 조건</b> " + (cond.Count > 0 ? string.Join("<span class=\"sep\">·</span>", cond) : "언제나") + "</p>");
         var info = new List<string>();
         if (A(q, "largeMonsters").Length > 0) info.Add("대형 몬스터: " + string.Join(", ", A(q, "largeMonsters").Select(x => MLink(S(D(x), "japanese"), T(S(D(x), "japanese"))) + (S(D(x), "quantity") != "" ? " ×" + H(S(D(x), "quantity")) : ""))));
         if (A(q, "hrp").Length > 0) info.Add("HRP: " + string.Join(" / ", A(q, "hrp").Select(x => H(Convert.ToString(x)))));
