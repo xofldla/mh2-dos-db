@@ -833,7 +833,7 @@ public static class G
         foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\"><span>" + LocKo(loc) + "</span><span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span></button>"); }
         sb.Append("</div>\n");
         foreach (var ld in locs) {
-            string loc = S(ld, "location");
+            string loc = S(ld, "location"); CurLoc = loc;
             sb.Append("<section class=\"gpanel vill" + (ld == locs[0] ? "" : " off") + "\" data-g=\"vill\" data-t=\"" + loc + "\"><h2 class=\"villh\"><img src=\"images/regions/" + loc + ".svg\" alt=\"\">" + LocKo(loc) + "</h2>");
             var cats = A(ld, "categories").Select(D).ToList();
             sb.Append("<div class=\"gtabs\" data-g=\"cat-" + loc + "\">");
@@ -842,11 +842,22 @@ public static class G
             for (int i = 0; i < cats.Count; i++) {
                 var cd = cats[i]; string id = loc + "-" + Slug(S(cd, "category"));
                 sb.Append("<section class=\"grp gpanel" + (i == 0 ? "" : " off") + "\" data-g=\"cat-" + loc + "\" data-t=\"" + i + "\" id=\"" + id + "\"><h2>" + TJ(S(cd, "categoryJapanese")) + "</h2>\n");
-                foreach (var ql in A(cd, "questLocales")) {
-                    var qd = D(ql);
-                    string lh = S(qd, "localeJapanese") != "" ? T(S(qd, "localeJapanese")) : "";
+                var qls = A(cd, "questLocales").Select(D).ToList();
+                bool multi = qls.Count > 1 && qls.All(x => S(x, "localeJapanese") != "");
+                if (multi) {
+                    string g = "loc-" + loc + "-" + i;
+                    sb.Append("<div class=\"gtabs rgn\" data-g=\"" + g + "\">");
+                    for (int k = 0; k < qls.Count; k++) sb.Append("<button type=\"button\" data-t=\"" + k + "\"" + (k == 0 ? " class=\"on\"" : "") + ">" + RegionImg(S(qls[k], "locale")) + T(S(qls[k], "localeJapanese")) + " <span class=\"cnt\">" + A(qls[k], "quests").Length + "</span></button>");
+                    sb.Append("</div>\n");
+                    for (int k = 0; k < qls.Count; k++) {
+                        sb.Append("<div class=\"gpanel" + (k == 0 ? "" : " off") + "\" data-g=\"" + g + "\" data-t=\"" + k + "\"><h3 class=\"rgnh\">" + RegionImg(S(qls[k], "locale")) + T(S(qls[k], "localeJapanese")) + "</h3>\n");
+                        foreach (var q in A(qls[k], "quests")) Quest(sb, D(q));
+                        sb.Append("</div>\n");
+                    }
+                } else foreach (var qd in qls) {
+                    string lh = S(qd, "localeJapanese") != "" ? RegionImg(S(qd, "locale")) + T(S(qd, "localeJapanese")) : "";
                     if (S(qd, "examRank") != "") lh = "HR" + H(S(qd, "examRank")) + " 승급 시험" + (S(qd, "examRequire") != "" ? " (HR" + H(S(qd, "examRequire")) + " 이상 수주)" : "");
-                    if (lh != "") sb.Append("<h3>" + lh + "</h3>\n");
+                    if (lh != "") sb.Append("<h3 class=\"rgnh\">" + lh + "</h3>\n");
                     foreach (var q in A(qd, "quests")) Quest(sb, D(q));
                 }
                 sb.Append("</section>\n");
@@ -856,16 +867,31 @@ public static class G
         Write("quests.html", sb.Append(Foot()).ToString());
     }
     static string LocKo(string loc) { return loc == "jumbo" ? Tk("ジャンボ村") : loc == "dundorma" ? "돈도르마" : H(loc); }
+    // 데이터에 없는 특별 등장 조건 (ＭＨ２@Wiki ジャンボ村 에서 확인)
+    static readonly Dictionary<string, string> QuestSpecial = new Dictionary<string, string> { { "水辺のダイミョウ", "「" + "유해를 잇는 자" + "」에서 다이묘자자미 등장 장면을 본 뒤" } };
+    static string CurLoc = "";
+    static string RegionImg(string en)
+    {
+        string s = Slug(en); if (s == "forest-and-hills") s = "forest"; if (s == "arena" || s == "grand-arena") s = "arenas"; if (s == "battleground") s = "the-battleground";
+        return File.Exists(Path.Combine(OutDir, "images", "regions", s + ".svg")) ? "<img class=\"rgi\" src=\"images/regions/" + s + ".svg\" alt=\"\">" : "";
+    }
     static void Quest(StringBuilder sb, Dictionary<string, object> q)
     {
         string stars = S(q, "stars"); int st; int.TryParse(stars, out st);
         var money = A(q, "rewardMoney").Select(x => Money(Convert.ToString(x)));
-        sb.Append("<details class=\"q\"><summary><span class=\"qs\">" + (st > 0 ? new string('★', st) : "") + "</span><span class=\"qt\">" + T(S(q, "japaneseTitle")) + " <b>" + T(S(q, "japanese")) + "</b></span>");
+        sb.Append("<details class=\"q\"><summary><span class=\"qs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "") + "</span><span class=\"qt\">" + T(S(q, "japaneseTitle")) + " <b>" + T(S(q, "japanese")) + "</b></span>");
         sb.Append("<span class=\"qm\">" + (S(q, "localeJapanese") != "" ? T(S(q, "localeJapanese")) + " · " : "") + T(S(q, "seasonJapanese")) + (S(q, "timeOfDayJapanese") != "" ? " · " + T(S(q, "timeOfDayJapanese")) : "") + " · " + H(S(q, "time")) + "분 · 계약금 " + Money(S(q, "fee")) + " · 보수 " + string.Join(" / ", money) + "</span></summary>\n<div class=\"qb\">");
         sb.Append("<p class=\"goals\">" + string.Join("<br>", A(q, "goals").Select((g, i) => "<span class=\"gl\">" + (i == 0 ? "메인" : i == 1 ? "서브A" : "서브B") + "</span> " + TJ(S(D(g), "j")))) + "</p>");
+        // 등장 조건
+        var cond = new List<string>();
+        cond.Add("<span class=\"cs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "-") + "</span>");
+        string sj = S(q, "seasonJapanese"); if (sj != "") cond.Add((sj.Contains("温暖") ? "☀️ " : sj.Contains("寒冷") ? "⛄ " : sj.Contains("繁殖") ? "🌳 " : "") + T(sj));
+        if (S(q, "timeOfDayJapanese") != "") cond.Add((S(q, "timeOfDayJapanese").Contains("夜") ? "🌙 " : "🌞 ") + T(S(q, "timeOfDayJapanese")));
+        if (S(q, "require") != "") cond.Add("🎖️ " + P(S(q, "require")));
+        string spc; if (CurLoc == "jumbo" && QuestSpecial.TryGetValue(S(q, "japanese"), out spc)) cond.Add("📌 " + spc);
+        sb.Append("<p class=\"qcond\"><b>등장 조건</b> " + string.Join("<span class=\"sep\">·</span>", cond) + "</p>");
         var info = new List<string>();
         if (A(q, "largeMonsters").Length > 0) info.Add("대형 몬스터: " + string.Join(", ", A(q, "largeMonsters").Select(x => MLink(S(D(x), "japanese"), T(S(D(x), "japanese"))) + (S(D(x), "quantity") != "" ? " ×" + H(S(D(x), "quantity")) : ""))));
-        if (S(q, "require") != "") info.Add("조건: " + P(S(q, "require")));
         if (A(q, "hrp").Length > 0) info.Add("HRP: " + string.Join(" / ", A(q, "hrp").Select(x => H(Convert.ToString(x)))));
         if (S(q, "hex") != "") info.Add("<span class=\"meta\">ID " + H(S(q, "hex")) + "</span>");
         if (info.Count > 0) sb.Append("<p class=\"kv\">" + string.Join(" · ", info) + "</p>");

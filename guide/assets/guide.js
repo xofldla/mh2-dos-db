@@ -162,6 +162,19 @@
       v.addEventListener("pointerup", up); v.addEventListener("pointerleave", up);
       v.addEventListener("click", function (e) { if (drag) { e.stopPropagation(); e.preventDefault(); } }, true);
     });
+    // 마우스 휠로 확대/축소 (휠을 굴린 자리가 그대로 남도록)
+    $$(".mapview").forEach(function (v) {
+      v.addEventListener("wheel", function (e) {
+        var cur = +zr.value, next = Math.max(100, Math.min(300, cur + (e.deltaY < 0 ? 25 : -25)));
+        if (next === cur) return; // 끝까지 확대/축소했으면 페이지 스크롤은 그대로
+        e.preventDefault();
+        var b = v.querySelector(".mapbox"), vr = v.getBoundingClientRect(), br = b.getBoundingClientRect();
+        var fx = (e.clientX - br.left) / br.width, fy = (e.clientY - br.top) / br.height, ox = e.clientX - vr.left, oy = e.clientY - vr.top;
+        setZoom(next, false);
+        var pad = parseFloat(getComputedStyle(v).paddingLeft) || 0;
+        v.scrollLeft = fx * b.offsetWidth + pad - ox; v.scrollTop = fy * b.offsetHeight + pad - oy;
+      }, { passive: false });
+    });
     var z0 = +(store.get("mh2-mapzoom") || 100); setZoom(z0 || 100, false);
     var mq = document.getElementById("mq"), mt;
     mq.addEventListener("input", function () { clearTimeout(mt); mt = setTimeout(function () {

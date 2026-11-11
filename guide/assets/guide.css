@@ -501,3 +501,13 @@ section.loc .mapside { width:min(600px, 100%); }
 .meals .ing { display:inline-flex; align-items:center; white-space:nowrap; }
 .meals .ing .ico { width:22px; height:22px; }
 .meals .plus { margin:0 6px; color:var(--sub); }
+
+/* 퀘스트: 지역 탭 + 등장 조건 */
+.gtabs.rgn button { padding:3px 10px; }
+img.rgi { width:22px; height:22px; image-rendering:pixelated; vertical-align:-5px; margin-right:4px; }
+.rgnh { display:flex; align-items:center; gap:4px; }
+.rgnh img.rgi { width:28px; height:28px; }
+.qs { letter-spacing:-2px; min-width:90px; }
+.qcond { margin:0 0 8px; padding:4px 8px; background:var(--head); border-radius:4px; }
+.qcond b { color:var(--acc); margin-right:6px; }
+.qcond .sep { margin:0 6px; color:var(--sub); }
