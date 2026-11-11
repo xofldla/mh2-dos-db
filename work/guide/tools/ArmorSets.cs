@@ -15,6 +15,21 @@ public static class ArmorSets
     static bool Compat(string a, string b) { return a == b || a == "" || b == ""; }
     static string Norm(string s) { return s.Normalize(System.Text.NormalizationForm.FormKC); }
 
+    // 부위 이름(접미사)을 뗀 시리즈 이름. 같은 시리즈면 스킬이 달라도 한 세트 (예: バトルヘルム/メイル/アーム/フォールド/グリーヴ)
+    static readonly string[] PartWords = { "ヘルム", "キャップ", "ピアス", "フェイク", "【鉢金】", "メイル", "レジスト", "ベスト", "スキン", "シェル", "【胸当て】", "【胴当て】",
+        "アーム", "ガード", "カフス", "【篭手】", "フォールド", "コート", "コイル", "ベルト", "【腰当て】", "グリーヴ", "レギンス", "フット", "ブーツ", "【具足】", "【袴】" };
+    static string Stem(string n)
+    {
+        n = n.Replace("キング", "K・"); // キングロブスタシェル ≡ Ｋ・ロブスタキャップ 시리즈
+        foreach (var w in PartWords.OrderByDescending(x => x.Length)) if (n.Length > w.Length && n.EndsWith(w)) return n.Substring(0, n.Length - w.Length);
+        return null;
+    }
+    static string Hint(string n)
+    {
+        foreach (var w in new[] { "ヘルム", "メイル", "アーム", "フォールド", "グリーヴ" }) if (n.EndsWith(w)) return "Blademaster";
+        foreach (var w in new[] { "キャップ", "レジスト", "ガード", "コート", "レギンス" }) if (n.EndsWith(w)) return "Gunner";
+        return "";
+    }
     public static List<List<Piece>> Group(List<Piece> all)
     {
         int n = all.Count; var par = Enumerable.Range(0, n).ToArray();
@@ -30,7 +45,15 @@ public static class ArmorSets
             string na = Norm(a.Name), nb = Norm(b.Name);
             bool tail = l >= 1 && na.Contains("・") && nb.Contains("・") && na.Substring(na.LastIndexOf('・')) == nb.Substring(nb.LastIndexOf('・'));
             bool ok = (l >= 3 && jac >= 0.34) || (l >= 2 && jac >= 0.99 && a.Skills.Count >= 2) || (l >= 4) || (tail && jac >= 0.34);
-            if (ok) pairs.Add(Tuple.Create(l + jac * 3, i, j));
+            string sa = Stem(na), sb = Stem(nb);
+            if (sa != null && sa == sb) {
+                // 직업이 정해진 부위끼리 먼저 묶고, 직업 공용(빈칸) 부위는 이름(ヘルム=검사, キャップ=거너)이 맞는 쪽에 붙인다
+                double bonus = (a.Cls != "" && b.Cls != "") ? 50 : 0;
+                if (a.Cls == "" && Hint(na) != "" && Hint(na) == b.Cls) bonus += 1;
+                if (b.Cls == "" && Hint(nb) != "" && Hint(nb) == a.Cls) bonus += 1;
+                pairs.Add(Tuple.Create(100.0 + bonus + l + jac * 3, i, j));
+            }
+            else if (ok) pairs.Add(Tuple.Create(l + jac * 3, i, j));
         }
         var members = new Dictionary<int, List<int>>(); for (int i = 0; i < n; i++) members[i] = new List<int> { i };
         foreach (var p in pairs.OrderByDescending(x => x.Item1)) {
