@@ -199,7 +199,7 @@
     document.addEventListener("click", function (e) { var b = e.target.closest(".gtabs button"); if (b) showG(b.closest(".gtabs").getAttribute("data-g"), b.getAttribute("data-t")); });
     [].forEach.call(document.querySelectorAll(".gtabs"), function (gt) { var g = gt.getAttribute("data-g"), v = store.get(gkey(g)); if (v !== null && gt.querySelector('button[data-t="' + v + '"]')) showG(g, v); });
     var gh = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-    if (gh) { var p = gh; while (p && p.closest) { p = p.closest(".gpanel"); if (!p) break; showG(p.getAttribute("data-g"), p.getAttribute("data-t")); p = p.parentElement; } gh.scrollIntoView(); }
+    if (gh) { var p = gh; while (p && p.closest) { p = p.closest(".gpanel"); if (!p) break; showG(p.getAttribute("data-g"), p.getAttribute("data-t")); p = p.parentElement; } if (gh.tagName === "DETAILS") gh.open = true; gh.scrollIntoView(); }
   }
 
   // 아이템 등: 용도 탭 (검색 중에는 모든 탭을 보여 줌)

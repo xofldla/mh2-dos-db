@@ -656,7 +656,7 @@ public static class G
         foreach (var s in A(Load("meals"))) foreach (var m in A(D(s), "meals")) foreach (var g in A(D(m), "ingredients")) MealIngredients.Add(S(D(g), "japanese"));
         var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보입니다. 검색하면 모든 탭에서 찾습니다.", true));
         var rows = new List<string>[4]; for (int i = 0; i < 4; i++) rows[i] = new List<string>();
-        var drops = MonsterDrops();
+        var drops = MonsterDrops(); var qdrops = QuestDrops();
         int idx = 0;
         foreach (var o in data) {
             var it = D(o); idx++;
@@ -671,6 +671,11 @@ public static class G
             if (Has(it, "account")) fx.Add("<span class=\"tag\">정산 아이템</span>");
             if (Has(it, "unavailable")) fx.Add("<span class=\"tag\">입수 불가</span>");
             List<string> dl; if (drops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">몬스터에게서 입수 (갈무리・포획・부위 파괴):</span>" + string.Join("", dl));
+            if (qdrops.TryGetValue(S(it, "japanese"), out dl)) {
+                string body = string.Join("", dl);
+                fx.Add(dl.Count > 5 ? "<details class=\"qdrop\"><summary><span class=\"tk\">퀘스트 보수:</span> " + dl.Count + "개 퀘스트 (눌러서 펼치기)</summary>" + body + "</details>"
+                                    : "<span class=\"tk\">퀘스트 보수:</span>" + body);
+            }
             if (A(it, "rewards").Length > 0) fx.Add("<span class=\"tk\">내용물:</span> " + string.Join(" ", A(it, "rewards").Select(x => "<span class=\"mat\">" + T(S(D(x), "japanese")) + " " + H(S(D(x), "percent")) + "%</span>")));
             string buy = S(it, "buy"), sell = S(it, "sell");
             rows[ItemCat(it)].Add("<tr id=\"item-" + idx + "\">" + string.Join("", new[] { name, Rar(S(it, "rarity")), Num(S(it, "maxStack")), buy == "0" || buy == "" ? "-" : Money(buy), sell == "" ? "-" : Money(sell), desc, string.Join("<br>", fx) }.Select(c => "<td>" + c + "</td>")) + "</tr>\n");
@@ -883,14 +888,15 @@ public static class G
                     sb.Append("</div>\n");
                     for (int k = 0; k < qls.Count; k++) {
                         sb.Append("<div class=\"gpanel" + (k == 0 ? "" : " off") + "\" data-g=\"" + g + "\" data-t=\"" + k + "\"><h3 class=\"rgnh\">" + RegionImg(S(qls[k], "locale")) + T(S(qls[k], "localeJapanese")) + "</h3>\n");
-                        foreach (var q in A(qls[k], "quests")) Quest(sb, D(q));
+                        int n0 = 0; foreach (var q in A(qls[k], "quests")) Quest(sb, D(q), QId(loc, i, k, n0++));
                         sb.Append("</div>\n");
                     }
-                } else foreach (var qd in qls) {
+                } else for (int k = 0; k < qls.Count; k++) {
+                    var qd = qls[k];
                     string lh = S(qd, "localeJapanese") != "" ? RegionImg(S(qd, "locale")) + T(S(qd, "localeJapanese")) : "";
                     if (S(qd, "examRank") != "") lh = "HR" + H(S(qd, "examRank")) + " 승급 시험" + (S(qd, "examRequire") != "" ? " (HR" + H(S(qd, "examRequire")) + " 이상 수주)" : "");
                     if (lh != "") sb.Append("<h3 class=\"rgnh\">" + lh + "</h3>\n");
-                    foreach (var q in A(qd, "quests")) Quest(sb, D(q));
+                    int n1 = 0; foreach (var q in A(qd, "quests")) Quest(sb, D(q), QId(loc, i, k, n1++));
                 }
                 sb.Append("</section>\n");
             }
@@ -907,11 +913,45 @@ public static class G
         string s = Slug(en); if (s == "forest-and-hills") s = "forest"; if (s == "arena" || s == "grand-arena") s = "arenas"; if (s == "battleground") s = "the-battleground";
         return File.Exists(Path.Combine(OutDir, "images", "regions", s + ".svg")) ? "<img class=\"rgi\" src=\"images/regions/" + s + ".svg\" alt=\"\">" : "";
     }
-    static void Quest(StringBuilder sb, Dictionary<string, object> q)
+    static string QId(string loc, int cat, int lc, int n) { return "q-" + loc + "-" + cat + "-" + lc + "-" + n; }
+    // 아이템(일본어 이름) → 그 아이템을 보수로 주는 퀘스트 목록 (quests.html#q-… 링크)
+    static Dictionary<string, List<string>> QuestDrops()
+    {
+        var res = new Dictionary<string, List<string>>();
+        foreach (var lo in A(Load("quests"))) {
+            var ld = D(lo); string loc = S(ld, "location"); var cats = A(ld, "categories").Select(D).ToList();
+            for (int i = 0; i < cats.Count; i++) {
+                string where = (loc == "jumbo" ? "점보" : LocKo(loc)) + "・" + T(S(cats[i], "categoryJapanese"));
+                var qls = A(cats[i], "questLocales").Select(D).ToList();
+                for (int k = 0; k < qls.Count; k++) {
+                    int n = 0;
+                    foreach (var qo in A(qls[k], "quests")) {
+                        var q = D(qo); string id = QId(loc, i, k, n++); int st; int.TryParse(S(q, "stars"), out st);
+                        var per = new Dictionary<string, List<string>>(); var order = new List<string>();
+                        foreach (var r in A(q, "rewards")) {
+                            var rd = D(r); string box = S(rd, "rewardNameJapanese") != "" ? T(S(rd, "rewardNameJapanese")) : "메인 보수";
+                            foreach (var x in A(rd, "materials")) {
+                                var d = D(x); string j = S(d, "j") != "" ? S(d, "j") : S(d, "japanese"); if (j == "") continue;
+                                string qn = S(d, "quantity");
+                                if (!per.ContainsKey(j)) { per[j] = new List<string>(); order.Add(j); }
+                                per[j].Add(box + (qn != "" && qn != "1" ? " ×" + H(qn) : "") + " " + H(S(d, "percent")) + "%");
+                            }
+                        }
+                        foreach (var j in order) {
+                            List<string> l; if (!res.TryGetValue(j, out l)) res[j] = l = new List<string>();
+                            l.Add("<div class=\"drop\"><span class=\"meta\">" + where + "</span> <a class=\"xlink\" href=\"quests.html#" + id + "\">" + (st > 0 ? "★" + st + " " : "") + T(S(q, "japanese")) + "</a>: " + string.Join(", ", per[j]) + "</div>");
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+    static void Quest(StringBuilder sb, Dictionary<string, object> q, string qid)
     {
         string stars = S(q, "stars"); int st; int.TryParse(stars, out st);
         var money = A(q, "rewardMoney").Select(x => Money(Convert.ToString(x)));
-        sb.Append("<details class=\"q\"><summary><span class=\"qs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "") + "</span><span class=\"qt\">" + T(S(q, "japaneseTitle")) + " <b>" + T(S(q, "japanese")) + "</b></span>");
+        sb.Append("<details class=\"q\" id=\"" + qid + "\"><summary><span class=\"qs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "") + "</span><span class=\"qt\">" + T(S(q, "japaneseTitle")) + " <b>" + T(S(q, "japanese")) + "</b></span>");
         sb.Append("<span class=\"qm\">" + (S(q, "localeJapanese") != "" ? T(S(q, "localeJapanese")) + " · " : "") + T(S(q, "seasonJapanese")) + (S(q, "timeOfDayJapanese") != "" ? " · " + T(S(q, "timeOfDayJapanese")) : "") + " · " + H(S(q, "time")) + "분 · 계약금 " + Money(S(q, "fee")) + " · 보수 " + string.Join(" / ", money) + "</span></summary>\n<div class=\"qb\">");
         sb.Append("<p class=\"goals\">" + string.Join("<br>", A(q, "goals").Select((g, i) => "<span class=\"gl\">" + (i == 0 ? "메인" : i == 1 ? "서브A" : "서브B") + "</span> " + TJ(S(D(g), "j")))) + "</p>");
         // 등장 조건
