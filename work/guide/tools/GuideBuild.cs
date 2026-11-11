@@ -664,7 +664,7 @@ public static class G
         foreach (var s in A(Load("meals"))) foreach (var m in A(D(s), "meals")) foreach (var g in A(D(m), "ingredients")) MealIngredients.Add(S(D(g), "japanese"));
         var sb = new StringBuilder(Head("items.html", "아이템", "용도별 탭으로 나눴습니다. 게임 속 설명은 한글 패치 문장 그대로이고, 「효과・입수」는 공략 위키의 실측・해석 정보이고, 조합법은 <a href=\"https://w.atwiki.jp/alter2/pages/32.html\">ＭＨ２@Wiki 「調合」</a>의 재료・성공률입니다. 검색하면 모든 탭에서 찾습니다.", true));
         var rows = new List<string>[4]; for (int i = 0; i < 4; i++) rows[i] = new List<string>();
-        var drops = MonsterDrops(); var qdrops = QuestDrops(); var mdrops = MapDrops(); var cdrops = ComboDrops();
+        var drops = MonsterDrops(); var qdrops = QuestDrops(); var mdrops = MapDrops(); var cdrops = ComboDrops(); var shopsAll = ItemShops();
         int idx = 0;
         foreach (var o in data) {
             var it = D(o); idx++;
@@ -679,7 +679,10 @@ public static class G
             if (Has(it, "account")) fx.Add("<span class=\"tag\">정산 아이템</span>");
             if (Has(it, "unavailable")) fx.Add("<span class=\"tag\">입수 불가</span>");
             string buy0 = S(it, "buy");
-            if (buy0 != "" && buy0 != "0") fx.Add("<span class=\"tk\">상점 구매:</span> 마을 상점(도구점・잡화점 등)에서 " + Money(buy0) + "에 살 수 있습니다.");
+            var wi = idx - 1 < shopsAll.Length ? D(shopsAll[idx - 1]) : null;
+            var towns = wi != null && S(wi, "japanese") == S(it, "japanese") ? A(wi, "shops") : new object[0];
+            if (towns.Length > 0) fx.Add("<span class=\"tk\">상점 구매:</span>" + ShopHtml(towns));
+            else if (buy0 != "" && buy0 != "0") fx.Add("<span class=\"tk\">상점 구매:</span> 마을 상점에서 " + Money(buy0) + "에 살 수 있습니다. <span class=\"meta\">(파는 가게 정보 없음)</span>");
             List<string> dl;
             if (cdrops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">조합:</span>" + string.Join("", dl));
             if (mdrops.TryGetValue(S(it, "japanese"), out dl)) fx.Add("<span class=\"tk\">채집:</span>" + string.Join("", dl));
@@ -729,6 +732,42 @@ public static class G
             l.Add("<div class=\"drop\">" + string.Join(" + ", mats) + " <span class=\"meta\">성공률 " + H(c[4]) + "% · " + H(c[5].Replace("～", "~")) + "개</span></div>");
         }
         return res;
+    }
+    // 마을별 상점 (위키 원본 페이지 items.html 의 window.items 에만 있는 shops 정보). 아이템 순서는 items.json 과 같다
+    static readonly Dictionary<string, string> ShopCond = new Dictionary<string, string> {
+        {"Unlock Desert","사막 개방 후"}, {"Unlock Snowy Mountains","설산 개방 후"}, {"Unlock Swamp","늪지 개방 후"}, {"Unlock Volcano","화산 개방 후"},
+        {"Guild Registration","길드 등록 후"}, {"Port Level 3","항구 LV3"}, {"Smith Level 3","공방 LV3"}, {"Tavern Level 2","주점 LV2"}, {"Tavern Level 3","주점 LV3"},
+        {"Clear all Practice Quests","훈련 퀘스트를 모두 클리어한 뒤"}, {"Clear All Arena Excerises","투기장 훈련을 모두 클리어한 뒤"}, {"Hunt all other monsters","다른 몬스터를 모두 수렵한 뒤"},
+        {"Ship in Port","배가 항구에 들어와 있을 때"}, {"Merchant Day","행상이 오는 날"}, {"PSP Connection 1","PSP 연동 1"}, {"PSP Connection 2","PSP 연동 2"}, {"PSP Connection 3","PSP 연동 3"},
+        {"PSP and Merchant Day","PSP 연동 + 행상이 오는 날"}, {"Patched in?","온라인 패치로 추가된 것으로 추정"},
+        {"Tool Day","도구 특매일"}, {"Combination Day","조합 특매일"}, {"Food Day","식재료 특매일"} };
+    static string ShopCondKo(string en)
+    {
+        if (en == "") return ""; string v; if (ShopCond.TryGetValue(en, out v)) return v;
+        if (en == "After Song of Origins") return "「" + T("始まりの唄") + "」 이후";
+        var m = Regex.Match(en, "^Hunter Rank (\\d+)$"); if (m.Success) return "HR" + m.Groups[1].Value + " 이상";
+        m = Regex.Match(en, "^(Unlock|Defeat) (.+)$");
+        if (m.Success) { var mon = new Dictionary<string, string> { {"Kushala Daora","クシャルダオラ"}, {"Lunastra","ナナ・テスカトリ"}, {"Teostra","テオ・テスカトル"} }; string ja; if (mon.TryGetValue(m.Groups[2].Value, out ja)) return T(ja) + (m.Groups[1].Value == "Unlock" ? " 등장 후" : " 토벌 후"); }
+        Console.WriteLine("shop: untranslated condition " + en); return H(en);
+    }
+    static object[] ItemShops()
+    {
+        string f = Path.Combine(JsonDir, "..", "..", "work", "guide", "src", "mhos", "items.html"); if (!File.Exists(f)) return new object[0];
+        string s = File.ReadAllText(f, Encoding.UTF8); int i = s.IndexOf("window.items="); if (i < 0) return new object[0];
+        i += "window.items=".Length; int e = s.IndexOf("</script>", i); string t = s.Substring(i, e - i).Trim().TrimEnd(';');
+        var js = new System.Web.Script.Serialization.JavaScriptSerializer(); js.MaxJsonLength = int.MaxValue; js.RecursionLimit = 1000;
+        return A(js.DeserializeObject(t));
+    }
+    static string ShopHtml(object[] towns)
+    {
+        var sb = new StringBuilder();
+        foreach (var to in towns) {
+            var td = D(to);
+            var shops = A(td, "shops").Select(x => { var sd = D(x); string cond = ShopCondKo(S(sd, "require")); string sp = ShopCondKo(S(sd, "special"));
+                var c = new[] { cond, sp }.Where(z => z != ""); return T(S(sd, "japanese")) + " " + Money(S(sd, "price")) + (c.Any() ? " <span class=\"meta\">(" + string.Join(", ", c) + ")</span>" : ""); });
+            sb.Append("<div class=\"drop\"><b>" + T(S(td, "japanese")) + "</b>: " + string.Join(" · ", shops) + "</div>");
+        }
+        return sb.ToString();
     }
     // 아이템(일본어 이름) → 지역별 채집 정보 (포인트 종류, 등급, 계절, 최대 확률). maps.html#loc-… 링크
     static Dictionary<string, List<string>> MapDrops()
