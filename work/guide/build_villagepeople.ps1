@@ -76,7 +76,7 @@ td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .wrap { o
 input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
 p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px }
 :root { --red:#c0201a } :root[data-theme="dark"] { --red:#ff5a4a }
-h2.why, .why, .why b { color:var(--red); font-weight:700 } .whybox { background:var(--card); border:2px solid var(--red); border-radius:8px; padding:4px 14px } ul.why { margin:6px 0 10px; padding-left:20px } ul.why li { margin:4px 0 }
+h2.why { color:var(--red); font-weight:700 } .whybox, .whybox b { color:var(--ink); font-weight:700 } u.lv { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px } .whybox { background:var(--card); border:2px solid var(--red); border-radius:8px; padding:4px 14px } ul.why { margin:6px 0 10px; padding-left:20px } ul.why li { margin:4px 0 }
 ol.tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:8px 14px 8px 34px } ol.tips > li { margin:8px 0 } ol.best { margin:6px 0; padding-left:22px } ol.best li { margin:2px 0 }
 footer { margin-top:40px; color:var(--sub) }
 #themebtn { font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px } #themebtn.floating { position:fixed; top:12px; right:16px; z-index:30 } #themebtn .ti { color:var(--acc) }
@@ -92,10 +92,10 @@ $sorted = @($eff.Values | Sort-Object -Descending); $cut = $sorted[[Math]::Min($
 $starKeys = @($eff.Keys | Where-Object { $eff[$_] -ge $cut } | Sort-Object @{ e = { $eff[$_] }; Descending = $true }, @{ e = { $_ } })
 
 # 1) 왜 해야 하나 (가장 중요 — 맨 위, 빨간 굵은 글씨)
-A '<h2 class="why">★ 왜 마을의뢰를 해야 하나 (가장 중요)</h2><div class="whybox">'
+A '<h2 class="why">★ 왜 마을의뢰를 해야 하나? (가장 중요)</h2><div class="whybox">'
 A '<p class="why">마을 사람의 의뢰를 해결해 친밀도를 쌓으면 아래 이벤트가 생깁니다. 선물로 회복약・광석・성철을 받고, 식사 초대로 능력치가 오르고, 마을 특매・용 장인・행상 같은 시설 이벤트가 열립니다.</p><ul class="why">'
 foreach ($r in $ev) {
-  $extra = if ($r[3]) { " + $(Esc $r[3])" } else { '' }
+  $extra = if ($r[3]) { " + <u class=lv>$(Esc $r[3])</u>" } else { '' }
   $what = switch ($r[0]) {
     '선물' { " → $(Esc $gift[0][1]) / $(Esc $gift[0][2]) / $(Esc $gift[0][3]) 등 (마을 사람 유형마다 다름)" }
     '식사 초대' { " → 식사 효과: $(Esc (($mealRows[-1][1..3] | ForEach-Object { $_ -replace "`n", ', ' }) -join ' / ')) (최고 마이하우스 LV 기준)" }
@@ -107,7 +107,7 @@ A ('<li><b>성철</b>: 선물을 준 마을 사람이 누적 {0}가 될 때마�
 $qpt = ($q | ForEach-Object { "{0} {1}" -f ($_[0] -replace '１','1' -replace '２','2' -replace '３','3' -replace '４','4'), $_[1] }) -join ', '
 A '<h2>친밀도를 효율적으로 올리는 순서</h2><ol class="tips">'
 A ('<li><b>누구에게 할지 정하기:</b> 항구 쪽 이벤트는 <b>항구 관계자</b>({0}), 공방 쪽 이벤트는 <b>공방 관계자</b>({1})의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</li>' -f (Esc (($types['항구 관계자'] | Where-Object { $_ }) -join '・')), (Esc (($types['공방 관계자'] | Where-Object { $_ }) -join '・')))
-A '<li><b>공방부터 노리기:</b> 공방이 <b>LV3</b>이고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」, 항구가 <b>LV3</b>이고 항구 관계자 합계가 <b>50pt</b>면 「마을 특매」가 생깁니다. 공방 쪽 필요량이 적으니 먼저 노리기 좋습니다.</li>'
+A '<li><b>공방부터 노리기:</b> <b><u class=lv>공방 LV3</u></b>이고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」, <b><u class=lv>항구 LV3</u></b>이고 항구 관계자 합계가 <b>50pt</b>면 「마을 특매」가 생깁니다. 공방 쪽 필요량이 적으니 먼저 노리기 좋습니다.</li>'
 A ('<li><b>의뢰 퀘스트는 별이 높은 것부터:</b> 한 번에 오르는 친밀도는 {0}입니다.</li>' -f (Esc $qpt))
 A '<li><b>납품은 아래 순서의 아이템부터:</b> 1개당 친밀도가 높은 순서입니다. 요구 수가 여러 단계면 적힌 단계로 납품할 때 가장 효율이 좋습니다.<ol class="best">'
 foreach ($k in $starKeys) { A ("<li><b>{0}</b> <span class=eff>{1:0.##}pt/개 ({2})</span></li>" -f (Esc $k), $eff[$k], (Esc $bestTier[$k])) }
