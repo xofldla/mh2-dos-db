@@ -14,13 +14,57 @@ table { border-collapse:collapse; width:100%; background:var(--card) }
 th, td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top } th { background:var(--head); font-weight:700 }
 td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .wrap { overflow-x:auto }
 input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
-p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px } footer { margin-top:40px; color:var(--sub) }
+p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px }
+:root { --red:#c0201a } :root[data-theme="dark"] { --red:#ff5a4a }
+h2.why, .why, .why b { color:var(--red); font-weight:700 } .whybox { background:var(--card); border:2px solid var(--red); border-radius:8px; padding:4px 14px } ul.why { margin:6px 0 10px; padding-left:20px } ul.why li { margin:4px 0 }
+ol.tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:8px 14px 8px 34px } ol.tips > li { margin:8px 0 } ol.best { margin:6px 0; padding-left:22px } ol.best li { margin:2px 0 }
+footer { margin-top:40px; color:var(--sub) }
 #themebtn { font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px } #themebtn.floating { position:fixed; top:12px; right:16px; z-index:30 } #themebtn .ti { color:var(--acc) }
 </style><script src="assets/theme.js"></script></head><body><main>
 <nav><a href="index.html">← 공략 목차</a></nav>
 <h1>마을 사람과의 교류</h1>
 <div class="sub">점보 마을 사람들의 납품 의뢰와 친밀도</div>
 <p>마을 사람의 의뢰(아이템 납품·퀘스트)를 해결하면 그 사람의 <b>친밀도</b>가 오릅니다. 친밀도가 쌓이면 선물·식사 초대 같은 이벤트가 생기고 마을 시설이 발전합니다.</p>
+<h2 class="why">★ 왜 마을의뢰를 해야 하나 (가장 중요)</h2><div class="whybox">
+<p class="why">마을 사람의 의뢰를 해결해 친밀도를 쌓으면 아래 이벤트가 생깁니다. 선물로 회복약・광석・성철을 받고, 식사 초대로 능력치가 오르고, 마을 특매・용 장인・행상 같은 시설 이벤트가 열립니다.</p><ul class="why">
+<li><b>선물</b>: 마을 사람 개인 친밀도 24pt → 회복약Ｇ &#215;3 / 마카라이트광석 &#215;3 / 화이트레버 &#215;5 등 (마을 사람 유형마다 다름)</li>
+<li><b>식사 초대</b>: 마을 사람 개인 친밀도 32pt → 식사 효과: 체력+50 스태미나+50 / 체력+50 방어+20 / 공격+5 스태미나+50 (최고 마이하우스 LV 기준)</li>
+<li><b>마을 특매</b>: 항구 관계자 친밀도 합계 50pt + 항구 LV3</li>
+<li><b>용 장인</b>: 공방 관계자 친밀도 합계 20pt + 공방 LV3</li>
+<li><b>행상</b>: 마을 전체 친밀도 합계 2pt</li>
+<li><b>행상 특매</b>: 마을 전체 친밀도 합계 50pt</li>
+<li><b>미용사 고양이</b>: 마을 전체 친밀도 합계 80pt</li>
+<li><b>촌장</b>: 마을 전체 친밀도 합계 500pt</li>
+<li><b>성철</b>: 선물을 준 마을 사람이 누적 3번째・6번째・10번째・15번째・20번째가 될 때마다 성철을 따로 받습니다.</li></ul></div>
+<h2>친밀도를 효율적으로 올리는 순서</h2><ol class="tips">
+<li><b>누구에게 할지 정하기:</b> 항구 쪽 이벤트는 <b>항구 관계자</b>(조선소 대장・조합점 주인・식재료 상인・도구점 주인), 공방 쪽 이벤트는 <b>공방 관계자</b>(공방 할머니・공방 수제자・공방 둘째 제자・공방 새 제자)의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</li>
+<li><b>공방부터 노리기:</b> 공방이 <b>LV3</b>이고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」, 항구가 <b>LV3</b>이고 항구 관계자 합계가 <b>50pt</b>면 「마을 특매」가 생깁니다. 공방 쪽 필요량이 적으니 먼저 노리기 좋습니다.</li>
+<li><b>의뢰 퀘스트는 별이 높은 것부터:</b> 한 번에 오르는 친밀도는 ★1 6pt, ★2 8pt, ★3 10pt, ★4 12pt입니다.</li>
+<li><b>납품은 아래 순서의 아이템부터:</b> 1개당 친밀도가 높은 순서입니다. 요구 수가 여러 단계면 적힌 단계로 납품할 때 가장 효율이 좋습니다.<ol class="best">
+<li><b>라이트크리스탈</b> <span class=eff>15pt/개 (1개 → 15pt)</span></li>
+<li><b>성철</b> <span class=eff>15pt/개 (1개 → 15pt)</span></li>
+<li><b>메인 마스트</b> <span class=eff>10pt/개 (1개 → 10pt)</span></li>
+<li><b>메인 세일</b> <span class=eff>10pt/개 (1개 → 10pt)</span></li>
+<li><b>풀베비절임</b> <span class=eff>6.67pt/개 (3개 → 20pt)</span></li>
+<li><b>강주약</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>경화약</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>귀신버섯</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>귀인약</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>도스헤라클레스</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>수면낭</b> <span class=eff>6pt/개 (1개 → 6pt)</span></li>
+<li><b>용의꼬리</b> <span class=eff>6pt/개 (1개 → 6pt)</span></li>
+<li><b>회복약Ｇ</b> <span class=eff>6pt/개 (2개 → 12pt)</span></li>
+<li><b>암룡갑각</b> <span class=eff>5.5pt/개 (2개 → 11pt)</span></li>
+<li><b>뇌광충</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>대저가죽</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>독낭</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>마비낭</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>민물장어</b> <span class=eff>5pt/개 (2개 → 10pt)</span></li>
+<li><b>사룡가죽</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>상승통폭탄</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>큰통폭탄</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+<li><b>해독적</b> <span class=eff>5pt/개 (1개 → 5pt)</span></li>
+</ol></li></ol><p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p>
 <h2>마을 사람 유형</h2><div class="wrap"><table><tr><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>
 <tr><td>촌장</td><td>공방 할머니</td><td>조선소 대장</td></tr>
 <tr><td>교관</td><td>공방 수제자</td><td>조합점 주인</td></tr>
@@ -170,12 +214,6 @@ p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border
 <tr><td>미용사 고양이</td><td>마을 전체 친밀도 합계</td><td class=n>80pt</td><td></td></tr>
 <tr><td>촌장</td><td>마을 전체 친밀도 합계</td><td class=n>500pt</td><td></td></tr>
 </table></div>
-<h2>항구・공방 레벨을 효율적으로 올리는 팁</h2><div class="tips">
-<p><b>누구에게 해야 하나:</b> 항구 쪽은 <b>항구 관계자</b>(조선소 대장・조합점 주인・식재료 상인・도구점 주인), 공방 쪽은 <b>공방 관계자</b>(공방 할머니・공방 수제자・공방 둘째 제자・공방 새 제자)의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</p>
-<p><b>의뢰 퀘스트는 별이 높을수록 이득:</b> 의뢰 퀘스트 한 번에 오르는 친밀도는 ★1 6pt, ★2 8pt, ★3 10pt, ★4 12pt입니다. 같은 시간이면 높은 별 의뢰를 고르세요.</p>
-<p><b>납품은 ⭐ 아이템부터:</b> 아래 표의 ⭐ 표시는 1개당 친밀도가 높은 납품입니다. 예: 라이트크리스탈 (15pt/개), 성철 (15pt/개), 메인 세일 (10pt/개), 메인 마스트 (10pt/개), 풀베비절임 (6.67pt/개), 수면낭 (6pt/개). 요구 수가 여러 단계인 아이템은 「1개당 최대」 값이 나오는 단계로 납품하면 효율이 좋습니다.</p>
-<p><b>레벨 3이 고비:</b> 항구가 <b>레벨 3</b>이 되고 항구 관계자 친밀도 합계가 <b>50pt</b>면 「마을 특매」, 공방이 <b>레벨 3</b>이 되고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」 이벤트가 생깁니다. 공방 쪽은 필요량이 적으니 먼저 노리기 좋습니다.</p>
-<p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p></div>
 <h2>마을 사람에게 받는 선물</h2><p class="note">선물은 마을 사람 유형마다 다릅니다. 1~5회째는 아래 순서이고, 6회째부터는 같은 유형의 선물 중 무작위입니다.</p>
 <div class="wrap"><table><tr><th></th><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>
 <tr><td>1회째</td><td>회복약Ｇ &#215;3</td><td>마카라이트광석 &#215;3</td><td>화이트레버 &#215;5</td></tr>

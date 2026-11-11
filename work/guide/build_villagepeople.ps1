@@ -74,7 +74,11 @@ table { border-collapse:collapse; width:100%; background:var(--card) }
 th, td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top } th { background:var(--head); font-weight:700 }
 td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .wrap { overflow-x:auto }
 input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
-p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px } footer { margin-top:40px; color:var(--sub) }
+p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px }
+:root { --red:#c0201a } :root[data-theme="dark"] { --red:#ff5a4a }
+h2.why, .why, .why b { color:var(--red); font-weight:700 } .whybox { background:var(--card); border:2px solid var(--red); border-radius:8px; padding:4px 14px } ul.why { margin:6px 0 10px; padding-left:20px } ul.why li { margin:4px 0 }
+ol.tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:8px 14px 8px 34px } ol.tips > li { margin:8px 0 } ol.best { margin:6px 0; padding-left:22px } ol.best li { margin:2px 0 }
+footer { margin-top:40px; color:var(--sub) }
 #themebtn { font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px } #themebtn.floating { position:fixed; top:12px; right:16px; z-index:30 } #themebtn .ti { color:var(--acc) }
 </style><script src="assets/theme.js"></script></head><body><main>
 <nav><a href="index.html">← 공략 목차</a></nav>
@@ -82,6 +86,33 @@ p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border
 <div class="sub">점보 마을 사람들의 납품 의뢰와 친밀도</div>
 <p>마을 사람의 의뢰(아이템 납품·퀘스트)를 해결하면 그 사람의 <b>친밀도</b>가 오릅니다. 친밀도가 쌓이면 선물·식사 초대 같은 이벤트가 생기고 마을 시설이 발전합니다.</p>
 '@
+# 효율: 1개당 친밀도(요구 수 단계 중 가장 좋은 값). 상위 15%에 ⭐
+$eff = @{}; $bestTier = @{}; foreach ($k in $req.Keys) { $best = 0.0; foreach ($t in $req[$k].tiers) { $c = [double](($t[0] -replace '[^0-9]', '')); $pt = [double](($t[1] -replace '[^0-9]', '')); if ($c -gt 0 -and $pt / $c -gt $best) { $best = $pt / $c; $bestTier[$k] = "$($t[0]) → $($t[1])" } }; $eff[$k] = $best }
+$sorted = @($eff.Values | Sort-Object -Descending); $cut = $sorted[[Math]::Min($sorted.Count - 1, [Math]::Ceiling($sorted.Count * 0.15) - 1)]
+$starKeys = @($eff.Keys | Where-Object { $eff[$_] -ge $cut } | Sort-Object @{ e = { $eff[$_] }; Descending = $true }, @{ e = { $_ } })
+
+# 1) 왜 해야 하나 (가장 중요 — 맨 위, 빨간 굵은 글씨)
+A '<h2 class="why">★ 왜 마을의뢰를 해야 하나 (가장 중요)</h2><div class="whybox">'
+A '<p class="why">마을 사람의 의뢰를 해결해 친밀도를 쌓으면 아래 이벤트가 생깁니다. 선물로 회복약・광석・성철을 받고, 식사 초대로 능력치가 오르고, 마을 특매・용 장인・행상 같은 시설 이벤트가 열립니다.</p><ul class="why">'
+foreach ($r in $ev) {
+  $extra = if ($r[3]) { " + $(Esc $r[3])" } else { '' }
+  $what = switch ($r[0]) {
+    '선물' { " → $(Esc $gift[0][1]) / $(Esc $gift[0][2]) / $(Esc $gift[0][3]) 등 (마을 사람 유형마다 다름)" }
+    '식사 초대' { " → 식사 효과: $(Esc (($mealRows[-1][1..3] | ForEach-Object { $_ -replace "`n", ', ' }) -join ' / ')) (최고 마이하우스 LV 기준)" }
+    default { '' } }
+  A ("<li><b>{0}</b>: {1} {2}{3}{4}</li>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), $extra, $what) }
+A ('<li><b>성철</b>: 선물을 준 마을 사람이 누적 {0}가 될 때마다 성철을 따로 받습니다.</li></ul></div>' -f (Esc (($cum | ForEach-Object { $_[0] }) -join '・')))
+
+# 2) 효율적으로 올리는 팁 (순서대로)
+$qpt = ($q | ForEach-Object { "{0} {1}" -f ($_[0] -replace '１','1' -replace '２','2' -replace '３','3' -replace '４','4'), $_[1] }) -join ', '
+A '<h2>친밀도를 효율적으로 올리는 순서</h2><ol class="tips">'
+A ('<li><b>누구에게 할지 정하기:</b> 항구 쪽 이벤트는 <b>항구 관계자</b>({0}), 공방 쪽 이벤트는 <b>공방 관계자</b>({1})의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</li>' -f (Esc (($types['항구 관계자'] | Where-Object { $_ }) -join '・')), (Esc (($types['공방 관계자'] | Where-Object { $_ }) -join '・')))
+A '<li><b>공방부터 노리기:</b> 공방이 <b>LV3</b>이고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」, 항구가 <b>LV3</b>이고 항구 관계자 합계가 <b>50pt</b>면 「마을 특매」가 생깁니다. 공방 쪽 필요량이 적으니 먼저 노리기 좋습니다.</li>'
+A ('<li><b>의뢰 퀘스트는 별이 높은 것부터:</b> 한 번에 오르는 친밀도는 {0}입니다.</li>' -f (Esc $qpt))
+A '<li><b>납품은 아래 순서의 아이템부터:</b> 1개당 친밀도가 높은 순서입니다. 요구 수가 여러 단계면 적힌 단계로 납품할 때 가장 효율이 좋습니다.<ol class="best">'
+foreach ($k in $starKeys) { A ("<li><b>{0}</b> <span class=eff>{1:0.##}pt/개 ({2})</span></li>" -f (Esc $k), $eff[$k], (Esc $bestTier[$k])) }
+A '</ol></li></ol><p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p>'
+
 A '<h2>마을 사람 유형</h2><div class="wrap"><table><tr><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
 $max = (($types.Values | ForEach-Object { $_.Count }) | Measure-Object -Maximum).Maximum
 for ($i = 0; $i -lt $max; $i++) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>" -f (Esc $types['일반'][$i]), (Esc $types['공방 관계자'][$i]), (Esc $types['항구 관계자'][$i])) }
@@ -91,10 +122,6 @@ foreach ($r in $q) { A ("<tr><td>{0}</td><td class=n>{1}</td></tr>" -f (Esc ($r[
 A '</table></div>'
 A '<h2>납품 아이템별 친밀도</h2><p class="note">같은 아이템도 요구 수가 많으면 친밀도가 더 오릅니다. 이름으로 찾을 수 있습니다. <b>⭐ = 1개당 친밀도가 높은 효율 좋은 납품</b>(상위 15%).</p>'
 A '<input type="search" id="q" placeholder="아이템 이름 검색 (예: 버섯)" oninput="f()"><div class="wrap"><table id="items"><tr><th>아이템</th><th>요구 수 → 친밀도</th></tr>'
-# 효율: 1개당 친밀도(요구 수 단계 중 가장 좋은 값). 상위 15%에 ⭐
-$eff = @{}; foreach ($k in $req.Keys) { $best = 0.0; foreach ($t in $req[$k].tiers) { $c = [double](($t[0] -replace '[^0-9]', '')); $pt = [double](($t[1] -replace '[^0-9]', '')); if ($c -gt 0 -and $pt / $c -gt $best) { $best = $pt / $c } }; $eff[$k] = $best }
-$sorted = @($eff.Values | Sort-Object -Descending); $cut = $sorted[[Math]::Min($sorted.Count - 1, [Math]::Ceiling($sorted.Count * 0.15) - 1)]
-$starCount = @($eff.Keys | Where-Object { $eff[$_] -ge $cut }).Count
 foreach ($k in ($req.Keys | Sort-Object)) { $v = $req[$k]; $tiers = ($v.tiers | ForEach-Object { "$($_[0]) → $($_[1])" }) -join '<br>'
   $star = if ($eff[$k] -ge $cut) { '<span class="star" title="1개당 친밀도가 높은 납품">⭐</span> ' } else { '' }
   A ("<tr><td>{0}{1}<div class=ja>{2}</div></td><td>{3}<div class=eff>1개당 최대 {4:0.##}pt</div></td></tr>" -f $star, (Esc $k), (Esc $v.ja), $tiers, $eff[$k]) }
@@ -102,15 +129,6 @@ A '</table></div>'
 A '<h2>이벤트 발생 조건</h2><div class="wrap"><table><tr><th>이벤트</th><th>필요한 친밀도</th><th>필요량</th><th>추가 조건</th></tr>'
 foreach ($r in $ev) { A ("<tr><td>{0}</td><td>{1}</td><td class=n>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
 A '</table></div>'
-# 항구・공방 레벨 올리기 팁 (원문 자료의 수치로만 작성)
-$topStar = @($eff.Keys | Sort-Object { -$eff[$_] } | Select-Object -First 6)
-$qpt = ($q | ForEach-Object { "{0} {1}" -f ($_[0] -replace '１','1' -replace '２','2' -replace '３','3' -replace '４','4'), $_[1] }) -join ', '
-A '<h2>항구・공방 레벨을 효율적으로 올리는 팁</h2><div class="tips">'
-A ('<p><b>누구에게 해야 하나:</b> 항구 쪽은 <b>항구 관계자</b>({0}), 공방 쪽은 <b>공방 관계자</b>({1})의 의뢰를 해결해야 그쪽 친밀도 합계가 쌓입니다. 일반 마을 사람의 의뢰는 마을 전체 친밀도에만 들어갑니다.</p>' -f (Esc (($types['항구 관계자'] | Where-Object { $_ }) -join '・')), (Esc (($types['공방 관계자'] | Where-Object { $_ }) -join '・')))
-A ('<p><b>의뢰 퀘스트는 별이 높을수록 이득:</b> 의뢰 퀘스트 한 번에 오르는 친밀도는 {0}입니다. 같은 시간이면 높은 별 의뢰를 고르세요.</p>' -f (Esc $qpt))
-A ('<p><b>납품은 ⭐ 아이템부터:</b> 아래 표의 ⭐ 표시는 1개당 친밀도가 높은 납품입니다. 예: {0}. 요구 수가 여러 단계인 아이템은 「1개당 최대」 값이 나오는 단계로 납품하면 효율이 좋습니다.</p>' -f (Esc (($topStar | ForEach-Object { "$_ ($('{0:0.##}' -f $eff[$_])pt/개)" }) -join ', ')))
-A '<p><b>레벨 3이 고비:</b> 항구가 <b>레벨 3</b>이 되고 항구 관계자 친밀도 합계가 <b>50pt</b>면 「마을 특매」, 공방이 <b>레벨 3</b>이 되고 공방 관계자 친밀도 합계가 <b>20pt</b>면 「용 장인」 이벤트가 생깁니다. 공방 쪽은 필요량이 적으니 먼저 노리기 좋습니다.</p>'
-A '<p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p></div>'
 A '<h2>마을 사람에게 받는 선물</h2><p class="note">선물은 마을 사람 유형마다 다릅니다. 1~5회째는 아래 순서이고, 6회째부터는 같은 유형의 선물 중 무작위입니다.</p>'
 A '<div class="wrap"><table><tr><th></th><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
 foreach ($r in $gift) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
