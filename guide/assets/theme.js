@@ -43,31 +43,34 @@
     paint();
     var bar = document.querySelector("header.top .wrap");
     if (bar) bar.appendChild(btn); else { btn.classList.add("floating"); document.body.appendChild(btn); }
-    visits(bar);
+    visits();
   }
 
-  // 접속 수: GitHub Pages 사이트에서만 센다(hitscounter.dev, 계정 불필요). 같은 탭(세션)에서는 한 번만 올리고 다른 페이지는 저장값을 보여 준다.
-  function visits(bar) {
+  // 접속 수: GitHub Pages 사이트에서만 센다(hitscounter.dev, 계정 불필요). 위치는 맨 아래 「자료:」 줄 바로 위.
+  //  Total = 사이트 주소의 누적 수, Today = 한국 시간(UTC+9) 날짜별 주소의 수 → 한국 시간 자정에 0부터 다시 센다.
+  //  같은 탭(세션)에서는 하루에 한 번만 올리고, 다른 페이지에서는 저장해 둔 값을 보여 준다.
+  function visits() {
     if (!/(^|\.)github\.io$/.test(location.hostname)) return;
     var st = document.createElement("style");
-    st.textContent = "#visits{font:12px/1 \"Galmuri11\",monospace;color:var(--sub);white-space:nowrap;z-index:30}" +
-      "header.top .wrap{position:relative}#visits.inbar{position:absolute;right:16px;top:calc(100% + 6px)}" +
-      "#visits.floating{position:fixed;top:48px;right:16px}#visits b{color:var(--acc);font-weight:700}";
+    st.textContent = "#visits{margin:24px 0 -24px;font:12px/1.4 \"Galmuri11\",monospace;color:var(--sub);white-space:nowrap}" +
+      "#visits span{margin-right:10px}#visits b{color:var(--acc);font-weight:700}";
     document.head.appendChild(st);
-    var el = document.createElement("div"); el.id = "visits"; el.className = bar ? "inbar" : "floating";
-    // 앞자리 0 없이, 천 단위 쉼표 (예: 0, 27, 1,234)
+    var el = document.createElement("div"); el.id = "visits";
     var fmt = function (n) { return String(Number(n) || 0).replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
-    var show = function (d) { el.innerHTML = "[ Total : <b>" + fmt(d.total_hits) + "</b> ]"; el.title = "누적 접속 수"; };
-    el.textContent = "[ Total : … ]";
-    (bar || document.body).appendChild(el);
-    var KEYS = "mh2-visits", cached = null;
+    var show = function (t, a) { el.innerHTML = "<span title=\"오늘(한국 시간) 방문\">[ Today : <b>" + fmt(t) + "</b> ]</span><span title=\"누적 방문\">[ Total : <b>" + fmt(a) + "</b> ]</span>"; };
+    el.textContent = "[ Today : … ] [ Total : … ]";
+    var ft = document.querySelector("main footer") || document.querySelector("footer");
+    if (ft && ft.parentNode) ft.parentNode.insertBefore(el, ft); else document.body.appendChild(el);
+    var day = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10); // 한국 시간 날짜
+    var KEYS = "mh2-visits2", cached = null;
     try { cached = JSON.parse(sessionStorage.getItem(KEYS) || "null"); } catch (e) {}
-    if (cached && cached.d === new Date().toDateString()) { show(cached); return; }
+    if (cached && cached.day === day) { show(cached.t, cached.a); return; }
     var site = "https://xofldla.github.io/mh2-dos-db/";
-    fetch("https://hitscounter.dev/api/hit?output=json&url=" + encodeURIComponent(site))
-      .then(function (r) { return r.json(); })
-      .then(function (d) { if (d && d.total_hits != null) { show(d); d.d = new Date().toDateString(); try { sessionStorage.setItem(KEYS, JSON.stringify(d)); } catch (e) {} } })
-      .catch(function () { el.textContent = ""; });
+    var hit = function (u) { return fetch("https://hitscounter.dev/api/hit?output=json&url=" + encodeURIComponent(u)).then(function (r) { return r.json(); }); };
+    Promise.all([hit(site + "?day=" + day), hit(site)]).then(function (r) {
+      var t = r[0] && r[0].total_hits, a = r[1] && r[1].total_hits; if (a == null) throw 0;
+      show(t, a); try { sessionStorage.setItem(KEYS, JSON.stringify({ day: day, t: t, a: a })); } catch (e) {}
+    }).catch(function () { el.textContent = ""; });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();
 })();
