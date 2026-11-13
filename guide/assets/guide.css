@@ -572,3 +572,5 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
 .mapbox .pt.hit::before { content:''; position:absolute; left:50%; top:50%; width:26px; height:26px; margin:-13px 0 0 -13px; border:2px solid #ffd27a; border-radius:50%; animation:mring 1.4s ease-out infinite; pointer-events:none; }
 @keyframes mring { from { transform:scale(.8); opacity:.9; } to { transform:scale(2.2); opacity:0; } }
 @media (prefers-reduced-motion: reduce) { .mapbox .pt.hit, .mapbox .pt.hit::before, .mapbox .pt.hit::after { animation:none; } }
+/* 테마 버튼 아이콘: 라이트=아이루, 다크=메라루 */
+#themebtn img.ti { height:20px; width:auto; display:block; }

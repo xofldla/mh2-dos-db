@@ -72,7 +72,7 @@
   renderChips();
 
   // 검색
-  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132240"); } catch (e) { worker = null; }
+  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132246"); } catch (e) { worker = null; }
   var last = null, shown = 0;
   function opts() {
     var o = { targets: picked.map(function (p) { return { sk: p.sk, pts: p.pts }; }), cls: radio("cls"), sex: radio("sex"), maxRar: +$("rar").value, wslots: +$("ws").value };
