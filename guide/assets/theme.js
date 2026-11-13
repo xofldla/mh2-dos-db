@@ -30,7 +30,8 @@
     btn.type = "button"; btn.id = "themebtn";
     var paint = function () {
       var dark = root.getAttribute("data-theme") === "dark";
-      btn.innerHTML = dark ? '<img class="ti" src="images/theme_airou.png" alt=""><span class="tl">라이트</span>' : '<img class="ti" src="images/theme_melynx.png" alt=""><span class="tl">다크</span>'; // 라이트 버튼=아이루, 다크 버튼=메라루
+      btn.innerHTML = dark ? '<img class="ti" src="images/theme_airou.png" alt="라이트">' : '<img class="ti" src="images/theme_melynx.png" alt="다크">'; // 라이트 버튼=아이루, 다크 버튼=메라루
+     
       btn.title = dark ? "라이트 모드로 바꾸기" : "다크 모드로 바꾸기";
       btn.setAttribute("aria-label", btn.title);
     };
