@@ -71,10 +71,10 @@ foreach ($p in Get-ChildItem "$root\guide" -Filter *.html) {
     param($m)
     $raw = $m.Groups[1].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
     $k = "logo|$text"; if (-not $cache[$k]) { $cache[$k] = Render $text $TF 16 }
-    '<a class="logo timg" href="index.html"><img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">' + (Span $cache[$k] $raw 'l') + '</a>'
+    '<a class="logo timg" href="index.html"><img class="mhl" src="images/site_icon.png" alt="" aria-hidden="true">' + (Span $cache[$k] $raw 'l') + '</a>'
   })
   # 이미 바뀐 페이지(index.html처럼 빌드가 다시 만들지 않는 파일)에도 로고 이미지를 넣는다
-  $img = '<img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">'
+  $img = '<img class="mhl" src="images/site_icon.png" alt="" aria-hidden="true">'
   $html = $html.Replace('<a class="logo timg" href="index.html"><span', '<a class="logo timg" href="index.html">' + $img + '<span')
   $html = [regex]::Replace($html, '<h1 class="timg">(<span class="ttl h"[^>]*></span><span class="sr">몬스터헌터2 \(DOS\) DB</span>)', '<h1 class="timg"><img class="mhl big" src="images/mh2_logo.png" alt="" aria-hidden="true">$1')
   # 이미 이미지로 바뀐 제목도 지금 글꼴로 다시 그린다 (글꼴을 바꿨을 때)
@@ -85,6 +85,7 @@ foreach ($p in Get-ChildItem "$root\guide" -Filter *.html) {
     if (-not $cache[$k]) { $cache[$k] = Render $text $TF $(if ($cls -eq 'h') { 26 } else { 16 }) }
     Span $cache[$k] $raw $cls
   })
+  $html = $html.Replace('<img class="mhl" src="images/mh2_logo.png"', '<img class="mhl" src="images/site_icon.png"') # 상단 작은 로고는 정사각형 아이루 아이콘
   if ($html -ne $orig) { [IO.File]::WriteAllText($p.FullName, $html, $u8); $n++ }
 }
 # 이미 바뀐 페이지가 쓰는 이미지도 사용 중으로 친다 (다시 실행해도 지우지 않게)

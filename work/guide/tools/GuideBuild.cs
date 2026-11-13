@@ -86,11 +86,12 @@ public static class G
         new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"} };
 
     // 보안 헤더(meta CSP): 이 사이트 파일과 방문자 카운터(hitscounter.dev)만 허용. file:은 오프라인(zip)으로 열 때용
+    public const string Fav = "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"images/favicon-32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"images/favicon-16.png\"><link rel=\"apple-touch-icon\" href=\"images/apple-touch-icon.png\">"; // 탭 아이콘(아이루)
     public const string Csp = "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' file:; script-src 'self' 'unsafe-inline' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file:; font-src 'self' data: file:; connect-src 'self' https://hitscounter.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'\">";
     public static string Head(string file, string title, string sub, bool search)
     {
         var sb = new StringBuilder();
-        sb.Append("<!doctype html>\n<html lang=\"ko\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + Csp + "\n");
+        sb.Append("<!doctype html>\n<html lang=\"ko\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + Csp + "\n" + Fav + "\n");
         sb.Append("<title>" + H(title) + " | 몬스터헌터2 (DOS) DB</title>\n<link rel=\"stylesheet\" href=\"assets/guide.css\">\n<link rel=\"stylesheet\" href=\"assets/icons.css\">\n<script src=\"assets/theme.js\"></script>\n</head><body>\n");
         sb.Append("<header class=\"top\"><div class=\"wrap\"><a class=\"logo\" href=\"index.html\">몬스터헌터2 (DOS) DB</a><nav>");
         foreach (var n in Nav) sb.Append("<a href=\"" + n[0] + "\"" + (n[0] == file ? " class=\"on\"" : "") + ">" + n[1] + "</a>");

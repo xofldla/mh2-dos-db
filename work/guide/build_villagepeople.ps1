@@ -61,6 +61,7 @@ A @'
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' 'unsafe-inline' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file:; font-src 'self' data: file:; connect-src 'self' https://hitscounter.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png"><link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <title>마을 사람과의 교류 | 몬스터헌터2 (DOS) DB</title>
 <link rel="stylesheet" href="assets/guide.css">
 <link rel="stylesheet" href="assets/icons.css">
