@@ -18,7 +18,7 @@
 #sklist button:hover { border-color:var(--acc); color:var(--acc); }
 #sklist .tr { color:var(--sub); font-size:11px; }
 #chips { display:flex; flex-wrap:wrap; gap:6px; min-height:28px; }
-.chip { background:var(--acc); border-color:var(--acc); color:var(--card); font-weight:700; cursor:default; }
+.chip { background:var(--acc); border-color:var(--acc); color:var(--card); font-weight:700; cursor:pointer; } .chip:hover { background:var(--neg); border-color:var(--neg); }
 .chip .x { margin-left:6px; opacity:.8; }
 .chip .tr { font-weight:400; opacity:.85; font-size:11px; }
 .resetrow { display:flex; justify-content:flex-end; margin-top:6px; } .resetbtn { font:inherit; font-weight:700; color:var(--ink); background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:4px 14px; cursor:pointer; } .resetbtn:hover { border-color:var(--neg); color:var(--neg); } font-weight:700; font-size:15px; padding:8px 22px; border-radius:8px; border:0; background:var(--acc); color:var(--card); cursor:pointer; }
@@ -50,7 +50,7 @@
   <h2>1. 원하는 스킬</h2>
   <input id="skq" type="search" placeholder="스킬 이름으로 찾기 (예: 공격, 회피, 체력)" autocomplete="off">
   <div id="sklist"></div>
-  <div class="sim-row"><span class="lab">고른 스킬</span></div><div class="sim-row"><div id="chips"><span class="note" id="nochip">위 목록에서 눌러 추가하세요 (최대 10개). 한 번 더 누르면 빠집니다.</span></div></div>
+  <div class="sim-row"><span class="lab">고른 스킬</span></div><div class="sim-row"><div id="chips"><span class="note" id="nochip">위 목록에서 눌러 추가하세요 (최대 10개). 목록에서 한 번 더 누르거나, 여기서 누르면 빠집니다.</span></div></div>
   <div class="resetrow"><button type="button" id="reset" class="resetbtn">[ 초기화 ]</button></div>
 </div>
 
