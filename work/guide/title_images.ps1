@@ -62,15 +62,20 @@ foreach ($p in Get-ChildItem "$root\guide" -Filter *.html) {
     param($m)
     $raw = $m.Groups[1].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
     $k = "h1|$text"; if (-not $cache[$k]) { $cache[$k] = Render $text 'REATIC' 26 }
-    '<h1 class="timg">' + (Span $cache[$k] $raw 'h') + '</h1>'
+    $pre = if ($text -eq '몬스터헌터2 (DOS) DB') { '<img class="mhl big" src="images/mh2_logo.png" alt="" aria-hidden="true">' } else { '' }
+    '<h1 class="timg">' + $pre + (Span $cache[$k] $raw 'h') + '</h1>'
   })
   # 상단 로고
   $html = [regex]::Replace($html, '<a class="logo" href="index.html">([^<]+)</a>', {
     param($m)
     $raw = $m.Groups[1].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
     $k = "logo|$text"; if (-not $cache[$k]) { $wf = @($fam.Keys | Where-Object { $_ -like '*Wide*' })[0]; $cache[$k] = Render $text $wf 14 }
-    '<a class="logo timg" href="index.html">' + (Span $cache[$k] $raw 'l') + '</a>'
+    '<a class="logo timg" href="index.html"><img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">' + (Span $cache[$k] $raw 'l') + '</a>'
   })
+  # 이미 바뀐 페이지(index.html처럼 빌드가 다시 만들지 않는 파일)에도 로고 이미지를 넣는다
+  $img = '<img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">'
+  $html = $html.Replace('<a class="logo timg" href="index.html"><span', '<a class="logo timg" href="index.html">' + $img + '<span')
+  $html = [regex]::Replace($html, '<h1 class="timg">(<span class="ttl h"[^>]*></span><span class="sr">몬스터헌터2 \(DOS\) DB</span>)', '<h1 class="timg"><img class="mhl big" src="images/mh2_logo.png" alt="" aria-hidden="true">$1')
   if ($html -ne $orig) { [IO.File]::WriteAllText($p.FullName, $html, $u8); $n++ }
 }
 # 이미 바뀐 페이지가 쓰는 이미지도 사용 중으로 친다 (다시 실행해도 지우지 않게)

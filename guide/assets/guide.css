@@ -541,3 +541,7 @@ details.qdrop[open] > summary { margin-bottom:2px; }
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 h1.timg { line-height:1; }
 .logo.timg { display:inline-flex; align-items:center; }
+img.mhl { height:28px; width:auto; margin-right:8px; vertical-align:middle; }
+img.mhl.big { height:96px; margin-right:14px; }
+h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px 0; }
+@media (max-width: 520px) { img.mhl.big { height:64px; } }
