@@ -461,6 +461,7 @@ public static class G
             var a = p.A; string id = "a" + p.Part + "-" + S(a, "index");
             string lb, lg; SimLink[0].TryGetValue(id, out lb); SimLink[1].TryGetValue(id, out lg);
             if (lb == null && lg == null) continue;
+            if (Has(a, "acquire") && P(S(a, "acquire")).Contains("훈련 전용")) continue; // 훈련(교관 수련) 전용 방어구는 실제 장비로 못 쓰므로 뺀다
             int cls = p.Cls == "Blademaster" ? 0 : p.Cls == "Gunner" ? 1 : 2;
             int sex = p.Sex == "Male" ? 1 : p.Sex == "Female" ? 2 : 0;
             var res = A(a, "resistances").Select(x => Convert.ToString(x)).ToArray();
