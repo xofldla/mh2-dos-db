@@ -10,7 +10,7 @@
 
   // 고를 수 있는 발동 스킬 (+ 단계만)
   var stages = [];
-  D.s.forEach(function (s, sk) { s[1].forEach(function (x) { if (x[0] > 0) stages.push({ sk: sk, pts: x[0], n: x[1], tree: s[0], cat: s[3] || 0 }); }); });
+  D.s.forEach(function (s, sk) { s[1].forEach(function (x) { if (x[0] > 0) stages.push({ sk: sk, pts: x[0], n: x[1], tree: s[0], cat: s[3] || 0, ja: x[3] || "", treeJa: s[4] || "" }); }); });
   // 발동 스킬 이름 가나다순. 숫자는 크기 순(+3 < +10), 【소】【중】【대】는 소→중→대 순
   var sortKey = function (n) { return n.replace(/【소】/g, "【1】").replace(/【중】/g, "【2】").replace(/【대】/g, "【3】"); };
   stages.sort(function (a, b) { return sortKey(a.n).localeCompare(sortKey(b.n), "ko", { numeric: true }) || a.pts - b.pts; });
@@ -27,10 +27,10 @@
   $("skcat").addEventListener("click", function (e) { var b = e.target.closest("button[data-c]"); if (!b) return; cat = +b.getAttribute("data-c"); store.set("mh2-sim-cat", String(cat)); renderCats(); renderList(); });
   function renderList() {
     var q = $("skq").value.trim();
-    var list = stages.filter(function (s) { return q ? (s.n.indexOf(q) >= 0 || s.tree.indexOf(q) >= 0) : (cat === -1 || s.cat === cat); });
+    var list = stages.filter(function (s) { return q ? (s.n.indexOf(q) >= 0 || s.tree.indexOf(q) >= 0 || s.ja.indexOf(q) >= 0 || s.treeJa.indexOf(q) >= 0) : (cat === -1 || s.cat === cat); });
     var btn = function (s) {
       var on = picked.some(function (p) { return p.sk === s.sk && p.pts === s.pts; });
-      return '<button type="button" data-sk="' + s.sk + '" data-p="' + s.pts + '"' + (on ? ' class="picked"' : "") + ">" + esc(s.n) + ' <span class="tr">' + esc(s.tree) + " " + s.pts + "</span></button>";
+      return '<button type="button" data-sk="' + s.sk + '" data-p="' + s.pts + '" title="' + esc(s.ja + (s.treeJa ? " (" + s.treeJa + " " + s.pts + ")" : "")) + '"' + (on ? ' class="picked"' : "") + ">" + esc(s.n) + ' <span class="tr">' + esc(s.tree) + " " + s.pts + "</span></button>";
     };
     var html = "";
     [0, 1, 2].forEach(function (c) {
@@ -74,7 +74,7 @@
   renderChips();
 
   // 검색
-  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132314"); } catch (e) { worker = null; }
+  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132333"); } catch (e) { worker = null; }
   var last = null, shown = 0;
   function opts() {
     var o = { targets: picked.map(function (p) { return { sk: p.sk, pts: p.pts }; }), cls: radio("cls"), sex: radio("sex"), maxRar: +$("rar").value, wslots: +$("ws").value };
@@ -113,18 +113,18 @@
     s.f.forEach(function (g) { byG[g.g] = (byG[g.g] || []).concat(g.d); });
     var deco = function (g) {
       var cnt = {}; (byG[g] || []).forEach(function (di) { cnt[di] = (cnt[di] || 0) + 1; });
-      return Object.keys(cnt).map(function (di) { var d = D.d[di]; return '<a class="xlink" href="' + d[4] + '">' + esc(d[0]) + "</a>" + (cnt[di] > 1 ? " ×" + cnt[di] : ""); }).join(", ");
+      return Object.keys(cnt).map(function (di) { var d = D.d[di]; return '<a class="xlink" href="' + d[4] + '">' + esc(d[0]) + "</a>" + (d[5] ? ' <span class="ja">' + esc(d[5]) + "</span>" : "") + (cnt[di] > 1 ? " ×" + cnt[di] : ""); }).join(", ");
     };
     var rows = s.p.map(function (ai, p) {
       var a = D.a[ai], link = o.cls === 0 ? (a[11] || a[12]) : (a[12] || a[11]);
-      return '<tr><td class="pt">' + PART[p] + '</td><td><a class="xlink" href="' + link + '">' + esc(a[1]) + "</a>" + (a[10] ? ' <span class="note">(동계통배가)</span>' : "") + ' <span class="meta">레어' + a[2] + '</span></td><td class="sl">' + slots(a[7]) + '</td><td class="dc">' + deco(p) + "</td></tr>";
+      return '<tr><td class="pt">' + PART[p] + '</td><td><a class="xlink" href="' + link + '">' + esc(a[1]) + "</a>" + (a[13] ? ' <span class="ja">' + esc(a[13]) + "</span>" : "") + (a[10] ? ' <span class="note">(동계통배가)</span>' : "") + ' <span class="meta">레어' + a[2] + '</span></td><td class="sl">' + slots(a[7]) + '</td><td class="dc">' + deco(p) + "</td></tr>";
     }).join("");
     if (o.wslots > 0) rows += '<tr><td class="pt">무기</td><td><span class="note">(무기 슬롯)</span></td><td class="sl">' + slots(o.wslots) + '</td><td class="dc">' + deco(5) + "</td></tr>";
     var res = RES.map(function (r, i) { return '<span class="res ' + r[0] + (e.res[i] === 0 ? " z" : "") + '">' + e.res[i] + "</span>"; }).join(" ");
     var acts = e.act.map(function (a) { return '<span class="act' + (a.p < 0 ? " neg" : last.tset[a.sk] ? " tg" : "") + '" title="' + esc(D.s[a.sk][0]) + " " + (a.v > 0 ? "+" : "") + a.v + '">' + esc(a.n) + "</span>"; }).join("");
     var desc = e.act.map(function (a) {
       var tr = D.s[a.sk], stg = tr[1].filter(function (x) { return x[0] === a.p; })[0], eff = stg && stg[2] ? stg[2] : "";
-      return '<li class="' + (a.p < 0 ? "neg" : last.tset[a.sk] ? "tg" : "pos") + '"><b>' + esc(a.n) + '</b> <span class="meta">(' + esc(tr[0]) + " " + (a.v > 0 ? "+" : "") + a.v + ")</span>" + (eff ? ' <span class="eff">' + esc(eff) + "</span>" : "") + (tr[2] ? ' <span class="desc">' + esc(tr[2]) + "</span>" : "") + "</li>";
+      return '<li class="' + (a.p < 0 ? "neg" : last.tset[a.sk] ? "tg" : "pos") + '"><b>' + esc(a.n) + '</b>' + (stg && stg[3] ? ' <span class="ja">' + esc(stg[3]) + "</span>" : "") + ' <span class="meta">(' + esc(tr[0]) + " " + (a.v > 0 ? "+" : "") + a.v + ")</span>" + (eff ? ' <span class="eff">' + esc(eff) + "</span>" : "") + (tr[2] ? ' <span class="desc">' + esc(tr[2]) + "</span>" : "") + "</li>";
     }).join("");
     return '<div class="sol"><div class="hd"><span class="no">#' + no + "</span><span>방어력 " + e.def0 + " → <b>" + e.def1 + "</b></span><span>내성 " + res + "</span><span>남는 슬롯 " + e.free + "</span></div><table>" + rows + '</table><div class="acts">' + acts + '</div>' + (desc ? '<details class="skd" open><summary>발동 스킬 효과</summary><ul>' + desc + "</ul></details>" : "") + "</div>";
   }

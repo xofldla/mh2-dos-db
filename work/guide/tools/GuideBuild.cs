@@ -469,20 +469,20 @@ public static class G
             int sex = p.Sex == "Male" ? 1 : p.Sex == "Female" ? 2 : 0;
             var res = A(a, "resistances").Select(x => Convert.ToString(x)).ToArray();
             bool tu = A(a, "skills").Any(x => S(D(x), "j") == "胴系統倍加");
-            sb.Append("[" + p.Part + "," + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + Ri(a) + "," + cls + "," + sex + "," + first(A(a, "defense")) + "," + last(A(a, "defense")) + "," + last(A(a, "slots")) + ",[" + string.Join(",", Enumerable.Range(0, 5).Select(i => i < res.Length ? res[i] : "0")) + "]," + pts(A(a, "skills")) + "," + (tu ? 1 : 0) + "," + Js(lb ?? "") + "," + Js(lg ?? "") + "],\n");
+            sb.Append("[" + p.Part + "," + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + Ri(a) + "," + cls + "," + sex + "," + first(A(a, "defense")) + "," + last(A(a, "defense")) + "," + last(A(a, "slots")) + ",[" + string.Join(",", Enumerable.Range(0, 5).Select(i => i < res.Length ? res[i] : "0")) + "]," + pts(A(a, "skills")) + "," + (tu ? 1 : 0) + "," + Js(lb ?? "") + "," + Js(lg ?? "") + "," + Js(S(a, "japanese")) + "],\n");
         }
         sb.Append("],d:[\n");
         foreach (var a in decos) {
             int sl; int.TryParse(S(a, "slots"), out sl);
-            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + sl + "," + Ri(a) + "," + pts(A(a, "skills")) + "," + Js("armor-deco-s" + sl + ".html#d" + S(a, "index")) + "],\n");
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + sl + "," + Ri(a) + "," + pts(A(a, "skills")) + "," + Js("armor-deco-s" + sl + ".html#d" + S(a, "index")) + "," + Js(S(a, "japanese")) + "],\n");
         }
         // 스킬 계통: 이름, 발동 단계 [포인트, 발동 스킬 이름]
         sb.Append("],s:[\n");
         foreach (var j in skList) {
             Dictionary<string, object> tree; skillTree.TryGetValue(j, out tree);
             var st = new List<string>();
-            if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; string eff = Regex.Replace(S(sd, "d"), "</span>$", ""); st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "," + Js(SimText(eff != "" ? P(eff) : "")) + "]"); }
-            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "," + (tree != null ? SkCat(S(tree, "id")) : 2) + "],\n");
+            if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; string eff = Regex.Replace(S(sd, "d"), "</span>$", ""); st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "," + Js(SimText(eff != "" ? P(eff) : "")) + "," + Js(S(sd, "j")) + "]"); }
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "," + (tree != null ? SkCat(S(tree, "id")) : 2) + "," + Js(j) + "],\n");
         }
         sb.Append("]};\n");
         File.WriteAllText(Path.Combine(OutDir, "assets", "sim-data.js"), sb.ToString(), new UTF8Encoding(false));
@@ -632,12 +632,12 @@ public static class G
                 var s = D(o); string ja = S(s, "japanese"); var stages = A(s, "stages").Select(D).ToList();
                 var pos = stages.Where(x => !S(x, "points").StartsWith("-")).ToList();
                 string range = pos.Count == 0 ? "" : pos.Count == 1 ? T(S(pos[0], "j")) : T(S(pos[0], "j")) + " ~ " + T(S(pos[pos.Count - 1], "j"));
-                sb.Append("<button type=\"button\" class=\"wn sk\" data-w=\"" + id + "\">" + Ico(colOf(ja), "gem") + "<span class=\"sk-t\"><span class=\"nm\">" + T(ja) + "</span><span class=\"sk-r\">" + range + "</span></span></button>");
+                sb.Append("<button type=\"button\" class=\"wn sk\" data-w=\"" + id + "\">" + Ico(colOf(ja), "gem") + "<span class=\"sk-t\"><span class=\"nm\">" + T(ja) + "</span><span class=\"ja sk-ja\">" + H(ja) + "</span><span class=\"sk-r\">" + range + "</span></span></button>");
                 // 효과 창
                 var d = new StringBuilder("<div class=\"wd-head\">" + Ico(colOf(ja), "gem", " big") + "<div><b class=\"wd-name\">" + T(ja) + "</b><div class=\"wd-ja\">" + H(ja) + "</div><div class=\"meta\">" + SkillCatName[ci] + " 스킬</div></div></div>");
                 var tbx = D(s.ContainsKey("table") ? s["table"] : null); d.Append("<p class=\"sk-desc\">" + DescClean(P(S(s, "desc")), tbx != null && A(tbx, "body").Length > 0) + "</p>");
                 d.Append("<table class=\"wd-stats sk-st\"><tr><th>포인트</th><th>발동 스킬</th><th>효과</th></tr>");
-                foreach (var t in stages) { string pt = S(t, "points"); d.Append("<tr><td><b class=\"" + (pt.StartsWith("-") ? "neg" : "pos") + "\">" + H(pt == "" ? "-" : pt) + "</b></td><td>" + T(S(t, "j")) + "</td><td>" + P(Regex.Replace(S(t, "d"), "</span>$", "")) + "</td></tr>"); }
+                foreach (var t in stages) { string pt = S(t, "points"); d.Append("<tr><td><b class=\"" + (pt.StartsWith("-") ? "neg" : "pos") + "\">" + H(pt == "" ? "-" : pt) + "</b></td><td>" + T(S(t, "j")) + (S(t, "j") != "" && T(S(t, "j")) != S(t, "j") ? " <span class=\"ja\">" + H(S(t, "j")) + "</span>" : "") + "</td><td>" + P(Regex.Replace(S(t, "d"), "</span>$", "")) + "</td></tr>"); }
                 d.Append("</table>");
                 var tb = D(s.ContainsKey("table") ? s["table"] : null);
                 if (tb != null && A(tb, "body").Length > 0) {
@@ -652,7 +652,7 @@ public static class G
                     d.Append("<h4 class=\"wd-h\">이 스킬을 올리는 장식주</h4><div class=\"wd-mats\">");
                     foreach (var de in decos) {
                         string pts = string.Join(" ", A(de, "skills").Select(x => T(S(D(x), "j")) + " <b>" + Sign(S(D(x), "q")) + "</b>"));
-                        d.Append("<div class=\"sk-deco\">" + Ico(S(de, "color") != "" ? S(de, "color") : "white", "gem") + "<b>" + T(S(de, "japanese")) + "</b> <span class=\"meta\">" + Slots(S(de, "slots")) + "</span> " + pts + "</div>");
+                        d.Append("<div class=\"sk-deco\">" + Ico(S(de, "color") != "" ? S(de, "color") : "white", "gem") + "<b>" + TJ(S(de, "japanese")) + "</b> <span class=\"meta\">" + Slots(S(de, "slots")) + "</span> " + pts + "</div>");
                     }
                     d.Append("</div>");
                 } else d.Append("<p class=\"meta\">이 스킬을 올리는 장식주는 없습니다 (방어구로만 발동).</p>");
