@@ -83,7 +83,7 @@ public static class G
     static readonly string[][] Nav = {
         new[]{"index.html","홈"}, new[]{"weapons.html","무기"}, new[]{"armor.html","방어구"}, new[]{"armor-skills.html","스킬"},
         new[]{"items.html","아이템"}, new[]{"bestiary.html","몬스터"}, new[]{"quests.html","퀘스트"}, new[]{"maps.html","맵"},
-        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"} };
+        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"} };
 
     public static string Head(string file, string title, string sub, bool search)
     {
@@ -445,6 +445,43 @@ public static class G
         return sb.Append("</div>").ToString();
     }
 
+    // ================= 장비 시뮬레이터 데이터 (assets/sim-data.js) =================
+    static readonly Dictionary<string, string>[] SimLink = { new Dictionary<string, string>(), new Dictionary<string, string>() };
+    static void SimData(List<ArmorSets.Piece> all, List<Dictionary<string, object>> decos, Dictionary<string, Dictionary<string, object>> skillTree)
+    {
+        var skIdx = new Dictionary<string, int>(); var skList = new List<string>();
+        Func<string, int> sk = j => { int i; if (!skIdx.TryGetValue(j, out i)) { i = skList.Count; skIdx[j] = i; skList.Add(j); } return i; };
+        Func<object[], string> pts = arr => "[" + string.Join(",", arr.Select(x => D(x)).Where(d => S(d, "j") != "胴系統倍加" && S(d, "j") != "").Select(d => { int q; int.TryParse(S(d, "q").Replace("+", ""), out q); return "[" + sk(S(d, "j")) + "," + q + "]"; })) + "]";
+        Func<object[], int> last = arr => { int v = 0; if (arr.Length > 0) int.TryParse(Convert.ToString(arr[arr.Length - 1]), out v); return v; };
+        Func<object[], int> first = arr => { int v = 0; if (arr.Length > 0) int.TryParse(Convert.ToString(arr[0]), out v); return v; };
+        var sb = new StringBuilder("window.SIMD={a:[\n");
+        foreach (var p in all) {
+            var a = p.A; string id = "a" + p.Part + "-" + S(a, "index");
+            string lb, lg; SimLink[0].TryGetValue(id, out lb); SimLink[1].TryGetValue(id, out lg);
+            if (lb == null && lg == null) continue;
+            int cls = p.Cls == "Blademaster" ? 0 : p.Cls == "Gunner" ? 1 : 2;
+            int sex = p.Sex == "Male" ? 1 : p.Sex == "Female" ? 2 : 0;
+            var res = A(a, "resistances").Select(x => Convert.ToString(x)).ToArray();
+            bool tu = A(a, "skills").Any(x => S(D(x), "j") == "胴系統倍加");
+            sb.Append("[" + p.Part + "," + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + Ri(a) + "," + cls + "," + sex + "," + first(A(a, "defense")) + "," + last(A(a, "defense")) + "," + last(A(a, "slots")) + ",[" + string.Join(",", Enumerable.Range(0, 5).Select(i => i < res.Length ? res[i] : "0")) + "]," + pts(A(a, "skills")) + "," + (tu ? 1 : 0) + "," + Js(lb ?? "") + "," + Js(lg ?? "") + "],\n");
+        }
+        sb.Append("],d:[\n");
+        foreach (var a in decos) {
+            int sl; int.TryParse(S(a, "slots"), out sl);
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(Tk(S(a, "japanese")))) + "," + sl + "," + Ri(a) + "," + pts(A(a, "skills")) + "," + Js("armor-deco-s" + sl + ".html#d" + S(a, "index")) + "],\n");
+        }
+        // 스킬 계통: 이름, 발동 단계 [포인트, 발동 스킬 이름]
+        sb.Append("],s:[\n");
+        foreach (var j in skList) {
+            Dictionary<string, object> tree; skillTree.TryGetValue(j, out tree);
+            var st = new List<string>();
+            if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "]"); }
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]],\n");
+        }
+        sb.Append("]};\n");
+        File.WriteAllText(Path.Combine(OutDir, "assets", "sim-data.js"), sb.ToString(), new UTF8Encoding(false));
+    }
+
     public static void Armor()
     {
         var data = A(Load("armor"));
@@ -503,7 +540,7 @@ public static class G
                 sb.Append(Cols("ft armor", 860, new[] { 17, 7, 4, 9, 9, 13, 16, 18, 7 }, "이름", "구분", "레어", "방어력", "슬롯", "내성", "스킬", "생산 소재", "가격"));
                 foreach (var q in s) {
                     string id = "a" + q.Part + "-" + S(q.A, "index");
-                    sb.Append(ArmorRow(q.A, q.Part, id));
+                    sb.Append(ArmorRow(q.A, q.Part, id)); SimLink[c][id] = file + "#" + id;
                     if (clsOrd(s) == c || c == 0) index.Append("<tr><td><a href=\"" + file + "#" + id + "\">" + Ico(RC(S(q.A, "rarity")), ArmorIcon[q.Part]) + TJ(S(q.A, "japanese")) + "</a></td><td><a href=\"" + file + "#" + sid + "\">" + H(sname) + "</a> <span class=\"meta\">" + (clsOrd(s) == 2 ? "공용" : ClsName[c]) + "</span></td><td>" + ArmorCat[q.Part] + "</td><td>" + Rar(S(q.A, "rarity")) + "</td><td>" + string.Join(" ", A(q.A, "skills").Select(x => T(S(D(x), "j")) + Sign(S(D(x), "q")))) + "</td></tr>\n");
                 }
                 sb.Append(TEnd + UpsBox(s.Select(q => q.A).ToList(), s.Select(q => q.Part).ToList()) + SetSummary(s, skillTree) + "</section>\n");
@@ -512,7 +549,7 @@ public static class G
                 sb.Append("<section class=\"grp\" id=\"single\"><h2>단품 <span class=\"meta\">세트가 없는 장비</span></h2>\n");
                 sb.Append(Cols("ft armor", 860, new[] { 17, 7, 4, 9, 9, 13, 16, 18, 7 }, "이름", "구분", "레어", "방어력", "슬롯", "내성", "스킬", "생산 소재", "가격"));
                 foreach (var s in singles) {
-                    var q = s[0]; string id = "a" + q.Part + "-" + S(q.A, "index");
+                    var q = s[0]; string id = "a" + q.Part + "-" + S(q.A, "index"); SimLink[c][id] = file + "#" + id;
                     sb.Append(ArmorRow(q.A, q.Part, id));
                     if (clsOrd(s) == c || c == 0) index.Append("<tr><td><a href=\"" + file + "#" + id + "\">" + Ico(RC(S(q.A, "rarity")), ArmorIcon[q.Part]) + TJ(S(q.A, "japanese")) + "</a></td><td>단품 <span class=\"meta\">" + (clsOrd(s) == 2 ? "공용" : ClsName[c]) + "</span></td><td>" + ArmorCat[q.Part] + "</td><td>" + Rar(S(q.A, "rarity")) + "</td><td>" + string.Join(" ", A(q.A, "skills").Select(x => T(S(D(x), "j")) + Sign(S(D(x), "q")))) + "</td></tr>\n");
                 }
@@ -537,6 +574,7 @@ public static class G
             sb.Append(TEnd + "</section>\n");
             Write(file, sb.Append(Foot()).ToString());
         }
+        SimData(all, decos, skillTree);
         // 목차 페이지
         var hub = new StringBuilder(Head("armor.html", "방어구", "먼저 <b>검사 / 거너</b>를 고르고, 다음에 <b>레어도</b>를 고르세요. 같은 소재 세트로 묶어 보여 주고, 세트마다 모두 착용했을 때 발동하는 스킬과 효과를 적었습니다. 검색창에 이름・세트・스킬을 넣으면 전체에서 찾아 이동합니다.", true));
         hub.Append("<div class=\"partgrid cls\">");
