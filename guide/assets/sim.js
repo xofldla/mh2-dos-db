@@ -11,7 +11,9 @@
   // 고를 수 있는 발동 스킬 (+ 단계만)
   var stages = [];
   D.s.forEach(function (s, sk) { s[1].forEach(function (x) { if (x[0] > 0) stages.push({ sk: sk, pts: x[0], n: x[1], tree: s[0], cat: s[3] || 0 }); }); });
-  stages.sort(function (a, b) { return a.tree.localeCompare(b.tree, "ko") || a.pts - b.pts; });
+  // 발동 스킬 이름 가나다순. 숫자는 크기 순(+3 < +10), 【소】【중】【대】는 소→중→대 순
+  var sortKey = function (n) { return n.replace(/【소】/g, "【1】").replace(/【중】/g, "【2】").replace(/【대】/g, "【3】"); };
+  stages.sort(function (a, b) { return sortKey(a.n).localeCompare(sortKey(b.n), "ko", { numeric: true }) || a.pts - b.pts; });
   var picked = [];
 
   // 분류 탭: 전체 / 공격계 / 방어계 / 유틸계 (검색어가 있으면 모든 분류에서 찾는다)
@@ -72,7 +74,7 @@
   renderChips();
 
   // 검색
-  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132310"); } catch (e) { worker = null; }
+  var worker = null; try { worker = new Worker("assets/sim-worker.js?v=202611132314"); } catch (e) { worker = null; }
   var last = null, shown = 0;
   function opts() {
     var o = { targets: picked.map(function (p) { return { sk: p.sk, pts: p.pts }; }), cls: radio("cls"), sex: radio("sex"), maxRar: +$("rar").value, wslots: +$("ws").value };
