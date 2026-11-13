@@ -61,6 +61,8 @@ A @'
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마을 사람과의 교류 | 몬스터헌터2 (DOS) DB</title>
+<link rel="stylesheet" href="assets/guide.css">
+<link rel="stylesheet" href="assets/icons.css">
 <style>
 @font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:400 }
 @font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11-Bold.woff2") format("woff2"); font-weight:700 }
@@ -69,10 +71,10 @@ A @'
 * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:12px/1.75 "Galmuri11","Malgun Gothic","Apple SD Gothic Neo",sans-serif }
 main { max-width:960px; margin:0 auto; padding:24px 16px 64px }
 h1 { font-size:24px; margin:0 0 4px } h2 { font-size:24px; margin:32px 0 10px; color:var(--acc) }
-.sub { color:var(--sub) } nav a { color:var(--acc); margin-right:12px }
+.sub { color:var(--sub) }
 table { border-collapse:collapse; width:100%; background:var(--card) }
 th, td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top } th { background:var(--head); font-weight:700 }
-td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .wrap { overflow-x:auto }
+td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .xw { overflow-x:auto }
 input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
 p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px }
 :root { --red:#c0201a } :root[data-theme="dark"] { --red:#ff5a4a }
@@ -80,8 +82,9 @@ h2.why { color:var(--red); font-weight:700 } .whybox, .whybox b { color:var(--in
 ol.tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:8px 14px 8px 34px } ol.tips > li { margin:8px 0 } ol.best { margin:6px 0; padding-left:22px } ol.best li { margin:2px 0 }
 footer { margin-top:40px; color:var(--sub) }
 #themebtn { font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px } #themebtn.floating { position:fixed; top:12px; right:16px; z-index:30 } #themebtn .ti { color:var(--acc) }
-</style><script src="assets/theme.js"></script></head><body><main>
-<nav><a href="index.html">← 공략 목차</a></nav>
+</style><script src="assets/theme.js"></script></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="index.html">몬스터헌터2 (DOS) DB</a><nav><a href="index.html">홈</a><a href="weapons.html">무기</a><a href="armor.html">방어구</a><a href="armor-skills.html">스킬</a><a href="items.html">아이템</a><a href="bestiary.html">몬스터</a><a href="quests.html">퀘스트</a><a href="maps.html">맵</a><a href="meals.html">식사</a><a href="miscellany.html">기타</a><a href="villagepeople.html" class="on">⭐마을의뢰⭐</a></nav></div></header>
+<main>
 <h1>마을 사람과의 교류</h1>
 <div class="sub">점보 마을 사람들의 납품 의뢰와 친밀도</div>
 <p>의뢰하면 수주할 수 있는 퀘스트가 늘어납니다.</p>
@@ -113,32 +116,32 @@ A '<li><b>납품은 아래 순서의 아이템부터:</b> 1개당 친밀도가 �
 foreach ($k in $starKeys) { A ("<li><b>{0}</b> <span class=eff>{1:0.##}pt/개 ({2})</span></li>" -f (Esc $k), $eff[$k], (Esc $bestTier[$k])) }
 A '</ol></li></ol><p class="note">※ 항구・공방 레벨이 몇 pt에서 오르는지는 원문 자료(mh2kaiseki)에도 적혀 있지 않아 여기서는 다루지 않습니다.</p>'
 
-A '<h2>마을 사람 유형</h2><div class="wrap"><table><tr><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
+A '<h2>마을 사람 유형</h2><div class="xw"><table><tr><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
 $max = (($types.Values | ForEach-Object { $_.Count }) | Measure-Object -Maximum).Maximum
 for ($i = 0; $i -lt $max; $i++) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>" -f (Esc $types['일반'][$i]), (Esc $types['공방 관계자'][$i]), (Esc $types['항구 관계자'][$i])) }
 A '</table></div>'
-A '<h2>퀘스트 레벨별 친밀도</h2><div class="wrap"><table style="max-width:320px"><tr><th>퀘스트 레벨</th><th>친밀도</th></tr>'
+A '<h2>퀘스트 레벨별 친밀도</h2><div class="xw"><table style="max-width:320px"><tr><th>퀘스트 레벨</th><th>친밀도</th></tr>'
 foreach ($r in $q) { A ("<tr><td>{0}</td><td class=n>{1}</td></tr>" -f (Esc ($r[0] -replace '１', '1' -replace '２', '2' -replace '３', '3' -replace '４', '4')), (Esc $r[1])) }
 A '</table></div>'
 A '<h2>납품 아이템별 친밀도</h2><p class="note">같은 아이템도 요구 수가 많으면 친밀도가 더 오릅니다. 이름으로 찾을 수 있습니다. <b>⭐ = 1개당 친밀도가 높은 효율 좋은 납품</b>(상위 15%).</p>'
-A '<input type="search" id="q" placeholder="아이템 이름 검색 (예: 버섯)" oninput="f()"><div class="wrap"><table id="items"><tr><th>아이템</th><th>요구 수 → 친밀도</th></tr>'
+A '<input type="search" id="q" placeholder="아이템 이름 검색 (예: 버섯)" oninput="f()"><div class="xw"><table id="items"><tr><th>아이템</th><th>요구 수 → 친밀도</th></tr>'
 foreach ($k in ($req.Keys | Sort-Object)) { $v = $req[$k]; $tiers = ($v.tiers | ForEach-Object { "$($_[0]) → $($_[1])" }) -join '<br>'
   $star = if ($eff[$k] -ge $cut) { '<span class="star" title="1개당 친밀도가 높은 납품">⭐</span> ' } else { '' }
   A ("<tr><td>{0}{1}<div class=ja>{2}</div></td><td>{3}<div class=eff>1개당 최대 {4:0.##}pt</div></td></tr>" -f $star, (Esc $k), (Esc $v.ja), $tiers, $eff[$k]) }
 A '</table></div>'
-A '<h2>이벤트 발생 조건</h2><div class="wrap"><table><tr><th>이벤트</th><th>필요한 친밀도</th><th>필요량</th><th>추가 조건</th></tr>'
+A '<h2>이벤트 발생 조건</h2><div class="xw"><table><tr><th>이벤트</th><th>필요한 친밀도</th><th>필요량</th><th>추가 조건</th></tr>'
 foreach ($r in $ev) { A ("<tr><td>{0}</td><td>{1}</td><td class=n>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
 A '</table></div>'
 A '<h2>마을 사람에게 받는 선물</h2><p class="note">선물은 마을 사람 유형마다 다릅니다. 1~5회째는 아래 순서이고, 6회째부터는 같은 유형의 선물 중 무작위입니다.</p>'
-A '<div class="wrap"><table><tr><th></th><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
+A '<div class="xw"><table><tr><th></th><th>일반</th><th>공방 관계자</th><th>항구 관계자</th></tr>'
 foreach ($r in $gift) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
 A '</table></div>'
 A '<p class="note">선물을 준 마을 사람이 누적으로 아래 인원이 되면 유형과 관계없이 성철을 받습니다. 21번째부터는 다시 1부터 셉니다.</p>'
-A '<div class="wrap"><table style="max-width:320px"><tr><th>누적 인원</th><th>받는 아이템</th></tr>'
+A '<div class="xw"><table style="max-width:320px"><tr><th>누적 인원</th><th>받는 아이템</th></tr>'
 foreach ($r in $cum) { A ("<tr><td>{0}</td><td>{1}</td></tr>" -f (Esc $r[0]), (Esc $r[1])) }
 A '</table></div>'
 A '<h2>식사 초대</h2><p class="note">식사 효과는 초대한 사람의 유형(A·B·C)과 마이하우스 레벨에 따라 정해집니다.</p>'
-A '<div class="wrap"><table><tr><th></th><th>A 유형</th><th>B 유형</th><th>C 유형</th></tr>'
+A '<div class="xw"><table><tr><th></th><th>A 유형</th><th>B 유형</th><th>C 유형</th></tr>'
 A ("<tr><td>초대하는 사람</td><td>{0}</td><td>{1}</td><td>{2}</td></tr>" -f (Esc $who[0]), (Esc $who[1]), (Esc $who[2]))
 foreach ($r in $mealRows) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
 A '</table></div>'
@@ -147,7 +150,9 @@ A @'
 </main>
 <script>
 function f(){ var q=document.getElementById('q').value.trim(); var rows=document.querySelectorAll('#items tr'); for (var i=1;i<rows.length;i++){ rows[i].style.display = (!q || rows[i].textContent.indexOf(q)>=0) ? '' : 'none'; } }
-</script></body></html>
+</script>
+<script src="assets/guide.js"></script>
+</body></html>
 '@
 New-Item -ItemType Directory -Force "$root\guide" | Out-Null
 [IO.File]::WriteAllText("$root\guide\villagepeople.html", $sb.ToString(), $u8)
