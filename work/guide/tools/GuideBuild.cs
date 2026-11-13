@@ -449,6 +449,8 @@ public static class G
 
     // ================= 장비 시뮬레이터 데이터 (assets/sim-data.js) =================
     static readonly Dictionary<string, string>[] SimLink = { new Dictionary<string, string>(), new Dictionary<string, string>() };
+    // 시뮬레이터용 설명: 태그를 빼고 글자만 (화면에서 이스케이프해서 넣는다)
+    static string SimText(string html) { return System.Net.WebUtility.HtmlDecode(Regex.Replace(html ?? "", "<[^>]+>", "")).Trim(); }
     static void SimData(List<ArmorSets.Piece> all, List<Dictionary<string, object>> decos, Dictionary<string, Dictionary<string, object>> skillTree)
     {
         var skIdx = new Dictionary<string, int>(); var skList = new List<string>();
@@ -478,8 +480,8 @@ public static class G
         foreach (var j in skList) {
             Dictionary<string, object> tree; skillTree.TryGetValue(j, out tree);
             var st = new List<string>();
-            if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "]"); }
-            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]],\n");
+            if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; string eff = Regex.Replace(S(sd, "d"), "</span>$", ""); st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "," + Js(SimText(eff != "" ? P(eff) : "")) + "]"); }
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "],\n");
         }
         sb.Append("]};\n");
         File.WriteAllText(Path.Combine(OutDir, "assets", "sim-data.js"), sb.ToString(), new UTF8Encoding(false));

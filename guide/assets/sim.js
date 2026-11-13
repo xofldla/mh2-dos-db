@@ -103,7 +103,11 @@
     if (o.wslots > 0) rows += '<tr><td class="pt">무기</td><td><span class="note">(무기 슬롯)</span></td><td class="sl">' + slots(o.wslots) + '</td><td class="dc">' + deco(5) + "</td></tr>";
     var res = RES.map(function (r, i) { return '<span class="res ' + r[0] + (e.res[i] === 0 ? " z" : "") + '">' + e.res[i] + "</span>"; }).join(" ");
     var acts = e.act.map(function (a) { return '<span class="act' + (a.p < 0 ? " neg" : last.tset[a.sk] ? " tg" : "") + '" title="' + esc(D.s[a.sk][0]) + " " + (a.v > 0 ? "+" : "") + a.v + '">' + esc(a.n) + "</span>"; }).join("");
-    return '<div class="sol"><div class="hd"><span class="no">#' + no + "</span><span>방어력 " + e.def0 + " → <b>" + e.def1 + "</b></span><span>내성 " + res + "</span><span>남는 슬롯 " + e.free + "</span></div><table>" + rows + '</table><div class="acts">' + acts + "</div></div>";
+    var desc = e.act.map(function (a) {
+      var tr = D.s[a.sk], stg = tr[1].filter(function (x) { return x[0] === a.p; })[0], eff = stg && stg[2] ? stg[2] : "";
+      return '<li class="' + (a.p < 0 ? "neg" : last.tset[a.sk] ? "tg" : "pos") + '"><b>' + esc(a.n) + '</b> <span class="meta">(' + esc(tr[0]) + " " + (a.v > 0 ? "+" : "") + a.v + ")</span>" + (eff ? ' <span class="eff">' + esc(eff) + "</span>" : "") + (tr[2] ? ' <span class="desc">' + esc(tr[2]) + "</span>" : "") + "</li>";
+    }).join("");
+    return '<div class="sol"><div class="hd"><span class="no">#' + no + "</span><span>방어력 " + e.def0 + " → <b>" + e.def1 + "</b></span><span>내성 " + res + "</span><span>남는 슬롯 " + e.free + "</span></div><table>" + rows + '</table><div class="acts">' + acts + '</div>' + (desc ? '<details class="skd" open><summary>발동 스킬 효과</summary><ul>' + desc + "</ul></details>" : "") + "</div>";
   }
   $("go").addEventListener("click", function () {
     if (!picked.length) return;
