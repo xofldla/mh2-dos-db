@@ -535,3 +535,9 @@ details.qdrop[open] > summary { margin-bottom:2px; }
 
 /* 팝업 닫기 버튼: 길게 내려도 오른쪽 위에 따라오게 (스크롤되는 .wp-box 안에서 sticky) */
 .wp-x { position:sticky; top:0; float:right; z-index:5; margin:-4px -4px 4px 8px; width:34px; height:34px; font-size:16px; box-shadow:0 2px 8px rgba(0,0,0,.5); }
+
+/* 제목 이미지 (리틱체, title_images.ps1) — 흰 글자 마스크에 글자색을 입혀 테마를 따른다 */
+.ttl { display:inline-block; vertical-align:middle; max-width:100%; background-color:currentColor; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-position:left center; mask-position:left center; }
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+h1.timg { line-height:1; }
+.logo.timg { display:inline-flex; align-items:center; }

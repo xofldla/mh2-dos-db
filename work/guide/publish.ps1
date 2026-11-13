@@ -7,6 +7,7 @@ $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Env
 
 powershell -NoProfile -File "$PSScriptRoot\build_mhos.ps1"
 powershell -NoProfile -File "$PSScriptRoot\build_villagepeople.ps1"
+powershell -NoProfile -File "$PSScriptRoot\title_images.ps1"
 
 git add -A
 if (-not (git status --porcelain)) { "바뀐 것이 없습니다."; return }
