@@ -1,15 +1,16 @@
-﻿# 페이지 제목(h1)과 상단 로고를 리틱체(REATIC)로 그린 이미지로 바꾼다.
-# 리틱체 라이선스: 이미지 제작은 자유, 폰트 파일 재배포・가공 금지 → 폰트 파일은 저장소에 올리지 않고(work/fonts_ext, git 제외) PNG만 올린다.
+﻿# 페이지 제목(h1)과 상단 로고를 고운바탕(Gowun Batang, SIL OFL 1.1) Bold로 그린 이미지로 바꾼다. (2026-11-13 리틱체에서 변경)
+# 8MB짜리 한글 TTF를 웹폰트로 싣는 대신 제목 글자만 이미지로 만든다. 폰트 파일은 work/fonts_ext(git 제외)에 두고 PNG만 올린다.
 # 이미지는 흰 글자+투명 배경 마스크라, CSS에서 글자색(var(--ink)/var(--acc))을 입혀 라이트/다크 테마를 그대로 따른다.
-# build_mhos.ps1 / build_villagepeople.ps1 다음에 실행 (publish.ps1에 포함).
+# build_mhos.ps1 / build_villagepeople.ps1 다음에 실행 (publish.ps1에 포함). 이미 바뀐 제목도 지금 글꼴로 다시 그린다.
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$fontDir = "$root\work\fonts_ext\reatic"
-if (-not (Test-Path "$fontDir\REATIC-Bold.ttf")) { "리틱체 TTF가 없어 제목 이미지를 건너뜁니다 ($fontDir)"; return }
+$fontFile = "$root\work\fonts_ext\gowun\GowunBatang-Bold.ttf"
+if (-not (Test-Path $fontFile)) { "고운바탕 TTF가 없어 제목 이미지를 건너뜁니다 ($fontFile)"; return }
 Add-Type -AssemblyName System.Drawing
 $pfc = New-Object System.Drawing.Text.PrivateFontCollection
-$pfc.AddFontFile("$fontDir\REATIC-Bold.ttf"); $pfc.AddFontFile("$fontDir\REATIC-WideBold.ttf")
+$pfc.AddFontFile($fontFile)
 $fam = @{}; foreach ($f in $pfc.Families) { $fam[$f.Name] = $f }
+$TF = @($fam.Keys)[0]
 $outDir = "$root\guide\images\titles"; New-Item -ItemType Directory -Force $outDir | Out-Null
 $used = @{}
 $md5 = [Security.Cryptography.MD5]::Create()
@@ -61,7 +62,7 @@ foreach ($p in Get-ChildItem "$root\guide" -Filter *.html) {
   $html = [regex]::Replace($html, '<h1>([^<]+)</h1>', {
     param($m)
     $raw = $m.Groups[1].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
-    $k = "h1|$text"; if (-not $cache[$k]) { $cache[$k] = Render $text 'REATIC' 26 }
+    $k = "h1|$text"; if (-not $cache[$k]) { $cache[$k] = Render $text $TF 26 }
     $pre = if ($text -eq '몬스터헌터2 (DOS) DB') { '<img class="mhl big" src="images/mh2_logo.png" alt="" aria-hidden="true">' } else { '' }
     '<h1 class="timg">' + $pre + (Span $cache[$k] $raw 'h') + '</h1>'
   })
@@ -69,13 +70,21 @@ foreach ($p in Get-ChildItem "$root\guide" -Filter *.html) {
   $html = [regex]::Replace($html, '<a class="logo" href="index.html">([^<]+)</a>', {
     param($m)
     $raw = $m.Groups[1].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
-    $k = "logo|$text"; if (-not $cache[$k]) { $wf = @($fam.Keys | Where-Object { $_ -like '*Wide*' })[0]; $cache[$k] = Render $text $wf 14 }
+    $k = "logo|$text"; if (-not $cache[$k]) { $cache[$k] = Render $text $TF 16 }
     '<a class="logo timg" href="index.html"><img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">' + (Span $cache[$k] $raw 'l') + '</a>'
   })
   # 이미 바뀐 페이지(index.html처럼 빌드가 다시 만들지 않는 파일)에도 로고 이미지를 넣는다
   $img = '<img class="mhl" src="images/mh2_logo.png" alt="" aria-hidden="true">'
   $html = $html.Replace('<a class="logo timg" href="index.html"><span', '<a class="logo timg" href="index.html">' + $img + '<span')
   $html = [regex]::Replace($html, '<h1 class="timg">(<span class="ttl h"[^>]*></span><span class="sr">몬스터헌터2 \(DOS\) DB</span>)', '<h1 class="timg"><img class="mhl big" src="images/mh2_logo.png" alt="" aria-hidden="true">$1')
+  # 이미 이미지로 바뀐 제목도 지금 글꼴로 다시 그린다 (글꼴을 바꿨을 때)
+  $html = [regex]::Replace($html, '<span class="ttl (h|l)" style="[^"]*" aria-hidden="true"></span><span class="sr">([^<]+)</span>', {
+    param($m)
+    $cls = $m.Groups[1].Value; $raw = $m.Groups[2].Value; $text = [Net.WebUtility]::HtmlDecode($raw)
+    $k = $(if ($cls -eq 'h') { "h1|$text" } else { "logo|$text" })
+    if (-not $cache[$k]) { $cache[$k] = Render $text $TF $(if ($cls -eq 'h') { 26 } else { 16 }) }
+    Span $cache[$k] $raw $cls
+  })
   if ($html -ne $orig) { [IO.File]::WriteAllText($p.FullName, $html, $u8); $n++ }
 }
 # 이미 바뀐 페이지가 쓰는 이미지도 사용 중으로 친다 (다시 실행해도 지우지 않게)
