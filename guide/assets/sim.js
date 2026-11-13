@@ -10,18 +10,35 @@
 
   // 고를 수 있는 발동 스킬 (+ 단계만)
   var stages = [];
-  D.s.forEach(function (s, sk) { s[1].forEach(function (x) { if (x[0] > 0) stages.push({ sk: sk, pts: x[0], n: x[1], tree: s[0] }); }); });
+  D.s.forEach(function (s, sk) { s[1].forEach(function (x) { if (x[0] > 0) stages.push({ sk: sk, pts: x[0], n: x[1], tree: s[0], cat: s[3] || 0 }); }); });
   stages.sort(function (a, b) { return a.tree.localeCompare(b.tree, "ko") || a.pts - b.pts; });
   var picked = [];
 
+  // 분류 탭: 전체 / 공격계 / 방어계 / 유틸계 (검색어가 있으면 모든 분류에서 찾는다)
+  var CATS = ["공격계", "방어계", "유틸계"], CATICO = ["⚔️", "🛡️", "🧰"], cat = -1;
+  try { var c0 = store.get("mh2-sim-cat"); if (c0 !== null) cat = +c0; } catch (e) {}
+  function renderCats() {
+    var cnt = [0, 0, 0]; stages.forEach(function (s) { cnt[s.cat]++; });
+    $("skcat").innerHTML = '<button type="button" data-c="-1"' + (cat === -1 ? ' class="on"' : "") + '>전체 <span class="cnt">' + stages.length + "</span></button>" +
+      CATS.map(function (n, i) { return '<button type="button" data-c="' + i + '"' + (cat === i ? ' class="on"' : "") + ">" + CATICO[i] + " " + n + ' <span class="cnt">' + cnt[i] + "</span></button>"; }).join("");
+  }
+  $("skcat").addEventListener("click", function (e) { var b = e.target.closest("button[data-c]"); if (!b) return; cat = +b.getAttribute("data-c"); store.set("mh2-sim-cat", String(cat)); renderCats(); renderList(); });
   function renderList() {
     var q = $("skq").value.trim();
-    var list = stages.filter(function (s) { return !q || s.n.indexOf(q) >= 0 || s.tree.indexOf(q) >= 0; });
-    $("sklist").innerHTML = list.map(function (s) {
+    var list = stages.filter(function (s) { return q ? (s.n.indexOf(q) >= 0 || s.tree.indexOf(q) >= 0) : (cat === -1 || s.cat === cat); });
+    var btn = function (s) {
       var on = picked.some(function (p) { return p.sk === s.sk && p.pts === s.pts; });
-      return '<button type="button" data-sk="' + s.sk + '" data-p="' + s.pts + '"' + (on ? ' style="border-color:var(--acc);color:var(--acc)"' : "") + ">" + esc(s.n) + ' <span class="tr">' + esc(s.tree) + " " + s.pts + "</span></button>";
-    }).join("") || '<span class="note">맞는 스킬이 없습니다.</span>';
+      return '<button type="button" data-sk="' + s.sk + '" data-p="' + s.pts + '"' + (on ? ' class="picked"' : "") + ">" + esc(s.n) + ' <span class="tr">' + esc(s.tree) + " " + s.pts + "</span></button>";
+    };
+    var html = "";
+    [0, 1, 2].forEach(function (c) {
+      var part = list.filter(function (s) { return s.cat === c; }); if (!part.length) return;
+      html += '<div class="skgrp"><div class="skh">' + CATICO[c] + " " + CATS[c] + ' <span class="cnt">' + part.length + '</span></div><div class="skbtns">' + part.map(btn).join("") + "</div></div>";
+    });
+    $("sklist").innerHTML = html || '<span class="note">맞는 스킬이 없습니다.</span>';
+    $("skqn").textContent = q ? list.length + "개 (모든 분류에서 찾음)" : "";
   }
+  renderCats();
   function renderChips() {
     $("chips").innerHTML = picked.length ? picked.map(function (p, i) {
       return '<button type="button" class="chip" data-i="' + i + '" title="누르면 빠집니다">' + esc(p.n) + ' <span class="tr">(' + esc(p.tree) + " " + p.pts + ')</span></button>';

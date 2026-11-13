@@ -481,7 +481,7 @@ public static class G
             Dictionary<string, object> tree; skillTree.TryGetValue(j, out tree);
             var st = new List<string>();
             if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; string eff = Regex.Replace(S(sd, "d"), "</span>$", ""); st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "," + Js(SimText(eff != "" ? P(eff) : "")) + "]"); }
-            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "],\n");
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "," + (tree != null ? SkCat(S(tree, "id")) : 2) + "],\n");
         }
         sb.Append("]};\n");
         File.WriteAllText(Path.Combine(OutDir, "assets", "sim-data.js"), sb.ToString(), new UTF8Encoding(false));
