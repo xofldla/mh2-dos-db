@@ -1063,11 +1063,11 @@ public static class G
         var sb = new StringBuilder(Head("quests.html", "퀘스트", "먼저 <b>마을</b>을 고르고, 다음에 <b>분류</b>(프리 퀘스트・하위・상위 등)를 고르세요. 퀘스트 제목・목표는 한글 패치 표기. 보수금은 「메인 / 서브A / 서브B」. 줄을 누르면 지급품・보수가 펼쳐지고, 몬스터・아이템 이름을 누르면 해당 페이지로 이동합니다. 검색하면 모든 마을・분류에서 찾습니다.", true));
         var locs = data;
         sb.Append("<div class=\"gtabs vill\" data-g=\"vill\">");
-        foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\"><span>" + LocKo(loc) + "</span><span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span></button>"); }
+        foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\"><span>" + LocKo(loc) + "</span><span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span>" + (loc == "dundorma" ? "<small class=\"vnote\">온라인(멀티) 전용</small>" : "") + "</button>"); }
         sb.Append("</div>\n");
         foreach (var ld in locs) {
             string loc = S(ld, "location"); CurLoc = loc;
-            sb.Append("<section class=\"gpanel vill" + (ld == locs[0] ? "" : " off") + "\" data-g=\"vill\" data-t=\"" + loc + "\"><h2 class=\"villh\"><img src=\"images/regions/" + loc + ".svg\" alt=\"\">" + LocKo(loc) + "</h2>");
+            sb.Append("<section class=\"gpanel vill" + (ld == locs[0] ? "" : " off") + "\" data-g=\"vill\" data-t=\"" + loc + "\"><h2 class=\"villh\"><img src=\"images/regions/" + loc + ".svg\" alt=\"\">" + LocKo(loc) + (loc == "dundorma" ? "<small class=\"vnote\">온라인(멀티) 전용</small>" : "") + "</h2>");
             if (loc == "kokoto") sb.Append("<p class=\"note\">점보 마을에서 배를 완성하면 배를 타고 가는 마을. 아래는 게임 퀘스트 파일에서 의뢰인이 <b>" + Tk("ココット村の村長") + "</b>인 퀘스트입니다 (점보 마을 목록에서 옮겨 옴).</p>");
             var cats = A(ld, "categories").Select(D).ToList();
             sb.Append("<div class=\"gtabs\" data-g=\"cat-" + loc + "\">");
