@@ -326,7 +326,7 @@ table.wd-stats th { width:90px; color:#e9a35a; font-weight:400; background:#2a22
 :root[data-theme="light"] { color-scheme:light; } :root[data-theme="dark"] { color-scheme:dark; }
 /* 라이트에서 흰 아이콘이 묻히지 않게 살짝 어둡게 */
 :root[data-theme="light"] .toc .ico.white-icon, :root[data-theme="light"] h2 .ico.white-icon, :root[data-theme="light"] .cardlink .ico.white-icon,
-:root[data-theme="light"] .ft .ico.white-icon, :root[data-theme="light"] a.tab .ico.white-icon, :root[data-theme="light"] .wtabs .ico.white-icon { filter:brightness(.35); }
+:root[data-theme="light"] .ft .ico.white-icon, :root[data-theme="light"] a.tab .ico.white-icon, :root[data-theme="light"] .wtabs .ico.white-icon { filter:drop-shadow(1px 0 0 #3a2f25) drop-shadow(-1px 0 0 #3a2f25) drop-shadow(0 1px 0 #3a2f25) drop-shadow(0 -1px 0 #3a2f25); } /* 라이트: 흰 아이콘을 어둡게 하지 않고 테두리만 둘러 다크와 같은 색으로 보이게 */
 
 #themebtn { margin-left:auto; font:inherit; display:inline-flex; align-items:center; gap:6px; padding:3px 10px; cursor:pointer;
   color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:6px; }
@@ -351,7 +351,7 @@ table.wd-stats th { width:90px; color:#e9a35a; font-weight:400; background:#2a22
 :root[data-theme="light"] .wd-link { background:#fff; color:#2f5d7c; border-color:#ddd2c2; }
 :root[data-theme="light"] .wp-x { background:#fff; color:#8a3b1e; }
 :root[data-theme="light"] .wd-final { color:#a06a00; }
-:root[data-theme="light"] .wn .ico.white-icon, :root[data-theme="light"] .wd-link .ico.white-icon, :root[data-theme="light"] .wd-head .ico.white-icon { filter:brightness(.35); }
+:root[data-theme="light"] .wn .ico.white-icon, :root[data-theme="light"] .wd-link .ico.white-icon, :root[data-theme="light"] .wd-head .ico.white-icon { filter:drop-shadow(1px 0 0 #3a2f25) drop-shadow(-1px 0 0 #3a2f25) drop-shadow(0 1px 0 #3a2f25) drop-shadow(0 -1px 0 #3a2f25); } /* 라이트: 흰 아이콘을 어둡게 하지 않고 테두리만 둘러 다크와 같은 색으로 보이게 */
 
 /* 스킬: 카테고리 탭 + 타일 */
 .wtabs .cnt { margin-left:6px; padding:0 5px; border-radius:8px; background:var(--head); color:var(--sub); font-size:12px; }
