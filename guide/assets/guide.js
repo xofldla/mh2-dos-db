@@ -1,3 +1,5 @@
+/* 잘못된 주소(깨진 %인코딩)가 들어와도 스크립트가 멈추지 않게 */
+function safeDec(s) { try { return decodeURIComponent(s); } catch (e) { return String(s); } }
 // 몬스터헌터 2 공략 — 검색・일본어 표시 (오프라인 동작)
 (function () {
   var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
@@ -63,7 +65,7 @@
     var t0 = store.get("mh2-time"); showTime(t0 === "night" ? "night" : "day");
     // 링크로 숨은 탭 안의 대상에 오면 그 탭을 연다
     var openHash = function () {
-      var id = location.hash ? decodeURIComponent(location.hash.slice(1)) : ""; var el = id && document.getElementById(id);
+      var id = location.hash ? safeDec(location.hash.slice(1)) : ""; var el = id && document.getElementById(id);
       var v = el && (el.classList.contains("variant") ? el : el.closest(".variant"));
       if (v) { showVariant(v.closest("section.loc"), v.getAttribute("data-v")); el.scrollIntoView(); }
     };
@@ -182,12 +184,12 @@
       if (st.q) { var cur = document.querySelector(".mregion .rg.on"); if (!cur.classList.contains("has")) { var f = document.querySelector(".mregion .rg.has"); if (f) showRegion(f.getAttribute("data-loc")); } }
     }, 200); });
     var r0 = store.get("mh2-maprg"); if (r0 && document.getElementById(r0)) showRegion(r0);
-    var hh = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var hh = location.hash && document.getElementById(safeDec(location.hash.slice(1)));
     var hs = hh && hh.closest && hh.closest("section.loc"); if (hs) showRegion(hs.id);
     // 아이템 페이지의 「채집」 링크(maps.html?item=이름#loc-…): 그 아이템으로 검색해 포인트를 빛나게 하고, 없으면 나오는 계절・등급으로 바꾼다
     var qi = /[?&]item=([^&#]+)/.exec(location.search), itemArrive = false;
     if (qi) {
-      itemArrive = true; mq.value = decodeURIComponent(qi[1].replace(/\+/g, " ")); st.q = mq.value.trim().toLowerCase();
+      itemArrive = true; mq.value = safeDec(qi[1].replace(/\+/g, " ")); st.q = mq.value.trim().toLowerCase();
       var regEl = hs || document.querySelector("section.loc:not(.off)");
       var hitsIn = function () { apply(); return regEl ? regEl.querySelectorAll(".mapbox .pt.hit, .xpt.hit").length : 0; };
       if (!hitsIn()) {
@@ -201,7 +203,7 @@
       var first = document.querySelector("section.loc:not(.off) .variant:not(.off) .mapbox .pt.hit") || document.querySelector("section.loc:not(.off) .mapbox .pt.hit");
       if (first) { var vv = first.closest(".variant"); if (vv && vv.classList.contains("off")) showVariant(vv.closest("section.loc"), vv.getAttribute("data-v")); first.scrollIntoView({ block: "center", behavior: "smooth" }); }
     }, 150);
-    var hp = /^#p-(.+)$/.exec(location.hash); if (hp && window.MP[decodeURIComponent(hp[1])]) { var pb = document.querySelector('[data-p="' + decodeURIComponent(hp[1]) + '"]'); if (pb) { var ls = pb.closest("section.loc"); if (ls) showRegion(ls.id); var vv = pb.closest(".variant"); if (vv) showVariant(vv.closest("section.loc"), vv.getAttribute("data-v")); } openP(decodeURIComponent(hp[1])); }
+    var hp = /^#p-(.+)$/.exec(location.hash); if (hp && window.MP[safeDec(hp[1])]) { var pb = document.querySelector('[data-p="' + safeDec(hp[1]) + '"]'); if (pb) { var ls = pb.closest("section.loc"); if (ls) showRegion(ls.id); var vv = pb.closest(".variant"); if (vv) showVariant(vv.closest("section.loc"), vv.getAttribute("data-v")); } openP(safeDec(hp[1])); }
   })();
 
   // 여러 단 탭 (퀘스트: 마을 → 분류). 버튼 묶음 .gtabs[data-g] ↔ 패널 .gpanel[data-g][data-t]
@@ -214,7 +216,7 @@
     };
     document.addEventListener("click", function (e) { var b = e.target.closest(".gtabs button"); if (b) showG(b.closest(".gtabs").getAttribute("data-g"), b.getAttribute("data-t")); });
     [].forEach.call(document.querySelectorAll(".gtabs"), function (gt) { var g = gt.getAttribute("data-g"), v = store.get(gkey(g)); if (v !== null && gt.querySelector('button[data-t="' + v + '"]')) showG(g, v); });
-    var gh = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var gh = location.hash && document.getElementById(safeDec(location.hash.slice(1)));
     if (gh) { var p = gh; while (p && p.closest) { p = p.closest(".gpanel"); if (!p) break; showG(p.getAttribute("data-g"), p.getAttribute("data-t")); p = p.parentElement; } if (gh.tagName === "DETAILS") gh.open = true; gh.scrollIntoView(); }
   }
 
@@ -229,7 +231,7 @@
     };
     ctabs.addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) showCat(b.getAttribute("data-c")); });
     var cc = store.get(ckey); if (cc !== null && document.querySelector('section.ccat[data-c="' + cc + '"]')) showCat(cc);
-    var h0 = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var h0 = location.hash && document.getElementById(safeDec(location.hash.slice(1)));
     var sec0 = h0 && h0.closest && h0.closest("section.ccat"); if (sec0) { showCat(sec0.getAttribute("data-c")); h0.scrollIntoView(); }
   }
 
@@ -258,7 +260,7 @@
       if (e.target === pop || e.target.closest(".wp-x")) closeW();
     });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeW(); });
-    var hw = /^#w-(.+)$/.exec(location.hash); if (hw) openW(decodeURIComponent(hw[1]));
+    var hw = /^#w-(.+)$/.exec(location.hash); if (hw) openW(safeDec(hw[1]));
     var wq = document.getElementById("wq"), wqn = document.getElementById("wqn"), wt;
     wq.addEventListener("input", function () {
       clearTimeout(wt); wt = setTimeout(function () {
@@ -303,6 +305,6 @@
     qn.textContent = s ? n + "건" : "";
   }
   q.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(run, 150); });
-  var h = location.hash ? decodeURIComponent(location.hash.slice(1)) : "";
+  var h = location.hash ? safeDec(location.hash.slice(1)) : "";
   if (h) { var t = document.getElementById(h); if (t && t.tagName === "DETAILS") t.open = true; }
 })();
