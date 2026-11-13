@@ -475,7 +475,7 @@ a.xlink { display:inline-block; vertical-align:top; } table.rw a.xlink { display
 .gtabs button.on { background:var(--acc); border-color:var(--acc); color:var(--card); font-weight:700; }
 .gtabs .cnt { margin-left:4px; padding:0 5px; border-radius:8px; background:var(--head); color:var(--sub); font-size:12px; }
 .gtabs button.on .cnt { background:rgba(0,0,0,.2); color:var(--card); }
-.gtabs.vill { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px; }
+.gtabs.vill { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; }
 .gtabs.vill button { justify-content:center; padding:10px; font-size:24px; line-height:1.2; border-width:2px; }
 .gtabs.vill img { width:40px; height:40px; image-rendering:pixelated; }
 .gpanel.off { display:none; }
@@ -551,7 +551,7 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
 .villh .vnote { font-size:12px; color:var(--sub); font-weight:400; margin-left:4px; }
 /* 모바일: 퀘스트 마을 탭이 칸을 넘지 않게 글자・아이콘을 줄인다 */
 @media (max-width: 640px) {
-  .gtabs.vill { grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px; }
+  .gtabs.vill { grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:8px; }
   .gtabs.vill button { font-size:16px; padding:8px 6px; gap:4px; white-space:nowrap; min-width:0; }
   .gtabs.vill img { width:28px; height:28px; }
   .gtabs.vill .cnt { margin-left:2px; }
@@ -563,3 +563,6 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
 .gtabs.vill button.on { font-weight:400; }
 .gtabs.vill button > span:not(.cnt) { justify-self:center; }
 @media (max-width: 640px) { .gtabs.vill button { grid-template-columns:28px 1fr auto; column-gap:4px; } }
+/* 아주 좁은 화면(400px 이하): 마을 탭을 한 줄에 하나씩 */
+@media (max-width: 400px) { .gtabs.vill { grid-template-columns:1fr; } }
+.gtabs.vill button { min-width:0; overflow:hidden; }
