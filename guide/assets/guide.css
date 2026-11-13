@@ -558,3 +558,8 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
   .villh { font-size:20px; } .villh img { width:28px; height:28px; }
 }
 @media (max-width: 640px) { .gtabs.vill .vnote { font-size:10.5px !important; } .gtabs.vill button { padding:8px 4px; } }
+/* 퀘스트 마을 탭: 세 버튼 모두 아이콘(왼쪽)・이름(가운데)・퀘스트 수(오른쪽) 같은 자리, 선택해도 굵게 하지 않음 */
+.gtabs.vill button { display:grid; grid-template-columns:40px 1fr auto; align-items:center; column-gap:8px; text-align:center; }
+.gtabs.vill button.on { font-weight:400; }
+.gtabs.vill button > span:not(.cnt) { justify-self:center; }
+@media (max-width: 640px) { .gtabs.vill button { grid-template-columns:28px 1fr auto; column-gap:4px; } }
