@@ -1063,7 +1063,7 @@ public static class G
         var sb = new StringBuilder(Head("quests.html", "퀘스트", "먼저 <b>마을</b>을 고르고, 다음에 <b>분류</b>(프리 퀘스트・하위・상위 등)를 고르세요. 퀘스트 제목・목표는 한글 패치 표기. 보수금은 「메인 / 서브A / 서브B」. 줄을 누르면 지급품・보수가 펼쳐지고, 몬스터・아이템 이름을 누르면 해당 페이지로 이동합니다. 검색하면 모든 마을・분류에서 찾습니다.", true));
         var locs = data;
         sb.Append("<div class=\"gtabs vill\" data-g=\"vill\">");
-        foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\"><span>" + LocKo(loc) + "</span><span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span>" + (loc == "dundorma" ? "<small class=\"vnote\" style=\"flex-basis:100%;display:block;font-size:12px;line-height:1.4\">*온라인 멀티 전용</small>" : "") + "</button>"); }
+        foreach (var ld in locs) { string loc = S(ld, "location"); sb.Append("<button type=\"button\" data-t=\"" + loc + "\"" + (ld == locs[0] ? " class=\"on\"" : "") + "><img src=\"images/regions/" + loc + ".svg\" alt=\"\">" + (loc == "dundorma" ? "<span style=\"display:inline-flex;flex-direction:column;align-items:center;line-height:1.15;white-space:nowrap\"><span>" + LocKo(loc) + "</span><small class=\"vnote\" style=\"font-size:12px;line-height:1.3;white-space:nowrap\">*온라인 멀티 전용</small></span>" : "<span>" + LocKo(loc) + "</span>") + "<span class=\"cnt\">" + A(ld, "categories").Sum(c => A(D(c), "questLocales").Sum(x => A(D(x), "quests").Length)) + "</span></button>"); }
         sb.Append("</div>\n");
         foreach (var ld in locs) {
             string loc = S(ld, "location"); CurLoc = loc;

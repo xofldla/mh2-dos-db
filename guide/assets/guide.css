@@ -1,4 +1,4 @@
-﻿/* 몬스터헌터 2 공략 — 공통 스타일 (폰트: Galmuri11, SIL OFL 1.1) */
+/* 몬스터헌터 2 공략 — 공통 스타일 (폰트: Galmuri11, SIL OFL 1.1) */
 @font-face { font-family: "Galmuri11"; src: url("../fonts/Galmuri11.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Galmuri11"; src: url("../fonts/Galmuri11-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
@@ -547,6 +547,5 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
 @media (max-width: 520px) { img.mhl.big { height:64px; } }
 .intro { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:4px 14px; margin:4px 0 16px; max-width:880px; }
 .intro p { margin:8px 0; line-height:1.85; }
-.gtabs.vill button { flex-wrap:wrap; }
-.gtabs.vill .vnote { flex-basis:100%; text-align:center; font-size:12px; line-height:1.4; opacity:.85; }
+.gtabs.vill .vnote { opacity:.85; }
 .villh .vnote { font-size:12px; color:var(--sub); font-weight:400; margin-left:4px; }
