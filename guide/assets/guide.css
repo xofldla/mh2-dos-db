@@ -545,3 +545,5 @@ img.mhl { height:28px; width:auto; margin-right:8px; vertical-align:middle; }
 img.mhl.big { height:96px; margin-right:14px; }
 h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px 0; }
 @media (max-width: 520px) { img.mhl.big { height:64px; } }
+.intro { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:4px 14px; margin:4px 0 16px; max-width:880px; }
+.intro p { margin:8px 0; line-height:1.85; }
