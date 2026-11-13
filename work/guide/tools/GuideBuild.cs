@@ -880,7 +880,7 @@ public static class G
         foreach (var kv in agg) {
             res[kv.Key] = regOrder.Where(g => kv.Value.ContainsKey(g)).Select(g => {
                 var v = kv.Value[g]; var kinds = (List<string>)v[0];
-                return "<div class=\"drop\"><a class=\"xlink\" href=\"" + regLink[g] + "\"><b>" + H(g) + "</b></a>: " + (kinds.Count > 0 ? H(string.Join("・", kinds)) + " " : "") + "<span class=\"meta\">" + string.Join("・", ((SortedSet<int>)v[1]).Select(i => rkName[i])) + "</span> " + string.Join("", ((SortedSet<int>)v[2]).Select(i => "<span class=\"sea\" title=\"" + seasonName[i] + "\">" + SeasonEmoji[i] + "</span>")) + " 최대 " + v[3] + "%</div>";
+                return "<div class=\"drop\"><a class=\"xlink\" href=\"" + regLink[g].Replace("maps.html#", "maps.html?item=" + Uri.EscapeDataString(Tk(kv.Key)) + "#") + "\"><b>" + H(g) + "</b></a>: " + (kinds.Count > 0 ? H(string.Join("・", kinds)) + " " : "") + "<span class=\"meta\">" + string.Join("・", ((SortedSet<int>)v[1]).Select(i => rkName[i])) + "</span> " + string.Join("", ((SortedSet<int>)v[2]).Select(i => "<span class=\"sea\" title=\"" + seasonName[i] + "\">" + SeasonEmoji[i] + "</span>")) + " 최대 " + v[3] + "%</div>";
             }).ToList();
         }
         return res;

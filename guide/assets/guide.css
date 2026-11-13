@@ -566,3 +566,9 @@ h1.timg:has(img.mhl) { display:flex; align-items:center; flex-wrap:wrap; gap:6px
 /* 아주 좁은 화면(400px 이하): 마을 탭을 한 줄에 하나씩 */
 @media (max-width: 400px) { .gtabs.vill { grid-template-columns:1fr; } }
 .gtabs.vill button { min-width:0; overflow:hidden; }
+/* 맵: 아이템으로 찾은 채집 포인트 — 위에서 튀는 화살표 + 퍼지는 고리 */
+.mapbox .pt.hit::after { content:'▼'; position:absolute; left:50%; bottom:100%; transform:translateX(-50%); color:#ffd27a; font-size:16px; line-height:1; text-shadow:0 0 4px #000, 0 0 2px #000; animation:marrow .7s ease-in-out infinite alternate; pointer-events:none; }
+@keyframes marrow { from { margin-bottom:2px; } to { margin-bottom:10px; } }
+.mapbox .pt.hit::before { content:''; position:absolute; left:50%; top:50%; width:26px; height:26px; margin:-13px 0 0 -13px; border:2px solid #ffd27a; border-radius:50%; animation:mring 1.4s ease-out infinite; pointer-events:none; }
+@keyframes mring { from { transform:scale(.8); opacity:.9; } to { transform:scale(2.2); opacity:0; } }
+@media (prefers-reduced-motion: reduce) { .mapbox .pt.hit, .mapbox .pt.hit::before, .mapbox .pt.hit::after { animation:none; } }

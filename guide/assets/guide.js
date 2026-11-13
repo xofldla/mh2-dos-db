@@ -184,7 +184,23 @@
     var r0 = store.get("mh2-maprg"); if (r0 && document.getElementById(r0)) showRegion(r0);
     var hh = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
     var hs = hh && hh.closest && hh.closest("section.loc"); if (hs) showRegion(hs.id);
+    // 아이템 페이지의 「채집」 링크(maps.html?item=이름#loc-…): 그 아이템으로 검색해 포인트를 빛나게 하고, 없으면 나오는 계절・등급으로 바꾼다
+    var qi = /[?&]item=([^&#]+)/.exec(location.search), itemArrive = false;
+    if (qi) {
+      itemArrive = true; mq.value = decodeURIComponent(qi[1].replace(/\+/g, " ")); st.q = mq.value.trim().toLowerCase();
+      var regEl = hs || document.querySelector("section.loc:not(.off)");
+      var hitsIn = function () { apply(); return regEl ? regEl.querySelectorAll(".mapbox .pt.hit, .xpt.hit").length : 0; };
+      if (!hitsIn()) {
+        var s0 = st.s, r0 = st.r, found = false;
+        for (var rr = 0; rr < 3 && !found; rr++) for (var ss = 0; ss < 3 && !found; ss++) { st.r = rr; st.s = ss; if (hitsIn()) found = true; }
+        if (!found) { st.s = s0; st.r = r0; }
+      }
+    }
     apply();
+    if (itemArrive) setTimeout(function () {
+      var first = document.querySelector("section.loc:not(.off) .variant:not(.off) .mapbox .pt.hit") || document.querySelector("section.loc:not(.off) .mapbox .pt.hit");
+      if (first) { var vv = first.closest(".variant"); if (vv && vv.classList.contains("off")) showVariant(vv.closest("section.loc"), vv.getAttribute("data-v")); first.scrollIntoView({ block: "center", behavior: "smooth" }); }
+    }, 150);
     var hp = /^#p-(.+)$/.exec(location.hash); if (hp && window.MP[decodeURIComponent(hp[1])]) { var pb = document.querySelector('[data-p="' + decodeURIComponent(hp[1]) + '"]'); if (pb) { var ls = pb.closest("section.loc"); if (ls) showRegion(ls.id); var vv = pb.closest(".variant"); if (vv) showVariant(vv.closest("section.loc"), vv.getAttribute("data-v")); } openP(decodeURIComponent(hp[1])); }
   })();
 
