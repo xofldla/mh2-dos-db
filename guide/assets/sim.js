@@ -24,8 +24,8 @@
   }
   function renderChips() {
     $("chips").innerHTML = picked.length ? picked.map(function (p, i) {
-      return '<button type="button" class="chip" data-i="' + i + '" title="빼기">' + esc(p.n) + ' <span class="tr">(' + esc(p.tree) + " " + p.pts + ')</span><span class="x">✕</span></button>';
-    }).join("") : '<span class="note">위 목록에서 눌러 추가하세요 (최대 10개).</span>';
+      return '<span class="chip">' + esc(p.n) + ' <span class="tr">(' + esc(p.tree) + " " + p.pts + ')</span></span>';
+    }).join("") : '<span class="note">위 목록에서 눌러 추가하세요 (최대 10개). 한 번 더 누르면 빠집니다.</span>';
     $("go").disabled = !picked.length;
     store.set("mh2-sim-skills", JSON.stringify(picked.map(function (p) { return [p.sk, p.pts]; })));
     renderList();
@@ -35,11 +35,10 @@
     var sk = +b.getAttribute("data-sk"), pts = +b.getAttribute("data-p");
     var st = stages.filter(function (s) { return s.sk === sk && s.pts === pts; })[0];
     var i = picked.findIndex(function (p) { return p.sk === sk; });
-    if (i >= 0) picked[i] = st; else if (picked.length < 10) picked.push(st);
+    if (i >= 0 && picked[i].pts === pts) picked.splice(i, 1); /* 같은 스킬을 다시 누르면 뺀다 */ else if (i >= 0) picked[i] = st; else if (picked.length < 10) picked.push(st);
     renderChips();
   });
-  $("chips").addEventListener("click", function (e) { var b = e.target.closest(".chip"); if (!b) return; picked.splice(+b.getAttribute("data-i"), 1); renderChips(); });
-  $("skq").addEventListener("input", renderList);
+ $("skq").addEventListener("input", renderList);
   $("reset").addEventListener("click", function () { picked = []; $("skq").value = ""; renderChips(); });
 
   // 조건
