@@ -462,7 +462,6 @@ public static class G
             string lb, lg; SimLink[0].TryGetValue(id, out lb); SimLink[1].TryGetValue(id, out lg);
             if (lb == null && lg == null) continue;
             if (Has(a, "acquire") && P(S(a, "acquire")).Contains("훈련 전용")) continue; // 훈련(교관 수련) 전용 방어구는 실제 장비로 못 쓰므로 뺀다
-            if (A(a, "forge").Length == 0) continue; // 제작 소재가 없는 방어구(메탈 계열 5개 등)도 뺀다 — 시뮬레이터는 제작 방어구만
             int cls = p.Cls == "Blademaster" ? 0 : p.Cls == "Gunner" ? 1 : 2;
             int sex = p.Sex == "Male" ? 1 : p.Sex == "Female" ? 2 : 0;
             var res = A(a, "resistances").Select(x => Convert.ToString(x)).ToArray();
