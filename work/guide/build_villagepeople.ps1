@@ -125,9 +125,18 @@ foreach ($r in $q) { A ("<tr><td>{0}</td><td class=n>{1}</td></tr>" -f (Esc ($r[
 A '</table></div>'
 A '<h2>납품 아이템별 친밀도</h2><p class="note">같은 아이템도 요구 수가 많으면 친밀도가 더 오릅니다. 이름으로 찾을 수 있습니다. <b>⭐ = 1개당 친밀도가 높은 효율 좋은 납품</b>(상위 15%).</p>'
 A '<input type="search" id="q" placeholder="아이템 이름 검색 (예: 버섯)" oninput="f()"><div class="xw"><table id="items"><tr><th>아이템</th><th>요구 수 → 친밀도</th></tr>'
+# 아이템 페이지(items.html) 링크: 일본어 이름 → item-번호 (없으면 한글 이름으로)
+$itemJa = @{}; $itemKo = @{}
+$ih = [IO.File]::ReadAllText("$root\guide\items.html", (New-Object Text.UTF8Encoding $false))
+foreach ($m in [regex]::Matches($ih, '<tr id="item-(\d+)"><td>.*?<b>((?:[^<]|<wbr>)+?) <span class="ja">([^<]+)</span>')) { $id = $m.Groups[1].Value; if (-not $itemJa[$m.Groups[3].Value]) { $itemJa[$m.Groups[3].Value] = $id }; if (-not $itemKo[($m.Groups[2].Value -replace '<wbr>','').Trim()]) { $itemKo[($m.Groups[2].Value -replace '<wbr>','').Trim()] = $id } }
+$linked = 0; $unlinked = @()
 foreach ($k in ($req.Keys | Sort-Object)) { $v = $req[$k]; $tiers = ($v.tiers | ForEach-Object { "$($_[0]) → $($_[1])" }) -join '<br>'
   $star = if ($eff[$k] -ge $cut) { '<span class="star" title="1개당 친밀도가 높은 납품">⭐</span> ' } else { '' }
-  A ("<tr><td>{0}{1}<div class=ja>{2}</div></td><td>{3}<div class=eff>1개당 최대 {4:0.##}pt</div></td></tr>" -f $star, (Esc $k), (Esc $v.ja), $tiers, $eff[$k]) }
+  $jaBase = ($v.ja -replace '\s*（[^）]*）\s*$', '').Trim()
+  $iid = if ($itemJa[$v.ja]) { $itemJa[$v.ja] } elseif ($itemJa[$jaBase]) { $itemJa[$jaBase] } else { $itemKo[$k] }
+  $nm = if ($iid) { $linked++; "<a class=""xlink"" href=""items.html#item-$iid"">$(Esc $k)</a>" } else { $unlinked += $k; (Esc $k) }
+  A ("<tr><td>{0}{1}<div class=ja>{2}</div></td><td>{3}<div class=eff>1개당 최대 {4:0.##}pt</div></td></tr>" -f $star, $nm, (Esc $v.ja), $tiers, $eff[$k]) }
+"item links: $linked, no link: $($unlinked -join ", ")"
 A '</table></div>'
 A '<h2>이벤트 발생 조건</h2><div class="xw"><table><tr><th>이벤트</th><th>필요한 친밀도</th><th>필요량</th><th>추가 조건</th></tr>'
 foreach ($r in $ev) { A ("<tr><td>{0}</td><td>{1}</td><td class=n>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
