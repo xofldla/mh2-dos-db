@@ -1,4 +1,4 @@
-/* 온라인 일정 — schedule-data.js(위키 자료, GitHub Actions가 15분마다 갱신) + schedule-quests.js(한글 패치 용어 퀘스트)로 한국 시간 일정을 그린다.
+/* 온라인 일정 — schedule-data.js(위키 자료, GitHub Actions가 30분마다 갱신) + schedule-quests.js(한글 패치 용어 퀘스트)로 한국 시간 일정을 그린다.
  * 규칙(위키와 같은 계산을 새로 작성):
  *  - 서버 하루 = 서버 시간대(CAL_META.tz, 기본 Europe/Berlin)의 날짜. startHour 시에 바뀐다.
  *  - 그날의 이벤트 = eventsRotation[(일 - 1) % 길이] 에 적힌 퀘스트들
@@ -83,7 +83,7 @@
         }).join("") + "</div>";
     }
     $("week").innerHTML = html;
-    $("meta").textContent = "일정 자료는 15분마다 위키에서 자동으로 확인하고, 이 페이지를 열 때마다 최신 자료를 읽습니다. 마지막으로 바뀐 시각: " + (M.updated ? tfmt(Date.parse(M.updated), { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?") + " · 서버 시간대: " + M.tz;
+    $("meta").textContent = "일정 자료는 30분마다 위키에서 자동으로 확인하고, 이 페이지를 열 때마다 최신 자료를 읽습니다. 마지막으로 바뀐 시각: " + (M.updated ? tfmt(Date.parse(M.updated), { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?") + " · 서버 시간대: " + M.tz;
   }
   render();
   setInterval(render, 60000); // 1분마다 남은 시간・현재 구간 갱신

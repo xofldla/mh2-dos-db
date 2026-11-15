@@ -1,9 +1,9 @@
-# 온라인 일정(schedule.html) 자료를 15분마다 MH Oldschool 위키에서 확인하고, 바뀌었을 때만 커밋 + 사이트 재배포
+# 온라인 일정(schedule.html) 자료를 30분마다 MH Oldschool 위키에서 확인하고, 바뀌었을 때만 커밋 + 사이트 재배포
 name: Update online schedule
 
 on:
   schedule:
-    - cron: "7,22,37,52 * * * *"   # 15분마다 (정각 혼잡 피함)
+    - cron: "7,37 * * * *"   # 30분마다 (정각 혼잡 피함)
   workflow_dispatch:
 
 permissions:
