@@ -83,7 +83,7 @@
         }).join("") + "</div>";
     }
     $("week").innerHTML = html;
-    $("meta").textContent = "일정 자료는 30분마다 위키에서 자동으로 확인하고, 이 페이지를 열 때마다 최신 자료를 읽습니다. 마지막으로 바뀐 시각: " + (M.updated ? tfmt(Date.parse(M.updated), { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?") + " · 서버 시간대: " + M.tz;
+    $("meta").textContent = "30분마다 위키에서 자동으로 확인합니다. 마지막으로 바뀐 시각: " + (M.updated ? tfmt(Date.parse(M.updated), { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?") + " · 서버 시간대: " + M.tz;
   }
   render();
   setInterval(render, 60000); // 1분마다 남은 시간・현재 구간 갱신
