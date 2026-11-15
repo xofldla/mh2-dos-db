@@ -83,7 +83,7 @@ public static class G
     static readonly string[][] Nav = {
         new[]{"index.html","홈"}, new[]{"weapons.html","무기"}, new[]{"armor.html","방어구"}, new[]{"armor-skills.html","스킬"},
         new[]{"items.html","아이템"}, new[]{"bestiary.html","몬스터"}, new[]{"quests.html","퀘스트"}, new[]{"maps.html","맵"},
-        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"}, new[]{"schedule.html","온라인 일정"} };
+        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"} }; // 온라인 일정(schedule.html)은 상단 탭에 넣지 않고 홈 카드로만 연결 (사용자 요청)
 
     // 보안 헤더(meta CSP): 이 사이트 파일과 방문자 카운터(hitscounter.dev)만 허용. file:은 오프라인(zip)으로 열 때용
     public const string Fav = "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"images/favicon-32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"images/favicon-16.png\"><link rel=\"apple-touch-icon\" href=\"images/apple-touch-icon.png\">"; // 탭 아이콘(아이루)
