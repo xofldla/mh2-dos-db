@@ -482,7 +482,7 @@ public static class G
             Dictionary<string, object> tree; skillTree.TryGetValue(j, out tree);
             var st = new List<string>();
             if (tree != null) foreach (var o in A(tree, "stages")) { var sd = D(o); int sp; if (!int.TryParse(S(sd, "points").Replace("+", ""), out sp) || sp == 0) continue; string eff = Regex.Replace(S(sd, "d"), "</span>$", ""); st.Add("[" + sp + "," + Js(System.Net.WebUtility.HtmlDecode(T(S(sd, "j")))) + "," + Js(SimText(eff != "" ? P(eff) : "")) + "," + Js(S(sd, "j")) + "]"); }
-            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) : "") + "," + (tree != null ? SkCat(S(tree, "id")) : 2) + "," + Js(j) + "],\n");
+            sb.Append("[" + Js(System.Net.WebUtility.HtmlDecode(T(j))) + ",[" + string.Join(",", st) + "]," + Js(tree != null ? SimText(DescClean(P(S(tree, "desc")), false)) + SkillExtraText(j) : "") + "," + (tree != null ? SkCat(S(tree, "id")) : 2) + "," + Js(j) + "],\n");
         }
         sb.Append("]};\n");
         File.WriteAllText(Path.Combine(OutDir, "assets", "sim-data.js"), sb.ToString(), new UTF8Encoding(false));
@@ -609,6 +609,21 @@ public static class G
     }
     static int SkCat(string id) { return SkAtk.Contains(id) ? 0 : SkDef.Contains(id) ? 1 : 2; }
 
+    // 스킬 설명 보충 (원본 위키에 없는 확인된 정보). 출처를 함께 적는다
+    static string SkillExtra(string ja)
+    {
+        if (ja == "達人") return "<h4 class=\"wd-h\">예리도 색별 회심률</h4><table class=\"wd-stats sk-st\"><tr><th>발동 스킬</th><th>초록</th><th>파랑</th><th>하양</th><th>노랑 이하</th></tr>" +
+            "<tr><td>심안 (+10)</td><td>+5%</td><td>+10%</td><td>+15%</td><td>0%</td></tr>" +
+            "<tr><td>간파+1 (+15)</td><td>+10%</td><td>+15%</td><td>+20%</td><td>0%</td></tr>" +
+            "<tr><td>간파+2 (+25)</td><td>+15%</td><td>+20%</td><td>+25%</td><td>0%</td></tr></table>" +
+            "<p class=\"meta\">튕기지 않음(간파+1・+2)은 예리도와 상관없이 적용. 출처: ＭＨ２@Wiki 「スキル」</p>";
+        return "";
+    }
+    static string SkillExtraText(string ja)
+    {
+        if (ja == "達人") return " 회심률은 예리도 색에 따라 다르다: 심안 초록 5%・파랑 10%・하양 15%, 간파+1 10%・15%・20%, 간파+2 15%・20%・25%, 노랑 이하는 0%.";
+        return "";
+    }
     public static void Skills()
     {
         var data = A(Load("armor_skills"));
@@ -635,7 +650,7 @@ public static class G
                 sb.Append("<button type=\"button\" class=\"wn sk\" data-w=\"" + id + "\">" + Ico(colOf(ja), "gem") + "<span class=\"sk-t\"><span class=\"nm\">" + T(ja) + "</span><span class=\"ja sk-ja\">" + H(ja) + "</span><span class=\"sk-r\">" + range + "</span></span></button>");
                 // 효과 창
                 var d = new StringBuilder("<div class=\"wd-head\">" + Ico(colOf(ja), "gem", " big") + "<div><b class=\"wd-name\">" + T(ja) + "</b><div class=\"wd-ja\">" + H(ja) + "</div><div class=\"meta\">" + SkillCatName[ci] + " 스킬</div></div></div>");
-                var tbx = D(s.ContainsKey("table") ? s["table"] : null); d.Append("<p class=\"sk-desc\">" + DescClean(P(S(s, "desc")), tbx != null && A(tbx, "body").Length > 0) + "</p>");
+                var tbx = D(s.ContainsKey("table") ? s["table"] : null); d.Append("<p class=\"sk-desc\">" + DescClean(P(S(s, "desc")), tbx != null && A(tbx, "body").Length > 0) + "</p>"); d.Append(SkillExtra(ja));
                 d.Append("<table class=\"wd-stats sk-st\"><tr><th>포인트</th><th>발동 스킬</th><th>효과</th></tr>");
                 foreach (var t in stages) { string pt = S(t, "points"); d.Append("<tr><td><b class=\"" + (pt.StartsWith("-") ? "neg" : "pos") + "\">" + H(pt == "" ? "-" : pt) + "</b></td><td>" + T(S(t, "j")) + (S(t, "j") != "" && T(S(t, "j")) != S(t, "j") ? " <span class=\"ja\">" + H(S(t, "j")) + "</span>" : "") + "</td><td>" + P(Regex.Replace(S(t, "d"), "</span>$", "")) + "</td></tr>"); }
                 d.Append("</table>");
