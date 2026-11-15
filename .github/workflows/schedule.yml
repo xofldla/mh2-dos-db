@@ -1,0 +1,57 @@
+# 온라인 일정(schedule.html) 자료를 1시간마다 MH Oldschool 위키에서 확인하고, 바뀌었을 때만 커밋 + 사이트 재배포
+name: Update online schedule
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # 매시 17분 (정각 혼잡 피함)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: schedule
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.fetch.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - id: fetch
+        run: |
+          r=$(node work/guide/fetch_schedule.mjs)
+          echo "$r"
+          if [ "$r" = "changed" ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; else echo "changed=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.fetch.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add guide/assets/schedule-data.js
+          git commit -m "온라인 일정 자료 자동 갱신 (MH Oldschool 위키)"
+          git push
+
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: guide
+      - id: deployment
+        uses: actions/deploy-pages@v4

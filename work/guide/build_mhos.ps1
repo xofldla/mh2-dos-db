@@ -19,7 +19,7 @@ foreach ($n in 'Galmuri11.woff2','Galmuri11-Bold.woff2','LICENSE.txt') {
   if (-not (Test-Path $dst)) { Copy-Item "$root\font\$n" $dst }
 }
 
-[G]::BuildLinks(); [G]::IconCss("$PSScriptRoot\icon_pos.txt"); [G]::Weapons(); [G]::WeaponsTree("$PSScriptRoot\src\mhos\weapons.html", "$PSScriptRoot\src\mhos\weapon_tree_codes.txt"); [G]::Armor(); [G]::Skills(); [G]::Items(); [G]::Bestiary(); [G]::Quests(); [G]::Maps(); [G]::Meals(); [G]::Misc("$PSScriptRoot\src\mhos\miscellany.html")
+[G]::BuildLinks(); [G]::IconCss("$PSScriptRoot\icon_pos.txt"); [G]::Weapons(); [G]::WeaponsTree("$PSScriptRoot\src\mhos\weapons.html", "$PSScriptRoot\src\mhos\weapon_tree_codes.txt"); [G]::Armor(); [G]::Skills(); [G]::Items(); [G]::Bestiary(); [G]::Quests(); [G]::WriteScheduleQuests(); [G]::Maps(); [G]::Meals(); [G]::Misc("$PSScriptRoot\src\mhos\miscellany.html")
 "pages done"
 $miss = @([G]::MissProse)
 "untranslated prose: $($miss.Count)"

@@ -18,5 +18,6 @@ git add -A
 if (-not (git status --porcelain)) { "바뀐 것이 없습니다."; return }
 git -c core.quotepath=false status --short
 git commit -q -m $Message
+git pull --rebase -q origin main  # GitHub Actions가 올린 온라인 일정 자동 갱신 커밋을 먼저 받는다
 git push -q origin main
 "올렸습니다: https://github.com/xofldla/mh2-dos-db  → 사이트: https://xofldla.github.io/mh2-dos-db/ (1~2분 뒤 반영)"

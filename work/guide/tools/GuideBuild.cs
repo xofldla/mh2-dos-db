@@ -83,7 +83,7 @@ public static class G
     static readonly string[][] Nav = {
         new[]{"index.html","홈"}, new[]{"weapons.html","무기"}, new[]{"armor.html","방어구"}, new[]{"armor-skills.html","스킬"},
         new[]{"items.html","아이템"}, new[]{"bestiary.html","몬스터"}, new[]{"quests.html","퀘스트"}, new[]{"maps.html","맵"},
-        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"} };
+        new[]{"meals.html","식사"}, new[]{"miscellany.html","기타"}, new[]{"villagepeople.html","⭐마을의뢰⭐"}, new[]{"simulator.html","장비 시뮬"}, new[]{"schedule.html","온라인 일정"} };
 
     // 보안 헤더(meta CSP): 이 사이트 파일과 방문자 카운터(hitscounter.dev)만 허용. file:은 오프라인(zip)으로 열 때용
     public const string Fav = "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"images/favicon-32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"images/favicon-16.png\"><link rel=\"apple-touch-icon\" href=\"images/apple-touch-icon.png\">"; // 탭 아이콘(아이루)
@@ -1225,6 +1225,7 @@ public static class G
     }
     static void Quest(StringBuilder sb, Dictionary<string, object> q, string qid)
     {
+        int qStart = sb.Length; // 개인용 스케줄 페이지(work/schedule)가 쓰도록 돈도르마 퀘스트 한글 HTML을 모아 둔다
         string stars = S(q, "stars"); int st; int.TryParse(stars, out st);
         var money = A(q, "rewardMoney").Select(x => Money(Convert.ToString(x)));
         sb.Append("<details class=\"q\" id=\"" + qid + "\"><summary><span class=\"qs\">" + (st > 0 ? string.Concat(Enumerable.Repeat("⭐", st)) : "") + "</span><span class=\"qt\">" + T(S(q, "japaneseTitle")) + " <b>" + T(S(q, "japanese")) + "</b></span>");
@@ -1253,6 +1254,15 @@ public static class G
             sb.Append("<div class=\"col\">" + RewardTable(t, A(rd, "materials")) + "</div>");
         }
         sb.Append("</div></div></details>\n");
+        if (CurLoc == "dundorma") { string jn = S(q, "japanese"); if (jn != "" && !SchedQuests.ContainsKey(jn)) SchedQuests[jn] = new[] { qid, T(jn), stars, sb.ToString(qStart, sb.Length - qStart) }; }
+    }
+    public static Dictionary<string, string[]> SchedQuests = new Dictionary<string, string[]>();
+    // 온라인 일정 페이지(schedule.html) 자료: 돈도르마 퀘스트(일본어 이름 → 퀘스트 id, 한글 이름, 별, 한글 상세 HTML) → assets/schedule-quests.js
+    public static void WriteScheduleQuests() {
+        string dir = Path.Combine(OutDir, "assets");
+        var sbj = new StringBuilder("window.QKO={");
+        foreach (var kv in SchedQuests) sbj.Append(Js(kv.Key) + ":[" + string.Join(",", kv.Value.Select(Js)) + "],\n");
+        File.WriteAllText(Path.Combine(dir, "schedule-quests.js"), sbj.Append("};\n").ToString(), new UTF8Encoding(false));
     }
     static string SupplyTable(string title, object[] list)
     {

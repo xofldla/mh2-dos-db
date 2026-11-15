@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' 'unsafe-inline' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file:; font-src 'self' data: file:; connect-src 'self' https://hitscounter.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png"><link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<title>온라인 일정 | 몬스터헌터2 (DOS) DB</title>
+<link rel="stylesheet" href="assets/guide.css">
+<link rel="stylesheet" href="assets/icons.css">
+<script src="assets/theme.js"></script>
+<style>
+.sch-box { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 14px; margin:12px 0; }
+.sch-box h2 { margin:2px 0 8px; font-size:18px; }
+.sch-now { display:flex; flex-wrap:wrap; gap:6px 18px; align-items:baseline; }
+.sch-now .big { font-size:16px; font-weight:700; color:var(--acc); }
+.shop { display:inline-block; background:var(--head); border-radius:6px; padding:2px 10px; font-weight:700; }
+.shop.none { font-weight:400; color:var(--sub); }
+.shopd { color:var(--sub); font-size:12px; margin-top:4px; }
+.week { display:grid; grid-template-columns:repeat(7, minmax(120px, 1fr)); gap:6px; overflow-x:auto; }
+.day { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px; min-width:120px; }
+.day.today { border-color:var(--acc); border-width:2px; }
+.day h3 { margin:0 0 6px; font-size:14px; text-align:center; }
+.seg { border-top:1px dashed var(--line); padding:4px 0; }
+.seg:first-of-type { border-top:0; }
+.seg .tm { font-size:11px; color:var(--sub); }
+.seg.cur { background:rgba(224,138,92,.12); border-radius:4px; }
+.seg a { display:block; font-size:12px; line-height:1.45; margin:2px 0; }
+.seg .sp { font-size:11px; color:var(--acc); }
+.stars { color:#e6c440; font-size:11px; }
+.note2 { color:var(--sub); font-size:12px; }
+@media (max-width:900px) { .week { grid-template-columns:repeat(7, 140px); } }
+</style>
+</head><body>
+<header class="top"><div class="wrap"><a class="logo timg" href="index.html"><span class="ttl l" style="width:163.3px;height:19.7px;-webkit-mask-image:url(images/titles/t_424fb52e231d.png);mask-image:url(images/titles/t_424fb52e231d.png)" aria-hidden="true"></span><span class="sr">몬스터헌터2 (DOS) DB</span></a><nav><a href="index.html">홈</a><a href="weapons.html">무기</a><a href="armor.html">방어구</a><a href="armor-skills.html">스킬</a><a href="items.html">아이템</a><a href="bestiary.html">몬스터</a><a href="quests.html">퀘스트</a><a href="maps.html">맵</a><a href="meals.html">식사</a><a href="miscellany.html">기타</a><a href="villagepeople.html">⭐마을의뢰⭐</a><a href="simulator.html">장비 시뮬</a><a href="schedule.html" class="on">온라인 일정</a></nav></div></header>
+<main class="wrap">
+<h1 class="timg"><span class="ttl h" style="width:129.3px;height:29px;-webkit-mask-image:url(images/titles/t_d0f7571c2ebc.png);mask-image:url(images/titles/t_d0f7571c2ebc.png)" aria-hidden="true"></span><span class="sr">온라인 일정</span></h1>
+<p class="sub">온라인(멀티서버) 돈도르마의 이벤트 퀘스트・특매 일정을 한국 시간으로 바꿔 보여 줍니다. 퀘스트 이름・내용은 한글 패치 용어입니다. 자료 출처: <a href="https://wiki.mholdschool.com/mh2/">Monster Hunter 2 Wiki (MH Oldschool)</a></p>
+
+<div class="sch-box" id="now"></div>
+<div class="sch-box"><h2>오늘의 이벤트 퀘스트</h2><div id="today"></div></div>
+<div class="sch-box"><h2>이번 주 일정 <span class="meta">(한국 시간)</span></h2><div class="week" id="week"></div>
+<p class="note2">서버의 하루는 독일 시간 0시에 바뀝니다(한국 시간 오전 8시, 독일 서머타임 기간에는 오전 7시). 그래서 한국 날짜 하루 안에 서버 날짜가 두 번 나옵니다.</p></div>
+<p class="note2" id="meta"></p>
+</main>
+<script src="assets/schedule-data.js?v=1"></script>
+<script src="assets/schedule-quests.js?v=1"></script>
+<script src="assets/schedule.js?v=1"></script>
+<script src="assets/guide.js"></script>
+</body></html>
