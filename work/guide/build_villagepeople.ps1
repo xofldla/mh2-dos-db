@@ -157,7 +157,8 @@ A ("<tr><td>초대하는 사람</td><td>{0}</td><td>{1}</td><td>{2}</td></tr>" -
 foreach ($r in $mealRows) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>" -f (Esc $r[0]), (Esc $r[1]), (Esc $r[2]), (Esc $r[3])) }
 A '</table></div>'
 A @'
-<footer>자료 출처: mmpotato「モンスターハンター２解析情報」— 村人との交流 (원문 갱신 2011-11-04). 아이템·인물 이름은 몬스터헌터 2 한글 패치 표기를 따릅니다.</footer>
+<footer>자료: <a href="https://wiki.mholdschool.com/mh2/">Monster Hunter Oldschool MH2 Wiki</a>, mmPotato 「モンスターハンター２解析情報」<br>조합법: <a href="https://w.atwiki.jp/alter2/pages/32.html">ＭＨ２@Wiki 「調合」</a><br>용어는 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다. 지도・아이콘・몬스터 그림은 같은 위키의 것입니다.<br>
+글꼴: <a href="fonts/LICENSE_Galmuri.txt">Galmuri11</a> (quiple, SIL Open Font License 1.1).</footer>
 </main>
 <script>
 function f(){ var q=document.getElementById('q').value.trim(); var rows=document.querySelectorAll('#items tr'); for (var i=1;i<rows.length;i++){ rows[i].style.display = (!q || rows[i].textContent.indexOf(q)>=0) ? '' : 'none'; } }
