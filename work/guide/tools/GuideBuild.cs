@@ -1425,7 +1425,7 @@ public static class G
     {
         string t = File.ReadAllText(srcHtml, Encoding.UTF8);
         t = t.Substring(t.IndexOf("<article"));
-        var sb = new StringBuilder(Head("miscellany.html", "기타 — 헌터 칭호", "조건을 채우면 열리는 칭호. 칭호 하나를 골라 프로필에 표시할 수 있고, 다른 플레이어에게 온라인으로 보인다. <span class=\"tag\">온라인</span>은 온라인에서만 얻는 칭호.", true));
+        var sb = new StringBuilder(Head("miscellany.html", "기타 — 헌터 칭호・심볼 컬러", "<a href=\"#symbol-color\">심볼 컬러</a>는 맨 아래에 있다. 조건을 채우면 열리는 칭호. 칭호 하나를 골라 프로필에 표시할 수 있고, 다른 플레이어에게 온라인으로 보인다. <span class=\"tag\">온라인</span>은 온라인에서만 얻는 칭호.", true));
         foreach (Match sec in Regex.Matches(t, "(?s)<details><summary><h3>(.*?)</h3></summary>(.*?)</details>")) {
             string grp = sec.Groups[1].Value.Trim();
             var tb = Regex.Match(sec.Groups[2].Value, "(?s)<table.*?</table>"); if (!tb.Success) continue;
@@ -1439,6 +1439,46 @@ public static class G
             }
             sb.Append(TEnd + "</section>\n");
         }
+        // 심볼 컬러 (사용자 요청 2026-11-17). 조건 문구는 게임 안 설명(ov3 83FED0~840160) + 공식 가이드북 기반 정리(mhwiki.axibug.com/mh2tip/color.html), 대사전 Wiki 대조
+        sb.Append("<section class=\"grp\" id=\"symbol-color\"><h2>심볼 컬러 <span class=\"ja\">シンボルカラー</span></h2>\n");
+        sb.Append("<p class=\"note\">S 시리즈 방어구 등 일부 방어구에 입히는 색. 방어구마다 따로가 아니라 헌터 한 명에 한 색이다. " +
+            "처음 S 시리즈 방어구를 만들 때, 그때까지 가장 많이 클리어한 메인 타겟 종류에 따라 <b>호완빨강</b>(토벌)・<b>기교하양</b>(포획)・<b>자연초록</b>(납품) 중 하나가 정해진다. " +
+            "그 뒤에도 같은 종류의 메인 타겟을 연달아 클리어하면 이 세 색 사이에서 바뀐다(오프라인에서 얻을 수 있는 색은 사실상 이 셋).<br>" +
+            "색을 마음대로 고르고 나머지 색도 쓰려면 HR31 이상에서 서브 타겟을 많이 클리어한 뒤(자료에 따라 100회 또는 200회) 온라인의 대장로에게 허가를 받아야 한다. " +
+            "고르는 곳은 아이템 박스의 장비 메뉴.</p>\n");
+        sb.Append(Table("ft", "색", "얻는 조건"));
+        string[][] colors = {
+            new[]{"#3f9a3f", "자연초록", "自然の緑", "길드에 ≪채취≫ 공헌도가 가장 높음 — 납품 메인 타겟 퀘스트를 많이 클리어. 생고기 납품 반복이 쉽다."},
+            new[]{"#c8322d", "호완빨강", "豪腕の赤", "길드에 ≪토벌≫ 공헌도가 가장 높음 — 토벌 메인 타겟 퀘스트를 많이 클리어."},
+            new[]{"#f2f2f2", "기교하양", "技巧の白", "길드에 ≪포획≫ 공헌도가 가장 높음 — 포획 메인 타겟 퀘스트를 많이 클리어."},
+            new[]{"#f2a7c3", "교환벚꽃", "交歓の桜", "≪CONNECT≫(PSP 몬스터헌터 포터블 연동)를 해 본 적이 있음."},
+            new[]{"#2f6fd6", "우정파랑", "友情の青", "친구 목록에 50명을 등록한 적이 있음."},
+            new[]{"#1f2f6b", "명검남색", "業物の紺", "얻기 어려운 무기를 많이 가짐 — 칭호 「웨폰 마스터」를 얻음."},
+            new[]{"#2a9d8f", "갑명의 청록", "鎧銘の青緑", "얻기 어려운 방어구를 많이 가짐 — 칭호 「베스트 드레서」를 얻음."},
+            new[]{"#7b3fb5", "무훈의 보라", "武勲の紫", "대투기회에서 50승 이상. <span class=\"tag\">온라인</span>"},
+            new[]{"#e8542a", "축제주홍", "祝祭の朱", "점보 마을을 발전시켜 ≪수확제≫ 이벤트를 봄."},
+            new[]{"#e6c229", "대물노랑", "大物の黄", "킹사이즈(금관) 몬스터 15마리 이상."},
+            new[]{"#b9b4ad", "연회회백", "宴の白灰", "마이하우스에서 100접시 이상 대접받음(혼자 먹어도 셈)."},
+            new[]{"", "완벽칠색", "完璧の虹", "위 11색을 모두 얻음. 모두 얻으면 칭호 「패션 리더」도 받는다."},
+        };
+        foreach (var c in colors) {
+            string sw = c[0] == "" ? "background:linear-gradient(90deg,#e33,#f90,#ee3,#3c3,#39f,#93f)" : "background:" + c[0];
+            sb.Append(Tr("<span class=\"swatch\" style=\"" + sw + "\"></span><b>" + c[1] + "</b> <span class=\"ja\">" + c[2] + "</span>", c[3]));
+        }
+        sb.Append(TEnd);
+        sb.Append("<h3>우정 스킬</h3><p class=\"note\">퀘스트에 함께 나가는 멤버의 색 조합이 아래와 같으면 모두에게 스킬이 발동한다.</p>\n" + Table("ft", "색 조합", "스킬"));
+        string[][] friend = {
+            new[]{"호완빨강・명검남색・대물노랑・완벽칠색 중 같은 색 4명", "행운"},
+            new[]{"기교하양 4명", "은밀"},
+            new[]{"자연초록 4명", "채취+1"},
+            new[]{"교환벚꽃・무훈의 보라・연회회백 중 같은 색 4명", "광역화+1"},
+            new[]{"우정파랑 4명", "상태이상공격강화"},
+            new[]{"갑명의 청록 4명", "정령의 변덕"},
+            new[]{"초록・빨강・하양", "지형데미지감소【소】"},
+            new[]{"빨강・파랑・노랑", "훔침무효"},
+        };
+        foreach (var f in friend) sb.Append(Tr(f[0], "<b>" + f[1] + "</b>"));
+        sb.Append(TEnd + "</section>\n");
         Write("miscellany.html", sb.Append(Foot()).ToString());
     }
     static string ReqKo(string req)

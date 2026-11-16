@@ -579,3 +579,4 @@ img.mhl:not(.big) { width:28px; height:28px; object-fit:contain; }
 /* 돌아가기 버튼: 더 크게, 팝업(몬스터 설명 등, z-index 50)보다 위에 */
 #backbtn { z-index:60; font-size:16px; padding:14px 20px; min-height:52px; border-width:3px; box-shadow:0 4px 14px rgba(0,0,0,.45); }
 @media (max-width:640px) { #backbtn { font-size:15px; padding:12px 16px; left:12px; bottom:12px; } }
+.swatch { display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid var(--line); margin-right:6px; vertical-align:-2px; }
