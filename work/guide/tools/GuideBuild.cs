@@ -1462,7 +1462,7 @@ public static class G
         // 식재료 아이콘: 아이템 데이터의 아이콘
         var icoOf = new Dictionary<string, string>();
         foreach (var o in A(Load("items"))) { var it = D(o); string j = S(it, "japanese"); if (j != "" && !icoOf.ContainsKey(j)) icoOf[j] = S(it, "icon"); }
-        var sb = new StringBuilder(Head("meals.html", "식사", "점보 마을 마이하우스(주방 아이루) 식사. 먼저 <b>계절</b>을 고르세요. 요리는 가나다순이고, 식재료 이름을 누르면 아이템 페이지로 이동합니다.", true));
+        var sb = new StringBuilder(Head("meals.html", "식사", "점보 마을 마이하우스(주방 아이루) 식사. 먼저 <b>계절</b>을 고르세요. 요리는 +효과가 있는 것부터 위에, -효과만 있는 것은 아래에 놓았고(같은 묶음은 가나다순), 식재료 이름을 누르면 아이템 페이지로 이동합니다.", true));
         var seasons = A(data).Select(D).ToList();
         sb.Append("<div class=\"gtabs seas\" data-g=\"season\">");
         for (int i = 0; i < seasons.Count; i++) sb.Append("<button type=\"button\" data-t=\"" + i + "\"" + (i == 0 ? " class=\"on\"" : "") + "><span class=\"emo\">" + (i < 3 ? SeasonEmoji[i] : "") + "</span>" + T(S(seasons[i], "seasonJapanese")) + " <span class=\"cnt\">" + A(seasons[i], "meals").Length + "</span></button>");
@@ -1471,9 +1471,11 @@ public static class G
             var sd = seasons[i];
             sb.Append("<section class=\"grp gpanel" + (i == 0 ? "" : " off") + "\" data-g=\"season\" data-t=\"" + i + "\"><h2><span class=\"emo\">" + (i < 3 ? SeasonEmoji[i] : "") + "</span> " + TJ(S(sd, "seasonJapanese")) + "</h2>\n" + Table("ft meals", "요리", "식재료", "효과"));
             var ko = new CultureInfo("ko-KR");
-            foreach (var md in A(sd, "meals").Select(D).OrderBy(m => Tk(S(m, "dishJapanese")), StringComparer.Create(ko, false))) {
+            // 정렬: +효과만 있는 요리 → +/- 섞인 요리 → 효과 없음 → -효과만 있는 요리, 같은 묶음 안은 가나다순 (사용자 요청 2026-11-17)
+            Func<Dictionary<string, object>, int> fxRank = m => { var am = A(m, "effects").Select(x => S(D(x), "amount")).ToList(); bool neg = am.Any(s => s.StartsWith("-")), pos = am.Any(s => !s.StartsWith("-")); return pos && !neg ? 0 : pos ? 1 : !neg ? 2 : 3; };
+            foreach (var md in A(sd, "meals").Select(D).OrderBy(fxRank).ThenBy(m => Tk(S(m, "dishJapanese")), StringComparer.Create(ko, false))) {
                 string ing = string.Join("<span class=\"plus\">+</span>", A(md, "ingredients").Select(x => { string j = S(D(x), "japanese"); string ic; icoOf.TryGetValue(j, out ic); return "<span class=\"ing\">" + ILink(j, Icon(ic ?? "") + T(j)) + "</span>"; }));
-                string fx = string.Join(" ", A(md, "effects").Select(x => { var e = D(x); string amt = S(e, "amount"); return "<span class=\"fx " + (amt.StartsWith("-") ? "neg" : "pos") + "\">" + T(S(e, "statJapanese")) + " " + H(amt) + "</span>"; }));
+                string fx = string.Join(" ", A(md, "effects").OrderBy(x => S(D(x), "amount").StartsWith("-") ? 1 : 0).Select(x => { var e = D(x); string amt = S(e, "amount"); return "<span class=\"fx " + (amt.StartsWith("-") ? "neg" : "pos") + "\">" + T(S(e, "statJapanese")) + " " + H(amt) + "</span>"; }));
                 sb.Append(Tr("<b>" + TJ(S(md, "dishJapanese")) + "</b>", ing, fx == "" ? "-" : fx));
             }
             sb.Append(TEnd + "</section>\n");
