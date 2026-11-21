@@ -65,12 +65,12 @@
     var ft = document.querySelector("main footer") || document.querySelector("footer");
     if (ft && ft.parentNode) ft.parentNode.insertBefore(el, ft); else document.body.appendChild(el);
     var day = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10); // 한국 시간 날짜
-    var KEYS = "mh2-visits2", cached = null;
+    var KEYS = "mh2-visits3", cached = null;
     try { cached = JSON.parse(sessionStorage.getItem(KEYS) || "null"); } catch (e) {}
     if (cached && cached.day === day) { show(cached.t, cached.a); return; }
-    var site = "https://xofldla.github.io/mh2-dos-db/";
+    var site = "https://xofldla.github.io/mh2-dos-db/?c=2026-11-21"; // 2026-11-21 사용자 요청으로 초기화: 카운터 키를 새로 만들어 0부터 다시 센다
     var hit = function (u) { return fetch("https://hitscounter.dev/api/hit?output=json&url=" + encodeURIComponent(u)).then(function (r) { return r.json(); }); };
-    Promise.all([hit(site + "?day=" + day), hit(site)]).then(function (r) {
+    Promise.all([hit(site + "&day=" + day), hit(site)]).then(function (r) {
       var t = r[0] && r[0].total_hits, a = r[1] && r[1].total_hits; if (a == null) throw 0;
       show(t, a); try { sessionStorage.setItem(KEYS, JSON.stringify({ day: day, t: t, a: a })); } catch (e) {}
     }).catch(function () { el.textContent = ""; });
