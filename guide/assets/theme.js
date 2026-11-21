@@ -52,6 +52,8 @@
   //  같은 탭(세션)에서는 하루에 한 번만 올리고, 다른 페이지에서는 저장해 둔 값을 보여 준다.
   function visits() {
     if (!/(^|\.)github\.io$/.test(location.hostname)) return;
+    // 방문 통계(GoatCounter, 사이트 주인만 대시보드를 봄): 유입처・페이지별 조회. 스크립트는 사이트 안 사본(assets/count.js)
+    if (!document.querySelector("script[data-goatcounter]")) { var gc = document.createElement("script"); gc.async = true; gc.src = "assets/count.js"; gc.setAttribute("data-goatcounter", "https://acropils.goatcounter.com/count"); document.head.appendChild(gc); }
     var st = document.createElement("style");
     st.textContent = "#visits{margin:24px 0 -24px;font:12px/1.4 \"Galmuri11\",monospace;color:var(--sub);white-space:nowrap}" +
       "#visits span{margin-right:10px}#visits b{color:var(--acc);font-weight:700}";

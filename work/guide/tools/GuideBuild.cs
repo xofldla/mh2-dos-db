@@ -87,7 +87,7 @@ public static class G
 
     // 보안 헤더(meta CSP): 이 사이트 파일과 방문자 카운터(hitscounter.dev)만 허용. file:은 오프라인(zip)으로 열 때용
     public const string Fav = "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"images/favicon-32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"images/favicon-16.png\"><link rel=\"apple-touch-icon\" href=\"images/apple-touch-icon.png\">"; // 탭 아이콘(아이루)
-    public const string Csp = "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' file:; script-src 'self' 'unsafe-inline' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file:; font-src 'self' data: file:; connect-src 'self' https://hitscounter.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'\">";
+    public const string Csp = "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' file:; script-src 'self' 'unsafe-inline' file:; style-src 'self' 'unsafe-inline' file:; img-src 'self' data: file: https://acropils.goatcounter.com; font-src 'self' data: file:; connect-src 'self' https://hitscounter.dev https://acropils.goatcounter.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'\">";
     public static string Head(string file, string title, string sub, bool search)
     {
         var sb = new StringBuilder();
