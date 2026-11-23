@@ -67,7 +67,7 @@ A @'
 <link rel="stylesheet" href="assets/icons.css">
 <style>
 @font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:400 }
-@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11-Bold.woff2") format("woff2"); font-weight:700 }
+@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:700 }
 :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2621; --sub:#6f665c; --line:#ddd2c2; --head:#efe4d1; --acc:#8a3b1e; }
 :root[data-theme="dark"] { --bg:#1d1a17; --card:#26221e; --ink:#ece5da; --sub:#a59a8c; --line:#3b352f; --head:#302a24; --acc:#e08a5c; }
 * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:12px/1.75 "Galmuri11","Malgun Gothic","Apple SD Gothic Neo",sans-serif }

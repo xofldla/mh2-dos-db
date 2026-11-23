@@ -1,6 +1,6 @@
 /* 몬스터헌터 2 공략 — 공통 스타일 (폰트: Galmuri11, SIL OFL 1.1) */
 @font-face { font-family: "Galmuri11"; src: url("../fonts/Galmuri11.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Galmuri11"; src: url("../fonts/Galmuri11-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Galmuri11"; src: url("../fonts/Galmuri11.woff2") format("woff2"); font-weight: 700; /* 2026-11-23 굵다는 의견: 굵은체 파일 대신 보통체, 강조는 색으로 */ font-display: swap; }
 
 :root {
   --bg: #f3ecdf; --card: #fffaf0; --ink: #2b2420; --sub: #6f6357; --line: #d9ccb6; --head: #ece1cd;
@@ -19,7 +19,7 @@
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 12px/1.75 "Galmuri11", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; }
+body { font-synthesis: none; margin: 0; background: var(--bg); color: var(--ink); font: 12px/1.75 "Galmuri11", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; }
 a { color: var(--acc2); }
 .wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
 
@@ -580,3 +580,6 @@ img.mhl:not(.big) { width:28px; height:28px; object-fit:contain; }
 #backbtn { z-index:60; font-size:16px; padding:14px 20px; min-height:52px; border-width:3px; box-shadow:0 4px 14px rgba(0,0,0,.45); }
 @media (max-width:640px) { #backbtn { font-size:15px; padding:12px 16px; left:12px; bottom:12px; } }
 .swatch { display:inline-block; width:14px; height:14px; border-radius:3px; border:1px solid var(--line); margin-right:6px; vertical-align:-2px; }
+
+/* 굵은체를 안 쓰므로 강조(b, strong)는 색으로 구분 */
+b, strong { color: var(--acc); }
