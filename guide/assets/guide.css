@@ -2,6 +2,9 @@
 @font-face { font-family: "Spoqa Han Sans Neo"; src: url("../fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 /* 굵은 글씨는 Bold 대신 Medium(굵다는 의견 반영) */
 @font-face { font-family: "Spoqa Han Sans Neo"; src: url("../fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+/* 일본어(.ja)는 M PLUS Rounded 1c(OFL 1.1, 2026-11-23 사용자 지정). 사이트에 쓰인 글자만 잘라 씀(work/guide/subset_ja.mjs) */
+@font-face { font-family: "M PLUS Rounded 1c"; src: url("../fonts/MPLUSRounded1c-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "M PLUS Rounded 1c"; src: url("../fonts/MPLUSRounded1c-Medium.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
 /* 영문・숫자는 Wanted Sans(OFL 1.1, 2026-11-23 사용자 지정). unicode-range로 라틴 글자에만 쓰고 한글은 스포카 */
 @font-face { font-family: "Wanted Sans"; src: url("../fonts/WantedSans-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0020-007E, U+00A0-00FF, U+2010-2027, U+2030-203A; }
 @font-face { font-family: "Wanted Sans"; src: url("../fonts/WantedSans-Medium.woff2") format("woff2"); font-weight: 500 700; font-display: swap; unicode-range: U+0020-007E, U+00A0-00FF, U+2010-2027, U+2030-203A; }
@@ -212,7 +215,7 @@ table.wpn .sh { width:100%; max-width:120px; }
 body.showja .ja { display:block; margin-top:1px; font-weight:400; line-height:1.4; }
 body.showja .mat .ja, body.showja .fx .ja { display:block; }
 body.showja .mat { vertical-align:top; margin-bottom:2px; }
-.ja { font-size:12px; line-height:1.4; font-weight:400; }
+.ja { font-size:12px; line-height:1.4; font-weight:400; font-family:"M PLUS Rounded 1c", "Wanted Sans", "Spoqa Han Sans Neo", sans-serif; }
 h2 .ja, h1 .ja { color:var(--sub); }
 
 /* 방어구: 부위・레어도 탭 (링크) */

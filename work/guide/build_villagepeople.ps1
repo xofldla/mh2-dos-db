@@ -68,6 +68,7 @@ A @'
 <style>
 @font-face { font-family:"Spoqa Han Sans Neo"; src:url("fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"); font-weight:400 }
 @font-face { font-family:"Spoqa Han Sans Neo"; src:url("fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2"); font-weight:500 700 }
+@font-face { font-family:"M PLUS Rounded 1c"; src:url("fonts/MPLUSRounded1c-Regular.woff2") format("woff2"); font-weight:400 }
 @font-face { font-family:"Wanted Sans"; src:url("fonts/WantedSans-Regular.woff2") format("woff2"); font-weight:400; unicode-range:U+0020-007E,U+00A0-00FF,U+2010-2027,U+2030-203A }
 @font-face { font-family:"Wanted Sans"; src:url("fonts/WantedSans-Medium.woff2") format("woff2"); font-weight:500 700; unicode-range:U+0020-007E,U+00A0-00FF,U+2010-2027,U+2030-203A }
 :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2621; --sub:#6f665c; --line:#ddd2c2; --head:#efe4d1; --acc:#8a3b1e; }
@@ -78,7 +79,7 @@ h1 { font-size:24px; margin:0 0 4px } h2 { font-size:24px; margin:32px 0 10px; c
 .sub { color:var(--sub) }
 table { border-collapse:collapse; width:100%; background:var(--card) }
 th, td { border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top } th { background:var(--head); font-weight:700 }
-td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub) } .xw { overflow-x:auto }
+td.n { text-align:right; white-space:nowrap } .ja { color:var(--sub); font-family:"M PLUS Rounded 1c","Wanted Sans","Spoqa Han Sans Neo",sans-serif } .xw { overflow-x:auto }
 input[type=search] { width:100%; max-width:360px; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); font:inherit; margin:4px 0 10px }
 p.note { color:var(--sub); margin:6px 0 } .tips { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:6px 14px } .tips p { margin:8px 0 } .eff { color:var(--sub); font-size:12px } .star { font-size:14px }
 :root { --red:#c0201a } :root[data-theme="dark"] { --red:#ff5a4a }
@@ -160,7 +161,7 @@ foreach ($r in $mealRows) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}<
 A '</table></div>'
 A @'
 <footer>자료: <a href="https://wiki.mholdschool.com/mh2/">Monster Hunter Oldschool MH2 Wiki</a>, mmPotato 「モンスターハンター２解析情報」<br>조합법: <a href="https://w.atwiki.jp/alter2/pages/32.html">ＭＨ２@Wiki 「調合」</a><br>용어는 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다. 지도・아이콘・몬스터 그림은 같은 위키의 것입니다.<br>
-글꼴: <a href="fonts/LICENSE_SpoqaHanSansNeo.txt">Spoqa Han Sans Neo</a>, 영문 <a href="fonts/LICENSE_WantedSans.txt">Wanted Sans</a> (SIL Open Font License 1.1), 제목 G마켓 산스.</footer>
+글꼴: <a href="fonts/LICENSE_SpoqaHanSansNeo.txt">Spoqa Han Sans Neo</a>, 영문 <a href="fonts/LICENSE_WantedSans.txt">Wanted Sans</a>, 일본어 <a href="fonts/LICENSE_MPLUSRounded1c.txt">M PLUS Rounded 1c</a> (SIL Open Font License 1.1), 제목 G마켓 산스.</footer>
 </main>
 <script>
 function f(){ var q=document.getElementById('q').value.trim(); var rows=document.querySelectorAll('#items tr'); for (var i=1;i<rows.length;i++){ rows[i].style.display = (!q || rows[i].textContent.indexOf(q)>=0) ? '' : 'none'; } }

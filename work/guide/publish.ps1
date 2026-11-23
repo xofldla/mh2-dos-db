@@ -8,6 +8,7 @@ $env:Path = [Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [Env
 powershell -NoProfile -File "$PSScriptRoot\build_mhos.ps1"
 powershell -NoProfile -File "$PSScriptRoot\build_villagepeople.ps1"
 powershell -NoProfile -File "$PSScriptRoot\title_images.ps1"
+node "$PSScriptRoot\subset_ja.mjs"   # 일본어 글꼴(M PLUS Rounded 1c)을 사이트 글자만 남겨 자름
 # 장비 시뮬레이터 스크립트 주소에 버전 꼬리표(?v=)를 새로 붙여, 방문자 브라우저가 예전 JS를 계속 쓰지 않게 한다
 $simV = (Get-Date).ToString('yyyyMMddHHmm'); $u8n = New-Object Text.UTF8Encoding $false
 foreach ($sf in "$root\guide\simulator.html", "$root\guide\assets\sim.js", "$root\guide\assets\sim-worker.js", "$root\guide\schedule.html") {
