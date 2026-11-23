@@ -66,11 +66,13 @@ A @'
 <link rel="stylesheet" href="assets/guide.css">
 <link rel="stylesheet" href="assets/icons.css">
 <style>
-@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:400 }
-@font-face { font-family:"Galmuri11"; src:url("fonts/Galmuri11.woff2") format("woff2"); font-weight:700 }
+@font-face { font-family:"Spoqa Han Sans Neo"; src:url("fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"); font-weight:400 }
+@font-face { font-family:"Spoqa Han Sans Neo"; src:url("fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2"); font-weight:500 700 }
+@font-face { font-family:"Wanted Sans"; src:url("fonts/WantedSans-Regular.woff2") format("woff2"); font-weight:400; unicode-range:U+0020-007E,U+00A0-00FF,U+2010-2027,U+2030-203A }
+@font-face { font-family:"Wanted Sans"; src:url("fonts/WantedSans-Medium.woff2") format("woff2"); font-weight:500 700; unicode-range:U+0020-007E,U+00A0-00FF,U+2010-2027,U+2030-203A }
 :root { --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2621; --sub:#6f665c; --line:#ddd2c2; --head:#efe4d1; --acc:#8a3b1e; }
 :root[data-theme="dark"] { --bg:#1d1a17; --card:#26221e; --ink:#ece5da; --sub:#a59a8c; --line:#3b352f; --head:#302a24; --acc:#e08a5c; }
-* { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:12px/1.75 "Galmuri11","Malgun Gothic","Apple SD Gothic Neo",sans-serif }
+* { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.7 "Wanted Sans","Spoqa Han Sans Neo","Malgun Gothic","Apple SD Gothic Neo",sans-serif }
 main { max-width:960px; margin:0 auto; padding:24px 16px 64px }
 h1 { font-size:24px; margin:0 0 4px } h2 { font-size:24px; margin:32px 0 10px; color:var(--acc) }
 .sub { color:var(--sub) }
@@ -158,7 +160,7 @@ foreach ($r in $mealRows) { A ("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}<
 A '</table></div>'
 A @'
 <footer>자료: <a href="https://wiki.mholdschool.com/mh2/">Monster Hunter Oldschool MH2 Wiki</a>, mmPotato 「モンスターハンター２解析情報」<br>조합법: <a href="https://w.atwiki.jp/alter2/pages/32.html">ＭＨ２@Wiki 「調合」</a><br>용어는 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다. 지도・아이콘・몬스터 그림은 같은 위키의 것입니다.<br>
-글꼴: <a href="fonts/LICENSE_Galmuri.txt">Galmuri11</a> (quiple, SIL Open Font License 1.1).</footer>
+글꼴: <a href="fonts/LICENSE_SpoqaHanSansNeo.txt">Spoqa Han Sans Neo</a>, 영문 <a href="fonts/LICENSE_WantedSans.txt">Wanted Sans</a> (SIL Open Font License 1.1), 제목 G마켓 산스.</footer>
 </main>
 <script>
 function f(){ var q=document.getElementById('q').value.trim(); var rows=document.querySelectorAll('#items tr'); for (var i=1;i<rows.length;i++){ rows[i].style.display = (!q || rows[i].textContent.indexOf(q)>=0) ? '' : 'none'; } }

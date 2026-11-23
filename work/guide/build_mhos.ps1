@@ -12,11 +12,12 @@ if (-not ('G' -as [type])) {
 [G]::LoadProse("$PSScriptRoot\prose_ko.tsv")
 foreach ($f in 'armor_skills','items','monsters','weapons','armor','quests','meals','maps') { [G]::CollectNames([G]::Load($f)) }
 
-# 폰트(Galmuri11, OFL)와 라이선스
+# 폰트(Spoqa Han Sans Neo, OFL — 2026-11-23 Galmuri11에서 변경)와 라이선스. Bold 대신 Medium을 굵은 글씨로 씀
 $fd = "$root\guide\fonts"; New-Item -ItemType Directory -Force $fd | Out-Null
-foreach ($n in 'Galmuri11.woff2','Galmuri11-Bold.woff2','LICENSE.txt') {
-  $dst = Join-Path $fd ($(if ($n -eq 'LICENSE.txt') { 'LICENSE_Galmuri.txt' } else { $n }))
-  if (-not (Test-Path $dst)) { Copy-Item "$root\font\$n" $dst }
+$sp = "$root\work\font\SpoqaHanSansNeo_all"
+foreach ($p in @("$sp\SpoqaHanSansNeo_TTF_subset\SpoqaHanSansNeo-Regular.woff2", "$sp\SpoqaHanSansNeo_TTF_subset\SpoqaHanSansNeo-Medium.woff2", "$sp\LICENSE", "$root\work\font\WantedSans-1.0.3\webfonts\static\complete\woff2\WantedSans-Regular.woff2", "$root\work\font\WantedSans-1.0.3\webfonts\static\complete\woff2\WantedSans-Medium.woff2", "$root\work\font\WantedSans-1.0.3\OFL.txt")) {
+  $n = Split-Path -Leaf $p; $dst = Join-Path $fd ($(if ($n -eq 'LICENSE') { 'LICENSE_SpoqaHanSansNeo.txt' } elseif ($n -eq 'OFL.txt') { 'LICENSE_WantedSans.txt' } else { $n }))
+  if (-not (Test-Path $dst)) { Copy-Item $p $dst }
 }
 
 [G]::BuildLinks(); [G]::IconCss("$PSScriptRoot\icon_pos.txt"); [G]::Weapons(); [G]::WeaponsTree("$PSScriptRoot\src\mhos\weapons.html", "$PSScriptRoot\src\mhos\weapon_tree_codes.txt"); [G]::Armor(); [G]::Skills(); [G]::Items(); [G]::Bestiary(); [G]::Quests(); [G]::WriteScheduleQuests(); [G]::Maps(); [G]::Meals(); [G]::Misc("$PSScriptRoot\src\mhos\miscellany.html")

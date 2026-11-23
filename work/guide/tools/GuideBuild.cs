@@ -105,7 +105,7 @@ public static class G
 
     public static string Foot()
     {
-        return "\n<footer>자료: <a href=\"https://wiki.mholdschool.com/mh2/\">Monster Hunter Oldschool MH2 Wiki</a>, mmPotato 「モンスターハンター２解析情報」<br>조합법: <a href=\"https://w.atwiki.jp/alter2/pages/32.html\">ＭＨ２@Wiki 「調合」</a><br>용어는 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다. 지도・아이콘・몬스터 그림은 같은 위키의 것입니다.<br>\n글꼴: <a href=\"fonts/LICENSE_Galmuri.txt\">Galmuri11</a> (quiple, SIL Open Font License 1.1).</footer>\n</main>\n<script src=\"assets/guide.js\"></script>\n</body></html>\n";
+        return "\n<footer>자료: <a href=\"https://wiki.mholdschool.com/mh2/\">Monster Hunter Oldschool MH2 Wiki</a>, mmPotato 「モンスターハンター２解析情報」<br>조합법: <a href=\"https://w.atwiki.jp/alter2/pages/32.html\">ＭＨ２@Wiki 「調合」</a><br>용어는 몬스터헌터 2 (도스) 한글 패치 표기를 따랐습니다. 지도・아이콘・몬스터 그림은 같은 위키의 것입니다.<br>\n글꼴: <a href=\"fonts/LICENSE_SpoqaHanSansNeo.txt\">Spoqa Han Sans Neo</a>, 영문 <a href=\"fonts/LICENSE_WantedSans.txt\">Wanted Sans</a> (SIL Open Font License 1.1), 제목 G마켓 산스.</footer>\n</main>\n<script src=\"assets/guide.js\"></script>\n</body></html>\n";
     }
 
     // 이름 → 다른 페이지로 가는 링크

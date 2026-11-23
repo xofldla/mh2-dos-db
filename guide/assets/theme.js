@@ -55,7 +55,7 @@
     // 방문 통계(GoatCounter, 사이트 주인만 대시보드를 봄): 유입처・페이지별 조회. 스크립트는 사이트 안 사본(assets/count.js)
     if (!document.querySelector("script[data-goatcounter]")) { var gc = document.createElement("script"); gc.async = true; gc.src = "assets/count.js"; gc.setAttribute("data-goatcounter", "https://acropils.goatcounter.com/count"); document.head.appendChild(gc); }
     var st = document.createElement("style");
-    st.textContent = "#visits{margin:24px 0 -24px;font:12px/1.4 \"Galmuri11\",monospace;color:var(--sub);white-space:nowrap}" +
+    st.textContent = "#visits{margin:24px 0 -24px;font:12px/1.4 \"Wanted Sans\",\"Spoqa Han Sans Neo\",sans-serif;color:var(--sub);white-space:nowrap}" +
       "#visits span{margin-right:10px}#visits b{color:var(--acc);font-weight:700}";
     document.head.appendChild(st);
     var el = document.createElement("div"); el.id = "visits";
