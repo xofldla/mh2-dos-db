@@ -85,6 +85,27 @@
     $("week").innerHTML = html;
     $("meta").textContent = "일정 시간마다 위키에서 자동으로 확인합니다. 마지막으로 바뀐 시각: " + (M.updated ? tfmt(Date.parse(M.updated), { year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?") + " · 서버 시간대: " + M.tz;
   }
-  render();
-  setInterval(render, 60000); // 1분마다 남은 시간・현재 구간 갱신
+  // 돈도르마 시간・계절: 위키(wiki.mholdschool.com/mh2) 돈도르마 시계와 같은 식.
+  // 실제 1970-01-01 0시(UTC)부터 지난 초로 정해진다. 하루 6000초(낮 3000 + 밤 3000), 계절 = 15일, 온난기→한랭기→번식기.
+  var DAY_S = 6000, SEASON_S = DAY_S * 15, SEASONS = ["온난기", "한랭기", "번식기"];
+  function seasonAt(sec) { return Math.floor(sec / SEASON_S) % 3; }
+  function renderClock() {
+    var el = $("clock"); if (!el) return;
+    var now = Date.now(), sec = now / 1000, inDay = sec % DAY_S, isDay = inDay < DAY_S / 2;
+    var si = seasonAt(sec), dayNo = Math.floor(sec / DAY_S % 15) + 1;
+    var gh = Math.floor(inDay / DAY_S * 24), gm = Math.floor(inDay / DAY_S * 1440 % 60);
+    var nextDN = (sec - inDay + (isDay ? DAY_S / 2 : DAY_S)) * 1000;
+    var seasonStart = Math.floor(sec / SEASON_S) * SEASON_S;
+    var left = function (ms) { var l = Math.max(0, ms - now), h = Math.floor(l / 3600000), m = Math.floor(l % 3600000 / 60000); return (h ? h + "시간 " : "") + m + "분 남음"; };
+    var when = function (ms) { return tfmt(ms, { month: "numeric", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit" }); };
+    var nexts = "";
+    for (var k = 1; k <= 3; k++) { var t = (seasonStart + k * SEASON_S) * 1000; nexts += "<span>" + when(t) + ' <span class="s">→</span> <b>' + SEASONS[seasonAt(seasonStart + k * SEASON_S)] + "</b></span>"; }
+    el.innerHTML = '<div class="sch-now"><span class="clk-season s' + si + '">' + SEASONS[si] + "</span>" +
+      '<span class="big">' + dayNo + "일째 · <span class=\"clk-dn\">" + (isDay ? "낮" : "밤") + "</span></span>" +
+      '<span class="note2">게임 안 시각 ' + String(gh).padStart(2, "0") + ":" + String(gm).padStart(2, "0") + "</span>" +
+      "<span>" + (isDay ? "밤" : "낮") + "으로 바뀜: <b>" + when(nextDN) + "</b> (" + left(nextDN) + ")</span></div>" +
+      '<div class="clk-next"><span class="s">다음 계절:</span>' + nexts + "</div>";
+  }
+  render(); renderClock();
+  setInterval(function () { render(); renderClock(); }, 60000); // 1분마다 남은 시간・현재 구간 갱신
 })();

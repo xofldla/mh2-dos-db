@@ -26,22 +26,28 @@
 .seg .sp { font-size:11px; color:var(--acc); }
 .stars { color:#e6c440; font-size:11px; }
 .note2 { color:var(--sub); font-size:12px; } .note2.warn { color:var(--neg); font-weight:700; }
+.clk-season { display:inline-block; border-radius:6px; padding:2px 10px; font-weight:700; color:#fff; }
+.clk-season.s0 { background:#c8742c; } .clk-season.s1 { background:#4a7fb5; } .clk-season.s2 { background:#4f9a55; }
+.clk-dn { font-weight:700; } .clk-next { margin-top:6px; display:flex; flex-wrap:wrap; gap:4px 14px; font-size:13px; }
+.clk-next .s { color:var(--sub); }
 @media (max-width:900px) { .week { grid-template-columns:repeat(7, 140px); } }
 </style>
 </head><body>
-<header class="top"><div class="wrap"><a class="logo timg" href="index.html"><span class="ttl l" style="width:179px;height:18.3px;-webkit-mask-image:url(images/titles/t_36588366dc89.png);mask-image:url(images/titles/t_36588366dc89.png)" aria-hidden="true"></span><span class="sr">몬스터헌터2 (DOS) DB</span></a><nav><a href="index.html">홈</a><a href="weapons.html">무기</a><a href="armor.html">방어구</a><a href="armor-skills.html">스킬</a><a href="items.html">아이템</a><a href="bestiary.html">몬스터</a><a href="quests.html">퀘스트</a><a href="maps.html">맵</a><a href="meals.html">식사</a><a href="miscellany.html">기타</a><a href="villagepeople.html">⭐마을의뢰⭐</a><a href="simulator.html">장비 시뮬</a></nav></div></header>
+<header class="top"><div class="wrap"><a class="logo timg" href="index.html"><span class="ttl l" style="width:179px;height:18.3px;-webkit-mask-image:url(images/titles/t_c5e4fbda1ba4.png);mask-image:url(images/titles/t_c5e4fbda1ba4.png)" aria-hidden="true"></span><span class="sr">몬스터헌터2 (DOS) DB</span></a><nav><a href="index.html">홈</a><a href="weapons.html">무기</a><a href="armor.html">방어구</a><a href="armor-skills.html">스킬</a><a href="items.html">아이템</a><a href="bestiary.html">몬스터</a><a href="quests.html">퀘스트</a><a href="maps.html">맵</a><a href="meals.html">식사</a><a href="miscellany.html">기타</a><a href="villagepeople.html">⭐마을의뢰⭐</a><a href="simulator.html">장비 시뮬</a></nav></div></header>
 <main class="wrap">
-<h1 class="timg"><span class="ttl h" style="width:136.3px;height:26.3px;-webkit-mask-image:url(images/titles/t_2fe654d1eaa4.png);mask-image:url(images/titles/t_2fe654d1eaa4.png)" aria-hidden="true"></span><span class="sr">온라인 일정</span></h1>
+<h1 class="timg"><span class="ttl h" style="width:136.3px;height:26.3px;-webkit-mask-image:url(images/titles/t_4778f03fd104.png);mask-image:url(images/titles/t_4778f03fd104.png)" aria-hidden="true"></span><span class="sr">온라인 일정</span></h1>
 <p class="sub">온라인(멀티서버) 돈도르마의 이벤트 퀘스트・특매 일정을 한국 시간으로 바꿔 보여 줍니다. 퀘스트 이름・내용은 한글 패치 용어입니다.<br>자료 출처: <a href="https://wiki.mholdschool.com/mh2/">Monster Hunter 2 Wiki (MH Oldschool)</a></p>
 
 <div class="sch-box" id="now"></div>
+<div class="sch-box"><h2>돈도르마 시간・계절 <span class="meta">(한국 시간)</span></h2><div id="clock"></div>
+<p class="note2">*돈도르마의 낮/밤과 계절은 서버 시계로 정해지며 게임 안에서 바꿀 수 없습니다. 하루 100분(낮 50분・밤 50분), 계절 하나는 게임 안 15일(실제 25시간)이고 온난기 → 한랭기 → 번식기 순서로 돕니다. 계산식은 위키의 돈도르마 시계와 같습니다.</p></div>
 <div class="sch-box"><h2>오늘의 이벤트 퀘스트</h2><div id="today"></div></div>
 <div class="sch-box"><h2>이번 주 일정 <span class="meta">(한국 시간)</span></h2><div class="week" id="week"></div>
 <p class="note2 warn">*서버의 하루는 독일 시간 0시에 바뀝니다(한국 시간 오전 8시, 독일 서머타임 기간에는 오전 7시).</p></div>
 <footer id="meta"></footer>
 </main>
 <script>/* 접속할 때마다 최신 일정 자료를 받는다(브라우저 캐시 무시) */ document.write('<script src="assets/schedule-data.js?t=' + Date.now() + '"><\/script>');</script>
-<script src="assets/schedule-quests.js?v=202611231249"></script>
-<script src="assets/schedule.js?v=202611231249"></script>
+<script src="assets/schedule-quests.js?v=202611260633"></script>
+<script src="assets/schedule.js?v=202611260633"></script>
 <script src="assets/guide.js"></script>
 </body></html>
